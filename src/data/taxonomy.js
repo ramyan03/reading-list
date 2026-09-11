@@ -45,7 +45,8 @@ export const sources = [
 ];
 
 export const sorts = [
-  { id: 'score', label: 'Score' },
+  { id: 'weighted', label: 'Your score' },
+  { id: 'score', label: 'Editorial' },
   { id: 'rating', label: 'GR rating' },
   { id: 'copies', label: 'Copies sold' },
   { id: 'words', label: 'Length' },

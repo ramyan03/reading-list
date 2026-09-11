@@ -1,6 +1,7 @@
 // Filtering + sorting for the book list. Pure, so it is easy to test later.
 
 const comparators = {
+  weighted: (a, b) => a.weighted - b.weighted,
   score: (a, b) => a.score - b.score,
   rating: (a, b) => a.rating - b.rating,
   copies: (a, b) => (a.copies || 0) - (b.copies || 0),
@@ -20,6 +21,6 @@ export function selectBooks(books, { query, genre, status, source, sort, sortDir
     return true;
   });
 
-  const cmp = comparators[sort] ?? comparators.score;
+  const cmp = comparators[sort] ?? comparators.weighted;
   return filtered.sort((a, b) => cmp(a, b) * sortDir);
 }

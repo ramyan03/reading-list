@@ -1,37 +1,48 @@
-import { genreClass, genreLabel, statusSuffix } from '../data/taxonomy.js';
-import { copiesStr, wordsStr, yearStr } from '../lib/format.js';
+import { coverUrl } from '../data/covers.js';
+import { genreLabel } from '../data/taxonomy.js';
+import { useReveal } from '../hooks/useReveal.js';
 
-export default function BookCard({ book }) {
-  const isRead = book.status === 'read';
+export default function BookCard({ book, rank, onOpen, onToggleFavourite }) {
+  const [ref, shown] = useReveal();
+  const src = coverUrl(book.coverId, 'M');
 
   return (
-    <article className={`book-card${isRead ? ' read' : ''}`}>
-      <div className={`status-bar s-${book.status}`} />
+    <article
+      ref={ref}
+      className={`card${shown ? ' is-shown' : ''} s-${book.status}`}
+      style={{ '--delay': `${(rank % 12) * 40}ms` }}
+    >
+      <button type="button" className="card-hit" onClick={() => onOpen(book)} data-cursor>
+        <span className="sr-only">{`Open ${book.title}`}</span>
+      </button>
 
-      <div className="book-info">
-        <h2 className={`book-title${isRead ? ' read-title' : ''}`}>
-          {book.title}
-          {statusSuffix(book.status)}
-        </h2>
-        <p className="book-author">
-          {book.author} · {yearStr(book.year)}
-        </p>
-        <div className="book-tags">
-          <span className={`tag ${genreClass(book.genre)}`}>{genreLabel(book.genre)}</span>
-        </div>
-        <p className="book-note">{book.note}</p>
-        <div className="source-dots">
-          {book.sources.map((s) => (
-            <span key={s} className={`dot dot-${s}`} title={s} />
-          ))}
-        </div>
+      <div className="card-cover">
+        {src ? (
+          <img src={src} alt="" loading="lazy" decoding="async" />
+        ) : (
+          <div className="card-cover-fallback">
+            <span>{book.title}</span>
+          </div>
+        )}
+        <span className="card-rank">{String(rank + 1).padStart(2, '0')}</span>
+        <span className="card-score">{book.weighted.toFixed(0)}</span>
       </div>
 
-      <div className="book-nums">
-        <div className="gr-rating">★ {book.rating.toFixed(2)}</div>
-        <div className="copies">{copiesStr(book.copies)}</div>
-        <div className="wordcount">{wordsStr(book.words)}</div>
+      <div className="card-meta">
+        <h3 className="card-title">{book.title}</h3>
+        <p className="card-author">{book.author}</p>
+        <p className="card-genre">{genreLabel(book.genre)}</p>
       </div>
+
+      <button
+        type="button"
+        className={`card-fav${book.favourite ? ' is-on' : ''}`}
+        onClick={() => onToggleFavourite(book.id)}
+        aria-label={book.favourite ? 'Remove from favourites' : 'Add to favourites'}
+        aria-pressed={!!book.favourite}
+      >
+        ★
+      </button>
     </article>
   );
 }

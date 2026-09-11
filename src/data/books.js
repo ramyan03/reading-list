@@ -3,6 +3,8 @@
 // score: aggregate of how many sources feature it (1-6) x quality signal
 // copies: millions sold. words: approximate word count.
 
+import { coverIds } from './covers.js';
+
 const rawBooks = [
   // RUSSIAN
   { title:"The Brothers Karamazov", author:"Fyodor Dostoevsky", genre:"Russian", year:1880, rating:4.37, copies:12, words:364000, status:"next", sources:["gr","lit","reddit","critics","sales"], note:"The pinnacle of Dostoevsky — morality, faith, and free will through three brothers, each a different answer to the same questions.", score:96 },
@@ -199,7 +201,10 @@ export const books = rawBooks
     seen.add(key);
     return true;
   })
-  .map((b) => ({ ...b, id: slugify(`${b.title}-${b.author}`) }));
+  .map((b) => {
+    const id = slugify(`${b.title}-${b.author}`);
+    return { ...b, id, coverId: coverIds[id] ?? null };
+  });
 
 function slugify(s) {
   return s
