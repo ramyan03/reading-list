@@ -44,7 +44,7 @@ export default function WeightPanel({ open, weights, setWeights, onClose }) {
             </p>
           </div>
           <button type="button" className="weights-close" onClick={onClose} aria-label="Close">
-            ✕
+            Close
           </button>
         </div>
 
@@ -73,16 +73,19 @@ export default function WeightPanel({ open, weights, setWeights, onClose }) {
                       <span className="weight-label">{s.label}</span>
                       <span className="weight-value">{value}</span>
                     </label>
-                    <input
-                      id={`w-${s.id}`}
-                      type="range"
-                      min="0"
-                      max="100"
-                      step="5"
-                      value={value}
-                      onChange={(e) => set(s.id, Number(e.target.value))}
-                      style={{ '--fill': `${value}%` }}
-                    />
+                    {/* The filled portion is drawn by the wrapper, so the track
+                        itself stays a plain rule and no gradient is needed. */}
+                    <span className="weight-track" style={{ '--fill': `${value}%` }}>
+                      <input
+                        id={`w-${s.id}`}
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="5"
+                        value={value}
+                        onChange={(e) => set(s.id, Number(e.target.value))}
+                      />
+                    </span>
                     <p className="weight-hint">{s.hint}</p>
                   </div>
                 );

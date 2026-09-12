@@ -1,48 +1,51 @@
 import { coverUrl } from '../data/covers.js';
-import { genreLabel } from '../data/taxonomy.js';
-import { useReveal } from '../hooks/useReveal.js';
+import { hasReview } from '../data/reviews.js';
 
-export default function BookCard({ book, rank, onOpen, onToggleFavourite }) {
-  const [ref, shown] = useReveal();
+/**
+ * One book in the catalogue.
+ *
+ * Reading state is carried by weight and opacity rather than by a badge or a
+ * coloured bar: finished books recede because they are done, the one being read
+ * is the only place the accent is spent, and everything unread sits at its
+ * natural brightness. Only the two states that need naming get a word above the
+ * title, so a screen of "TO READ" labels never appears.
+ */
+
+const STATE_LABEL = { next: 'Reading', owned: 'On the shelf' };
+
+export default function BookCard({ book, onOpen }) {
   const src = coverUrl(book.coverId, 'M');
+  const label = STATE_LABEL[book.status];
+  const reviewed = hasReview(book.id);
 
   return (
-    <article
-      ref={ref}
-      className={`card${shown ? ' is-shown' : ''} s-${book.status}`}
-      style={{ '--delay': `${(rank % 12) * 40}ms` }}
-    >
-      <button type="button" className="card-hit" onClick={() => onOpen(book)} data-cursor>
+    <article className={`book is-${book.status}`}>
+      <button type="button" className="book-hit" onClick={() => onOpen(book)}>
         <span className="sr-only">{`Open ${book.title}`}</span>
       </button>
 
-      <div className="card-cover">
+      <div className="book-art">
         {src ? (
           <img src={src} alt="" loading="lazy" decoding="async" />
         ) : (
-          <div className="card-cover-fallback">
+          <div className="book-art-fallback">
             <span>{book.title}</span>
           </div>
         )}
-        <span className="card-rank">{String(rank + 1).padStart(2, '0')}</span>
-        <span className="card-score">{book.weighted.toFixed(0)}</span>
       </div>
 
-      <div className="card-meta">
-        <h3 className="card-title">{book.title}</h3>
-        <p className="card-author">{book.author}</p>
-        <p className="card-genre">{genreLabel(book.genre)}</p>
-      </div>
+      <div className="book-meta">
+        {label && <span className="book-state">{label}</span>}
 
-      <button
-        type="button"
-        className={`card-fav${book.favourite ? ' is-on' : ''}`}
-        onClick={() => onToggleFavourite(book.id)}
-        aria-label={book.favourite ? 'Remove from favourites' : 'Add to favourites'}
-        aria-pressed={!!book.favourite}
-      >
-        ★
-      </button>
+        <h2 className="book-title">{book.title}</h2>
+        <p className="book-author">{book.author}</p>
+
+        <p className="book-score">
+          {book.weighted.toFixed(0)}
+          {book.status === 'read' && ' · finished'}
+          {reviewed && <span className="book-review-mark"> · reviewed</span>}
+        </p>
+      </div>
     </article>
   );
 }

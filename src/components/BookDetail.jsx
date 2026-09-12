@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { coverUrl } from '../data/covers.js';
+import { reviewUrl } from '../data/reviews.js';
 import { genreLabel, sources as SOURCES, statuses } from '../data/taxonomy.js';
 import { breakdown } from '../lib/score.js';
 import { copiesStr, wordsStr, yearStr } from '../lib/format.js';
 
-export default function BookDetail({ book, weights, onClose, onSetStatus, onToggleFavourite }) {
+export default function BookDetail({ book, weights, onClose, onSetStatus }) {
   useEffect(() => {
     if (!book) return;
     const onKey = (e) => e.key === 'Escape' && onClose();
     addEventListener('keydown', onKey);
-    // Stop the list scrolling behind the overlay.
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -23,6 +23,7 @@ export default function BookDetail({ book, weights, onClose, onSetStatus, onTogg
   const rows = breakdown(book, weights).filter((r) => r.weight > 0);
   const weightSum = rows.reduce((n, r) => n + r.weight, 0);
   const src = coverUrl(book.coverId, 'L');
+  const review = reviewUrl(book.id);
 
   return (
     <div className="detail-wrap" role="dialog" aria-modal="true" aria-label={book.title}>
@@ -30,15 +31,15 @@ export default function BookDetail({ book, weights, onClose, onSetStatus, onTogg
 
       <div className="detail">
         <button type="button" className="detail-close" onClick={onClose} aria-label="Close">
-          ✕
+          Close
         </button>
 
         <div className="detail-top">
-          <div className="detail-cover">
+          <div className="detail-art">
             {src ? (
               <img src={src} alt="" />
             ) : (
-              <div className="card-cover-fallback">
+              <div className="book-art-fallback">
                 <span>{book.title}</span>
               </div>
             )}
@@ -50,21 +51,31 @@ export default function BookDetail({ book, weights, onClose, onSetStatus, onTogg
             <p className="detail-author">
               {book.author} · {yearStr(book.year)}
             </p>
+
             <p className="detail-note">{book.note}</p>
 
             <div className="detail-facts">
-              <span>★ {book.rating.toFixed(2)} Goodreads</span>
+              <span>{book.rating.toFixed(2)} on Goodreads</span>
               <span>{copiesStr(book.copies)}</span>
               <span>{wordsStr(book.words)}</span>
             </div>
 
             <div className="detail-sources">
               {SOURCES.filter((s) => book.sources.includes(s.id)).map((s) => (
-                <span key={s.id} className={`src src-${s.id}`}>
-                  {s.label}
-                </span>
+                <span key={s.id}>{s.label}</span>
               ))}
             </div>
+
+            {/*
+              Metadata, not a call to action: one line in the same register as
+              the source list above it. It only exists for books that actually
+              have a review, so it never reads as an advert for the other site.
+            */}
+            {review && (
+              <p className="detail-review">
+                <a href={review}>Read my review &rarr;</a>
+              </p>
+            )}
 
             <div className="detail-shelf">
               <span className="detail-shelf-label">Shelf</span>
@@ -72,20 +83,12 @@ export default function BookDetail({ book, weights, onClose, onSetStatus, onTogg
                 <button
                   key={s.id}
                   type="button"
-                  className={`chip${book.status === s.id ? ' is-on' : ''}`}
+                  className={book.status === s.id ? 'is-on' : ''}
                   onClick={() => onSetStatus(book.id, s.id)}
                 >
                   {s.label}
                 </button>
               ))}
-              <button
-                type="button"
-                className={`chip chip-fav${book.favourite ? ' is-on' : ''}`}
-                onClick={() => onToggleFavourite(book.id)}
-                aria-pressed={!!book.favourite}
-              >
-                ★ Favourite
-              </button>
             </div>
           </div>
         </div>
@@ -110,14 +113,14 @@ export default function BookDetail({ book, weights, onClose, onSetStatus, onTogg
                 const share = (r.contribution / (weightSum * 100)) * 100;
                 return (
                   <tr key={r.id}>
-                    <td>
-                      <span className="bd-label">{r.label}</span>
-                    </td>
+                    <td>{r.label}</td>
                     <td className="bd-num">{r.value.toFixed(0)}</td>
                     <td className="bd-num">{r.weight}</td>
-                    <td className="bd-share">
-                      <span className="bd-bar" style={{ '--pct': `${share}%` }} />
-                      <span className="bd-num">{share.toFixed(1)}</span>
+                    <td>
+                      <span className="bd-share">
+                        <span className="bd-bar" style={{ '--pct': `${share}%` }} />
+                        <span className="bd-num">{share.toFixed(1)}</span>
+                      </span>
                     </td>
                   </tr>
                 );
@@ -126,7 +129,7 @@ export default function BookDetail({ book, weights, onClose, onSetStatus, onTogg
           </table>
 
           <p className="detail-formula">
-            Sum of value × weight, divided by total weight ({weightSum}).
+            Value times weight, divided by total weight ({weightSum}).
           </p>
         </div>
       </div>
