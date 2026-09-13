@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Ramyan Reads</title>
+  <rect width="64" height="64" fill="#0f0f0f"/>
+  <text x="29" y="49"
+        font-family="Newsreader, Georgia, 'Times New Roman', serif"
+        font-size="46" font-weight="500" font-style="italic"
+        fill="#e6e3df" text-anchor="middle">R</text>
+  <path d="M46 0 H56 V19 L51 14.5 L46 19 Z" fill="#c9a15a"/>
+</svg>
