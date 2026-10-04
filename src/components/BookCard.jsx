@@ -11,7 +11,7 @@ import { hasReview } from '../data/reviews.js';
  * title, so a screen of "TO READ" labels never appears.
  */
 
-const STATE_LABEL = { next: 'Reading', owned: 'On the shelf' };
+const STATE_LABEL = { active: 'Reading', next: 'Up next', paused: 'Paused' };
 
 export default function BookCard({ book, onOpen }) {
   const src = coverUrl(book.coverId, 'M');
@@ -42,7 +42,7 @@ export default function BookCard({ book, onOpen }) {
 
         <p className="book-score">
           {book.weighted.toFixed(0)}
-          {book.status === 'read' && ' · finished'}
+          {book.status === 'done' && (book.myScore != null ? ` · ${book.myScore}/10` : ' · finished')}
           {reviewed && <span className="book-review-mark"> · reviewed</span>}
         </p>
       </div>

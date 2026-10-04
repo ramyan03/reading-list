@@ -3,6 +3,7 @@
 // GENRE_ORDER only controls which ones lead the filter row.
 
 import { books } from './books.js';
+import { SHELVES, STATUSES, statusLabel } from './categories.js';
 
 const GENRE_ORDER = [
   'Classic',
@@ -28,12 +29,10 @@ export const genres = [...new Set(books.map((b) => b.genre))].sort((a, b) => {
   return ia - ib;
 });
 
-export const statuses = [
-  { id: 'read', label: 'Read ✓', suffix: ' ✓' },
-  { id: 'owned', label: 'Owned', suffix: ' (owned)' },
-  { id: 'next', label: 'Up next', suffix: ' →' },
-  { id: 'todo', label: 'To read', suffix: '' },
-];
+// Books share the status vocabulary with everything else (see categories.js);
+// only the wording differs.
+export const statuses = STATUSES.map((s) => ({ ...s, label: statusLabel(s.id, 'book') }));
+export const shelves = SHELVES;
 
 export const sources = [
   { id: 'gr', label: 'Goodreads' },
@@ -56,4 +55,3 @@ export const sorts = [
 
 export const genreLabel = (g) => GENRE_LABELS[g] ?? g;
 export const genreClass = (g) => `t-${g.replace(/[^a-zA-Z]/g, '')}`;
-export const statusSuffix = (s) => statuses.find((x) => x.id === s)?.suffix ?? '';

@@ -43,6 +43,7 @@
 
   --gutter: clamp(1.25rem, 4vw, 4.5rem);
   --max: 1420px;
+  --nav-h: 46px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -198,7 +199,7 @@ button {
 
 .controls {
   position: sticky;
-  top: 0;
+  top: var(--nav-h);
   z-index: 20;
   background: color-mix(in srgb, var(--ink) 92%, transparent);
   backdrop-filter: blur(12px);
@@ -488,20 +489,20 @@ button {
   color: var(--fg-dim);
 }
 
-.is-read .book-art,
-.is-read .book-art img {
+.is-done .book-art,
+.is-done .book-art img {
   opacity: 0.55;
 }
 
-.is-read .book-title {
+.is-done .book-title {
   color: var(--fg-muted);
 }
 
-.is-next .book-state {
+.is-active .book-state {
   color: var(--accent);
 }
 
-.is-next .book-art {
+.is-active .book-art {
   box-shadow: inset 0 0 0 1px var(--accent);
 }
 
@@ -606,7 +607,7 @@ button {
   color: var(--fg-title);
 }
 
-.row.is-read .row-title {
+.row.is-done .row-title {
   color: var(--fg-muted);
 }
 
@@ -1146,6 +1147,676 @@ input[type="range"]::-moz-range-thumb {
 
 .foot a:hover {
   color: var(--accent);
+}
+
+/* ==========================================================================
+   Nav
+   --------------------------------------------------------------------------
+   The sections as a line of words, same treatment as the facets: the current
+   one is brighter and underlined in the accent. One line tall always; on a
+   phone it scrolls sideways instead of wrapping.
+   ========================================================================== */
+
+.masthead.is-compact {
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+  padding-bottom: 0.75rem;
+}
+
+.masthead.is-compact .masthead-title {
+  font-size: var(--text-xl);
+  text-decoration: none;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  height: var(--nav-h);
+  background: color-mix(in srgb, var(--ink) 94%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav-inner {
+  max-width: var(--max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.nav a {
+  flex: none;
+  font-size: var(--text-sm);
+  color: var(--fg-faint);
+  text-decoration: none;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.nav a:hover {
+  color: var(--fg);
+}
+
+.nav a.is-on {
+  color: var(--fg-bright);
+  border-bottom-color: var(--accent);
+}
+
+/* ==========================================================================
+   Pages, blocks and lines
+   --------------------------------------------------------------------------
+   Everything that is not the book grid is a list of lines: a title, one line
+   of metadata, and at most two actions on the right. Same brightness rules as
+   the books: finished recedes, in progress carries the accent.
+   ========================================================================== */
+
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--gutter) 6rem;
+}
+
+.block + .block {
+  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.block-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.15;
+  color: var(--fg-bright);
+  margin-bottom: 0.85rem;
+}
+
+.block-title span {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+  margin-left: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.block-note {
+  margin-top: 0.85rem;
+  max-width: 60ch;
+  font-family: var(--font-serif);
+  color: var(--fg-muted);
+}
+
+.lines {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.line-hit {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 0.8rem 0;
+  text-align: left;
+}
+
+.line-rank {
+  flex: none;
+  width: 1.25rem;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.line-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.line-kicker {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.line-title {
+  font-size: var(--text-base);
+  color: var(--fg-title);
+  transition: color 0.25s ease;
+}
+
+.line-hit:hover .line-title {
+  color: var(--accent);
+}
+
+.line-meta {
+  font-size: var(--text-sm);
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line.is-active .line-kicker {
+  color: var(--accent);
+}
+
+.line.is-done .line-title,
+.line.is-dropped .line-title {
+  color: var(--fg-muted);
+}
+
+.line.is-dropped .line-title {
+  text-decoration: line-through;
+  text-decoration-color: var(--fg-dim);
+}
+
+.line-actions {
+  flex: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.line-actions button,
+.more {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  padding: 0.6rem 0;
+  transition: color 0.25s ease;
+}
+
+.line-actions button:hover,
+.more:hover {
+  color: var(--accent);
+}
+
+.more {
+  margin-top: 0.5rem;
+}
+
+/* Up next on the Now page: one column per medium where there is room. */
+.queues {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 2rem clamp(1.5rem, 3vw, 3rem);
+}
+
+.queue-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.queues .queue-title {
+  margin-top: 0;
+}
+
+.queue-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.queue-title a:hover {
+  color: var(--accent);
+}
+
+.refine.is-inline {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.facet-n {
+  color: var(--fg-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Countdown
+   ========================================================================== */
+
+.countdown.is-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  align-items: baseline;
+  padding: 0.9rem 0 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  border-bottom: 1px solid var(--rule);
+  color: var(--fg-muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  position: relative;
+}
+
+.countdown b {
+  color: var(--fg-bright);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-days b {
+  color: var(--accent);
+}
+
+.countdown.is-compact:hover .cd-days {
+  color: var(--fg-bright);
+}
+
+.cd-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  color: var(--fg-muted);
+}
+
+/*
+ * Two readings on one rule: the fill is issues read, the tick is time gone.
+ * The tick sitting ahead of the fill means falling behind.
+ */
+.cd-bar {
+  display: block;
+  position: relative;
+  height: 2px;
+  background: var(--rule);
+  margin-top: 0.9rem;
+}
+
+.countdown.is-compact .cd-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  margin: 0;
+  background: none;
+}
+
+.cd-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--done);
+  background: var(--accent);
+}
+
+.cd-bar::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: var(--time);
+  width: 1px;
+  background: var(--fg-muted);
+}
+
+.cd-legend {
+  margin-top: 0.6rem;
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+}
+
+/* ==========================================================================
+   Plan
+   ========================================================================== */
+
+.plan-lines {
+  list-style: none;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.plan-line {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  align-items: baseline;
+}
+
+.plan-cat {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.plan-text {
+  color: var(--fg-title);
+}
+
+.plan-note {
+  color: var(--fg-faint);
+  font-size: var(--text-sm);
+}
+
+.plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin-top: 0.3rem;
+}
+
+.plan-links button {
+  font-size: var(--text-sm);
+  color: var(--fg-faint);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.plan-links button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.plan-links button.is-done {
+  color: var(--fg-dim);
+  text-decoration: line-through;
+}
+
+.plan-links button.is-active {
+  color: var(--accent);
+}
+
+.plan-line.is-done .plan-text {
+  color: var(--fg-dim);
+}
+
+.plan-line.is-active .plan-cat {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   Editor
+   --------------------------------------------------------------------------
+   Choices are lines of words like the facets; free text is an underlined
+   field, no boxes. Big enough tap targets for a thumb on a moving train.
+   ========================================================================== */
+
+.editor,
+.ed-facts {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: 1rem;
+}
+
+.ed-row {
+  display: flex;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.ed-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  min-width: 64px;
+}
+
+.ed-options {
+  display: flex;
+  gap: 0.25rem 1.1rem;
+  flex-wrap: wrap;
+}
+
+.ed-options button {
+  font-size: var(--text-sm);
+  color: var(--fg-faint);
+  padding: 0.3rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.ed-options button:hover {
+  color: var(--fg);
+}
+
+.ed-options button.is-on {
+  color: var(--fg-bright);
+  border-bottom-color: var(--accent);
+}
+
+.ed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+  gap: 1rem 1.5rem;
+}
+
+.ed-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ed-field input,
+.ed-field textarea,
+.ed-field select,
+.unlock input {
+  font: inherit;
+  font-size: var(--text-base);
+  color: var(--fg-bright);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 0.35rem 0;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.25s ease;
+  color-scheme: inherit;
+}
+
+.ed-field textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.ed-field select option {
+  background: var(--ink);
+  color: var(--fg);
+}
+
+.ed-field input:focus,
+.ed-field textarea:focus,
+.ed-field select:focus,
+.unlock input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.ed-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ed-stepper button {
+  font-size: var(--text-lg);
+  color: var(--fg-muted);
+  width: 2.25rem;
+  height: 2.25rem;
+  transition: color 0.25s ease;
+}
+
+.ed-stepper button:hover {
+  color: var(--accent);
+}
+
+.ed-count {
+  flex: 1;
+  text-align: center;
+  color: var(--fg-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.ed-reset button {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  transition: color 0.25s ease;
+}
+
+.ed-reset button:hover {
+  color: var(--accent);
+}
+
+.ed-facts div {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.ed-facts dt {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  min-width: 88px;
+}
+
+.ed-facts dd {
+  color: var(--fg);
+}
+
+.breakdown tr.is-missing td {
+  color: var(--fg-dim);
+}
+
+/* ==========================================================================
+   Add form
+   ========================================================================== */
+
+.add {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0 1.25rem;
+  border-top: 1px solid var(--rule-soft);
+  max-width: 640px;
+}
+
+.add-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: baseline;
+}
+
+.button {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--accent);
+  padding: 0.65rem 1rem;
+  border-radius: 2px;
+  transition: background 0.25s ease;
+}
+
+.button:hover {
+  background: var(--fg-bright);
+}
+
+.button-quiet {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.button-quiet:hover {
+  color: var(--fg-bright);
+}
+
+/* ==========================================================================
+   Footer: sync and unlock
+   ========================================================================== */
+
+.foot button {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--fg-faint);
+  transition: color 0.25s ease;
+}
+
+.foot button:hover:not(:disabled) {
+  color: var(--accent);
+}
+
+.foot button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.foot-sync[data-sync="offline"] {
+  color: var(--accent);
+}
+
+.foot-error {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--accent);
+}
+
+.unlock {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+}
+
+.unlock input {
+  width: 12rem;
+  font-size: var(--text-sm);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 560px) {
+  .line {
+    flex-wrap: wrap;
+    gap: 0 1rem;
+  }
+  .line-actions {
+    margin: -0.5rem 0 0.4rem 0;
+  }
+  .line-hit:has(.line-rank) + .line-actions {
+    margin-left: 2.15rem;
+  }
+  .plan-line {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
 }
 
 /* ==========================================================================

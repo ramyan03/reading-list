@@ -9,6 +9,14 @@
 
 const clamp = (n, lo = 0, hi = 100) => Math.min(hi, Math.max(lo, n));
 
+/**
+ * A signal is null when the book has no data for it (books added from the
+ * master list never had sources or an editorial score assigned). Null drops out
+ * of the average entirely, which is fairer than scoring the gap as zero.
+ */
+const known = (v, f) => (v == null ? null : f(v));
+const has = (b, src) => known(b.sources, (s) => (s.includes(src) ? 100 : 0));
+
 /** Map a value in [lo, hi] onto 0-100, clamped outside that band. */
 const band = (value, lo, hi) => clamp(((value - lo) / (hi - lo)) * 100);
 
@@ -25,70 +33,70 @@ export const SIGNALS = [
     label: 'Editorial score',
     group: 'Judgement',
     hint: 'The hand-assigned 0-100 rating already in the list',
-    of: (b) => clamp(b.score),
+    of: (b) => known(b.score, clamp),
   },
   {
     id: 'rating',
     label: 'Goodreads rating',
     group: 'Judgement',
     hint: 'Normalised across the 3.6-4.4 band where these books actually sit',
-    of: (b) => band(b.rating, 3.6, 4.4),
+    of: (b) => known(b.rating, (r) => band(r, 3.6, 4.4)),
   },
   {
     id: 'breadth',
     label: 'Source breadth',
     group: 'Judgement',
     hint: 'How many of the six sources feature it at all',
-    of: (b) => (b.sources.length / 6) * 100,
+    of: (b) => known(b.sources, (s) => (s.length / 6) * 100),
   },
   {
     id: 'lit',
     label: '/lit/',
     group: 'Taste',
     hint: 'Present on 4chan /lit/ charts',
-    of: (b) => (b.sources.includes('lit') ? 100 : 0),
+    of: (b) => has(b, 'lit'),
   },
   {
     id: 'critics',
     label: 'Critics',
     group: 'Taste',
     hint: 'Present on critical best-of lists',
-    of: (b) => (b.sources.includes('critics') ? 100 : 0),
+    of: (b) => has(b, 'critics'),
   },
   {
     id: 'reddit',
     label: 'Reddit',
     group: 'Taste',
     hint: 'Recommended across book subreddits',
-    of: (b) => (b.sources.includes('reddit') ? 100 : 0),
+    of: (b) => has(b, 'reddit'),
   },
   {
     id: 'booktok',
     label: 'BookTok',
     group: 'Taste',
     hint: 'Driven by BookTok and social',
-    of: (b) => (b.sources.includes('booktok') ? 100 : 0),
+    of: (b) => has(b, 'booktok'),
   },
   {
     id: 'sales',
     label: 'Copies sold',
     group: 'Reach',
     hint: 'Log scale from 1M to 500M',
-    of: (b) => logBand(b.copies, 1, 500),
+    of: (b) => known(b.copies, (c) => logBand(c, 1, 500)),
   },
   {
     id: 'brevity',
     label: 'Brevity',
     group: 'Practical',
     hint: 'Rewards books you can actually finish. Turn negative-ish by zeroing it',
-    of: (b) => 100 - band(b.words, 20000, 450000),
+    of: (b) => known(b.words, (w) => 100 - band(w, 20000, 450000)),
   },
   {
     id: 'recency',
     label: 'Recency',
     group: 'Practical',
     hint: 'Rewards the modern end of the list',
-    of: (b) => band(b.year, 1850, 2021),
+    of: (b) => known(b.year, (y) => band(y, 1850, 2021)),
   },
 ];
 
@@ -134,7 +142,7 @@ export function breakdown(book, weights) {
   return SIGNALS.map((s) => {
     const weight = weights[s.id] ?? 0;
     const value = s.of(book);
-    return { ...s, weight, value, contribution: value * weight };
+    return { ...s, weight, value, missing: value == null, contribution: (value ?? 0) * weight };
   });
 }
 
@@ -143,12 +151,13 @@ export function weightedScore(book, weights) {
   let weightSum = 0;
   for (const s of SIGNALS) {
     const w = weights[s.id] ?? 0;
-    if (!w) continue;
-    total += s.of(book) * w;
+    const v = s.of(book);
+    if (!w || v == null) continue;
+    total += v * w;
     weightSum += w;
   }
-  // All weights at zero has no meaningful ranking, so fall back to editorial.
-  return weightSum === 0 ? clamp(book.score) : total / weightSum;
+  // Nothing weighted and known: fall back to editorial, or the bottom.
+  return weightSum === 0 ? clamp(book.score ?? 0) : total / weightSum;
 }
 
 export function scoreAll(books, weights) {

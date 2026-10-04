@@ -1,138 +1,86 @@
-import { useEffect, useMemo, useState } from 'react';
-import BookCard from './components/BookCard.jsx';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import BookDetail from './components/BookDetail.jsx';
-import BookRow from './components/BookRow.jsx';
-import Controls from './components/Controls.jsx';
+import BooksView from './components/BooksView.jsx';
+import Footer from './components/Footer.jsx';
+import ItemDetail from './components/ItemDetail.jsx';
 import Masthead from './components/Masthead.jsx';
-import WeightPanel from './components/WeightPanel.jsx';
+import MediaView from './components/MediaView.jsx';
+import Nav from './components/Nav.jsx';
+import NowView from './components/NowView.jsx';
+import PlanView from './components/PlanView.jsx';
 import { books as rawBooks } from './data/books.js';
-import { REVIEWS_ORIGIN } from './data/reviews.js';
+import { categoryByRoute } from './data/categories.js';
+import { media } from './data/media.js';
+import { buildCatalogue } from './lib/catalogue.js';
 import { DEFAULT_WEIGHTS, scoreAll } from './lib/score.js';
-import { selectBooks } from './lib/select.js';
-import { loadShelf, loadWeights, saveShelf, saveWeights } from './lib/storage.js';
-
-const initialFilters = {
-  query: '',
-  genre: 'all',
-  status: 'all',
-  source: 'all',
-  sort: 'weighted',
-  sortDir: -1,
-};
+import { useShelf } from './lib/shelf.js';
+import { loadWeights, saveWeights } from './lib/storage.js';
 
 /**
- * Reviews links back here with ?q=<title>, so arriving from a review lands on
- * that book rather than on the top of a 161 book list. Read once, on mount.
+ * Routes live in the hash (#now, #plan, #books, #anime...) so the phone's back
+ * button and home-screen bookmarks work without any server rewrites. Reviews
+ * links here with ?q=<title>, which always means the books tab.
  */
-function initialState() {
+function readRoute() {
+  const hash = location.hash.replace(/^#\/?/, '');
+  if (hash) return hash;
   try {
-    const q = new URLSearchParams(location.search).get('q');
-    return q ? { ...initialFilters, query: q } : initialFilters;
+    if (new URLSearchParams(location.search).get('q')) return 'books';
   } catch {
-    return initialFilters;
+    // Fall through to the default.
   }
+  return 'now';
 }
 
 export default function App() {
-  const [filters, setFilters] = useState(initialState);
-  const [view, setView] = useState('grid');
+  const [route, setRoute] = useState(readRoute);
   const [weights, setWeights] = useState(() => ({ ...DEFAULT_WEIGHTS, ...loadWeights({}) }));
-  const [shelf, setShelf] = useState(loadShelf);
-  const [weightsOpen, setWeightsOpen] = useState(false);
   const [openId, setOpenId] = useState(null);
+  const shelf = useShelf();
 
   useEffect(() => saveWeights(weights), [weights]);
-  useEffect(() => saveShelf(shelf), [shelf]);
 
-  const update = (patch) => setFilters((f) => ({ ...f, ...patch }));
+  useEffect(() => {
+    const onHash = () => {
+      setRoute(readRoute());
+      setOpenId(null);
+      scrollTo(0, 0);
+    };
+    addEventListener('hashchange', onHash);
+    return () => removeEventListener('hashchange', onHash);
+  }, []);
 
-  // books.js is the baseline; the shelf holds only what has been changed here.
-  const books = useMemo(
-    () =>
-      scoreAll(
-        rawBooks.map((b) => ({ ...b, status: shelf[b.id]?.status ?? b.status })),
-        weights
-      ),
-    [shelf, weights]
-  );
+  const items = useMemo(() => buildCatalogue(rawBooks, media, shelf.records), [shelf.records]);
+  const books = useMemo(() => scoreAll(items.filter((i) => i.cat === 'book'), weights), [items, weights]);
 
-  const visible = useMemo(() => selectBooks(books, filters), [books, filters]);
+  const open = useCallback((item) => setOpenId(item.id), []);
+  const close = useCallback(() => setOpenId(null), []);
+  const openItem = openId && (books.find((b) => b.id === openId) ?? items.find((i) => i.id === openId));
 
-  const setStatus = (id, status) => setShelf((s) => ({ ...s, [id]: { ...s[id], status } }));
-
-  const readCount = books.filter((b) => b.status === 'read').length;
-  const readingCount = books.filter((b) => b.status === 'next').length;
-  const authorCount = new Set(books.map((b) => b.author)).size;
-  const openBook = books.find((b) => b.id === openId);
+  const cat = categoryByRoute(route);
+  const view =
+    route === 'plan' ? (
+      <PlanView items={items} onOpen={open} />
+    ) : route === 'books' ? (
+      <BooksView books={books} weights={weights} setWeights={setWeights} onOpen={open} shelf={shelf} />
+    ) : cat ? (
+      <MediaView key={cat.id} cat={cat} items={items} onOpen={open} shelf={shelf} />
+    ) : (
+      <NowView items={items} onOpen={open} shelf={shelf} />
+    );
 
   return (
     <>
-      <Masthead
-        total={books.length}
-        read={readCount}
-        reading={readingCount}
-        authors={authorCount}
-      />
+      <Masthead items={items} compact={route !== 'now'} />
+      <Nav route={cat || route === 'plan' || route === 'books' ? route : 'now'} />
+      {view}
+      <Footer shelf={shelf} />
 
-      <Controls
-        state={filters}
-        update={update}
-        view={view}
-        setView={setView}
-        count={visible.length}
-        onOpenWeights={() => setWeightsOpen(true)}
-      />
-
-      <main className="catalogue">
-        {visible.length === 0 ? (
-          <p className="empty">
-            Nothing matches.{' '}
-            <button type="button" onClick={() => setFilters(initialFilters)}>
-              Clear
-            </button>
-          </p>
-        ) : view === 'grid' ? (
-          <div className="grid">
-            {visible.map((b) => (
-              <BookCard key={b.id} book={b} onOpen={(x) => setOpenId(x.id)} />
-            ))}
-          </div>
-        ) : (
-          <div className="index">
-            <div className="index-head">
-              <span>#</span>
-              <span>Title</span>
-              <span>Genre</span>
-              <span>Rating</span>
-              <span>Score</span>
-            </div>
-            {visible.map((b, i) => (
-              <BookRow key={b.id} book={b} rank={i} onOpen={(x) => setOpenId(x.id)} />
-            ))}
-          </div>
-        )}
-      </main>
-
-      <footer className="foot">
-        <span>Ramyan Reads</span>
-        <span>
-          <a href={REVIEWS_ORIGIN}>Ramyan Reviews &rarr;</a>
-        </span>
-      </footer>
-
-      <WeightPanel
-        open={weightsOpen}
-        weights={weights}
-        setWeights={setWeights}
-        onClose={() => setWeightsOpen(false)}
-      />
-
-      <BookDetail
-        book={openBook}
-        weights={weights}
-        onClose={() => setOpenId(null)}
-        onSetStatus={setStatus}
-      />
+      {openItem?.cat === 'book' ? (
+        <BookDetail book={openItem} weights={weights} onClose={close} shelf={shelf} items={items} />
+      ) : (
+        <ItemDetail item={openItem} onClose={close} shelf={shelf} items={items} />
+      )}
     </>
   );
 }

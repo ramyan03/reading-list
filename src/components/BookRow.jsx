@@ -12,13 +12,14 @@ export default function BookRow({ book, rank, onOpen }) {
         <span className="row-main">
           <span className="row-title">{book.title}</span>
           <span className="row-author">
-            {book.author} · {yearStr(book.year)}
+            {book.author}
+            {book.year != null && ` · ${yearStr(book.year)}`}
             {hasReview(book.id) && ' · reviewed'}
           </span>
         </span>
 
         <span className="row-genre">{genreLabel(book.genre)}</span>
-        <span className="row-num">{book.rating.toFixed(2)}</span>
+        <span className="row-num">{book.rating != null ? book.rating.toFixed(2) : '–'}</span>
         <span className="row-score">{book.weighted.toFixed(1)}</span>
       </button>
     </article>

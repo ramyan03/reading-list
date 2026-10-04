@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { genreLabel, genres, sorts, sources, statuses } from '../data/taxonomy.js';
+import { genreLabel, genres, shelves, sorts, sources, statuses } from '../data/taxonomy.js';
 
 /**
  * Search, count and view are always visible because they are what you reach
@@ -35,12 +35,13 @@ function Facet({ label, options, value, onChange }) {
   );
 }
 
-export default function Controls({ state, update, view, setView, count, onOpenWeights }) {
+export default function Controls({ state, update, view, setView, count, onOpenWeights, onAdd, adding, children }) {
   const [open, setOpen] = useState(false);
 
   const active =
     (state.genre !== 'all' ? 1 : 0) +
     (state.status !== 'all' ? 1 : 0) +
+    (state.shelf !== 'all' ? 1 : 0) +
     (state.source !== 'all' ? 1 : 0);
 
   return (
@@ -98,6 +99,12 @@ export default function Controls({ state, update, view, setView, count, onOpenWe
             <button type="button" className="refine-toggle" onClick={onOpenWeights}>
               Scoring
             </button>
+
+            {onAdd && (
+              <button type="button" className="refine-toggle" aria-expanded={adding} onClick={onAdd}>
+                Add
+              </button>
+            )}
           </div>
         </div>
 
@@ -114,6 +121,12 @@ export default function Controls({ state, update, view, setView, count, onOpenWe
               options={statuses}
               value={state.status}
               onChange={(status) => update({ status })}
+            />
+            <Facet
+              label="Copy"
+              options={shelves}
+              value={state.shelf}
+              onChange={(shelf) => update({ shelf })}
             />
             <Facet
               label="Source"
@@ -144,6 +157,7 @@ export default function Controls({ state, update, view, setView, count, onOpenWe
             </div>
           </div>
         )}
+        {children}
       </div>
     </div>
   );

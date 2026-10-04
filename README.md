@@ -1,98 +1,81 @@
-# Reading List
+# Ramyan Reads
 
-A personal recommendation engine for books. 161 titles sourced from Goodreads,
-/lit/, Reddit, critics, sales figures and BookTok, ranked by a **weighted score
-you tune yourself**.
+Everything I am reading, watching and playing: what is in progress, what comes
+next in each medium, the 2026-27 plan, and everything finished so far. Books
+keep their recommendation engine, ranked by a **weighted score you tune
+yourself**. Edits sync between phone and laptop.
 
-Not a library catalogue: it answers "what should I read next, by my standards"
-rather than "what have I read".
+Live at https://ramyan-reads.vercel.app. Pushing `main` deploys.
 
 ## Running it
 
 ```bash
 npm install --legacy-peer-deps
-npm run dev      # http://localhost:5173
+npm run dev      # http://localhost:5173, edit key "dev", saves to .data/shelf.json
+npm run check    # data and API invariants; run after editing anything in src/data
 npm run build    # production build into dist/
-npm run preview  # serve the production build
-npm run covers   # refresh cover art after adding books
+npm run covers   # refresh book cover art after adding books
 ```
 
-## The weighted score
+## Sections
 
-Every book is reduced to ten signals, each normalised to 0–100, then combined as
-a **weighted average**. An average rather than a sum, so the result stays on a
-0–100 scale no matter how the weights are set and books stay comparable between
-presets.
+| Route    | What it is                                                          |
+| -------- | ------------------------------------------------------------------- |
+| `#now`   | In progress (with +1 and Finished), up next per medium, recent finishes |
+| `#plan`  | Doomsday countdown and checklist, then the month-by-month plan      |
+| `#books` | The original catalogue: covers or index, weighted score, filters    |
+| `#shows` `#films` `#anime` `#manga` `#games` `#comics` | One list per medium, grouped now / next / backlog / paused / finished |
 
-| Group     | Signals                                      |
-| --------- | -------------------------------------------- |
-| Judgement | Editorial score, Goodreads rating, breadth    |
-| Taste     | /lit/, Critics, Reddit, BookTok               |
-| Reach     | Copies sold (log scale, 1M–500M)              |
-| Practical | Brevity, Recency                              |
+Reviews links here with `?q=<title>`, which opens the books tab on that search.
 
-Weights live in a slide-out panel and persist to `localStorage`. Five presets
-ship as starting points: Balanced, Literary, Popular, Quick wins, Canon.
+## Data, and how edits are stored
 
-Two things worth knowing about the model:
+The data files are the baseline and never change at runtime:
 
-- **Copies sold is log-scaled.** Linear would put everything except Don Quixote
-  at the bottom.
-- **Editorial score correlates with nearly every other signal**, so weighting it
-  highly flattens the presets into each other. `Literary` deliberately holds it
-  at 25 — otherwise it just reproduces `Balanced`.
+- `src/data/books.js`: 183 books with their scoring signals
+- `src/data/media.js`: 426 shows, films, anime, manga, games and comics
+- `src/data/plan.js`: the monthly plan and the Doomsday goal
 
-Open any book to see the full breakdown: each signal's value, its weight, and
-its share of the final number. The shares sum to the score exactly.
+Every item shares one vocabulary (`src/data/categories.js`):
 
-## Your own state
+- `status`: `active`, `next`, `backlog`, `paused`, `done`, `dropped`
+- `tier`: `must`, `good`, `burner`, `skip`
+- `shelf` (books): `owned`, `gift`, `buy`
+- `order`: position in the up next queue; `progress` / `total`, `at` (where I am),
+  `myScore` (out of 10), `finished` (YYYY-MM), `mine` (my note), `note` (the blurb)
 
-Shelf status (read / owned / up next / to read) and favourites are editable in
-the UI and saved to `localStorage`. `books.js` stays the baseline; only your
-overrides are stored, so re-running the data never clobbers your shelf and your
-shelf never hides a data fix.
+What gets changed in the app is stored separately as **overrides**: one record
+per item id, holding only the changed fields, plus whole records for items added
+in the app (`custom: true`). So a data fix never clobbers an edit, and an edit
+never hides a data fix. "Undo my changes" on an item deletes its record.
 
-This is per-browser and not backed up. Anything you want permanent belongs in
-`books.js`.
+The overrides live in one Upstash Redis hash behind `/api/shelf`
+(`api/_shelf.js`). Reading is public (the baseline is already in the public
+bundle). Writing needs `EDIT_KEY`. On each device you unlock once from the
+footer and the key is remembered there.
 
-## Layout
+The client (`src/lib/shelf.js`) renders the cached copy instantly, pulls fresh
+on load and whenever the tab comes back into view, and queues edits made offline
+in localStorage. They retry on `online`, on focus, and every 30 seconds.
+**A failed save must never retry itself synchronously**: an offline `fetch`
+rejects instantly and a self-retrying flush froze the page in testing.
 
-```
-src/
-  main.jsx              entry point
-  App.jsx               state, wiring, shelf overrides
-  styles.css            all styling, design tokens at the top
-  components/
-    Hero.jsx            oversized display type, animated stats
-    Marquee.jsx         author ticker
-    FilterBar.jsx       search, filters, sort, view toggle
-    BookCard.jsx        grid view
-    BookRow.jsx         index view
-    BookDetail.jsx      overlay with the score breakdown
-    WeightPanel.jsx     the sliders
-    Cursor.jsx          custom cursor
-  hooks/
-    useReveal.js        scroll-triggered reveals
-    useCountUp.js       animated numbers
-  lib/
-    score.js            the weighted model (pure)
-    select.js           filtering and sorting (pure)
-    format.js           display formatting
-    storage.js          localStorage, guarded
-  data/
-    books.js            the list itself
-    covers.js           generated, do not hand-edit
-    taxonomy.js         genres, statuses, sources, sorts
-scripts/
-  fetch-covers.mjs      cover lookup against Open Library
-```
+## Setting up sync on Vercel
 
-`score.js` and `select.js` are pure and import nothing from React, so the whole
-ranking model can be exercised from Node without a browser.
+1. Vercel project `ramyan-reads` → Storage → Marketplace → **Upstash for Redis**
+   → create (free plan) and connect it to the project. This adds
+   `KV_REST_API_URL` and `KV_REST_API_TOKEN`. (A database made directly on
+   upstash.com works too; use its `UPSTASH_REDIS_REST_URL` / `_TOKEN`.)
+2. Settings → Environment Variables → add `EDIT_KEY`, a long random string.
+3. Redeploy. Open the site, footer → Unlock to edit, paste the key.
 
-## Adding a book
+Without a database the site still works, read only, and the footer says so.
+To use the real database locally, put the same variables in `.env.local`.
 
-Append to `rawBooks` in `src/data/books.js`:
+## Adding things
+
+From the app: unlock, open a tab, press **Add**. Permanent additions belong in
+the data files: append to `media.js`, or to `rawBooks` in `books.js`:
 
 ```js
 { title:"…", author:"…", genre:"Russian", year:1880, rating:4.37,
@@ -100,35 +83,65 @@ Append to `rawBooks` in `src/data/books.js`:
   note:"…", score:96 },
 ```
 
-- `status` — `read`, `owned`, `next` or `todo`
-- `sources` — any of `gr`, `lit`, `reddit`, `sales`, `critics`, `booktok`
-- `copies` — millions sold; `words` — approximate word count
-- `score` — the hand-assigned 0–100 editorial rating
+`sources` is any of `gr`, `lit`, `reddit`, `sales`, `critics`, `booktok`;
+`score` is the hand-assigned 0-100 editorial rating. Either can be `null` when
+unknown, and that signal then drops out of the average instead of scoring zero
+(the 22 books added from the master list in October 2026 are like this). Run
+`npm run covers`, then `npm run check`.
 
-Then run `npm run covers`, which looks up only the books it has no id for and
-rewrites `src/data/covers.js`. Cover ids are committed so the app never calls
-Open Library at runtime.
+## The weighted score
 
-Genres are read from the data, so a new genre becomes a filter automatically.
-Add a `GENRE_ORDER` entry in `taxonomy.js` to place it in the row.
+Every book is reduced to ten signals, each normalised to 0-100, then combined as
+a **weighted average**, so the result stays on a 0-100 scale however the weights
+are set.
+
+| Group     | Signals                                      |
+| --------- | -------------------------------------------- |
+| Judgement | Editorial score, Goodreads rating, breadth    |
+| Taste     | /lit/, Critics, Reddit, BookTok               |
+| Reach     | Copies sold (log scale, 1M-500M)              |
+| Practical | Brevity, Recency                              |
+
+Weights live in a slide-out panel, persist per browser, and ship with five
+presets. Copies sold is log-scaled, or everything but Don Quixote sits at the
+bottom. Editorial correlates with nearly every other signal, so `Literary`
+holds it at 25 or it just reproduces `Balanced`. The breakdown in a book's
+detail reconciles to its score exactly; `npm run check` tests that.
 
 ## Design notes
 
-Dark only, deliberately. Instrument Serif for display, Space Grotesk for UI,
-JetBrains Mono for anything numeric. One accent (`--accent`) carries every
-interactive and emphatic state; all colour lives in tokens at the top of
-`styles.css`.
+Same system as Ramyan Reviews: zero chroma neutral ground, one gold accent,
+Newsreader and Work Sans, one type scale, no em dashes, all colour in tokens at
+the top of `styles.css`. Reads earns its character through density. State is
+carried by brightness, not badges: finished recedes, in progress gets the
+accent.
 
-Two traps already paid for, worth not reintroducing:
+Traps already paid for:
 
 - **`overflow-x` belongs on `html`, not `body`.** On `body` it makes body the
-  scroll container, which pins `window.scrollY` at 0 and silently breaks
-  `scrollIntoView`, sticky positioning and any viewport IntersectionObserver.
-- **Scroll reveals need a fallback.** Chrome does not run IntersectionObserver
-  callbacks in a hidden tab, so a page loaded into a background tab would sit at
-  `opacity: 0`. `useReveal` reveals unconditionally if no observer anywhere has
-  reported within 2.5s.
+  scroll container and silently breaks `scrollIntoView`, sticky positioning and
+  viewport IntersectionObservers.
+- **Chrome throttles background tabs.** Browser automation sees
+  `visibilityState: "hidden"`, so verify with DOM reads rather than screenshots
+  and avoid long waits inside one evaluation.
 
-## Deploying
+## Layout
 
-Vercel needs no configuration: Vite preset, build `npm run build`, output `dist`.
+```
+api/
+  shelf.js            Vercel function
+  _shelf.js           handler + Upstash and file stores (shared with dev)
+src/
+  App.jsx             routing, shelf, detail sheets
+  components/         NowView, PlanView, BooksView, MediaView, Editor, ...
+  lib/
+    shelf.js          sync hook
+    catalogue.js      baseline + overrides, queue ordering (pure)
+    actions.js        start, finish, +1, queue first
+    score.js          the weighted model (pure)
+    select.js         filtering and sorting (pure)
+  data/               books, media, plan, categories, covers, reviews
+scripts/
+  check.mjs           invariants
+  fetch-covers.mjs    Open Library cover lookup
+```
