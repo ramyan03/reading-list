@@ -26,7 +26,16 @@ npm run posters  # fetch posters for new non-book items (AniList, TVmaze, Wikipe
 | `#backlog` | Every category's queue and backlog, expanded, with totals         |
 | `#plan`  | The whole plan as month columns or a written list, then the Doomsday checklist |
 | `#books` | The original catalogue: covers or index, weighted score, filters    |
-| `#shows` `#films` `#anime` `#manga` `#games` `#comics` | One list per medium, grouped now / next / backlog / paused / finished |
+| `#shows` `#films` `#anime` `#manga` `#games` `#comics` | A hero for what's on the go (else next up, else top rated) with the category's numbers, then a poster grid grouped now / next / backlog / paused / finished |
+
+Books has the same hero above its scored catalogue.
+
+**Admin mode.** The Admin button in the top bar asks for the password, which is
+`EDIT_KEY`. The server checks it before the browser keeps it, and again on every
+save, so the hidden controls are a convenience and the API is the gate. Once in,
+every poster gets a progress stepper (pages step by 10), a score picker, Start
+and Finished, and the detail sheet gets a 1 to 10 rating with half points.
+Progress kept only as text ("pg 215 / 350") becomes real numbers on the first step.
 
 Reviews links here with `?q=<title>`, which opens the books tab on that search.
 
@@ -53,8 +62,8 @@ never hides a data fix. "Undo my changes" on an item deletes its record.
 
 The overrides live in one Upstash Redis hash behind `/api/shelf`
 (`api/_shelf.js`). Reading is public (the baseline is already in the public
-bundle). Writing needs `EDIT_KEY`. On each device you unlock once from the
-footer and the key is remembered there.
+bundle). Writing needs `EDIT_KEY`. On each device you sign in once with Admin
+and the key is remembered there until you lock it.
 
 The client (`src/lib/shelf.js`) renders the cached copy instantly, pulls fresh
 on load and whenever the tab comes back into view, and queues edits made offline
@@ -69,14 +78,14 @@ rejects instantly and a self-retrying flush froze the page in testing.
    `KV_REST_API_URL` and `KV_REST_API_TOKEN`. (A database made directly on
    upstash.com works too; use its `UPSTASH_REDIS_REST_URL` / `_TOKEN`.)
 2. Settings → Environment Variables → add `EDIT_KEY`, a long random string.
-3. Redeploy. Open the site, footer → Unlock to edit, paste the key.
+3. Redeploy. Open the site, Admin (top bar), enter the key.
 
 Without a database the site still works, read only, and the footer says so.
 To use the real database locally, put the same variables in `.env.local`.
 
 ## Adding things
 
-From the app: unlock, open a tab, press **Add**. Permanent additions belong in
+From the app: sign in with Admin, open a category, press **Add**. Permanent additions belong in
 the data files: append to `media.js`, or to `rawBooks` in `books.js`:
 
 ```js

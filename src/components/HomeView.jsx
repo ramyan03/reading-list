@@ -1,6 +1,7 @@
 import { CATEGORIES, category, statusLabel } from '../data/categories.js';
 import { actions } from '../lib/actions.js';
 import { monthText, progressText } from '../lib/catalogue.js';
+import { percent } from '../lib/progress.js';
 import BacklogBoard, { isBacklog } from './BacklogBoard.jsx';
 import Countdown from './Countdown.jsx';
 import HeroArt from './HeroArt.jsx';
@@ -44,19 +45,6 @@ function Mood({ items }) {
       </div>
     </section>
   );
-}
-
-/**
- * How far through, from progress and total when both are known, otherwise
- * read out of the free text: "pg 215 / 350" or "About 20% in".
- */
-function percent(item) {
-  if (item.total) return Math.min(100, Math.round(((item.progress ?? 0) / item.total) * 100));
-  const at = item.at ?? '';
-  const frac = at.match(/(\d+)\s*\/\s*(\d+)/);
-  if (frac && Number(frac[2])) return Math.min(100, Math.round((Number(frac[1]) / Number(frac[2])) * 100));
-  const pc = at.match(/(\d+)\s*%/);
-  return pc ? Math.min(100, Number(pc[1])) : null;
 }
 
 function MediaCard({ item, onOpen, act, canEdit }) {

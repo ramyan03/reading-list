@@ -18,6 +18,11 @@ const PATHS = {
   check: 'M5 12.5l4.5 4.5L19 7.5',
   clock: 'M12 3a9 9 0 110 18 9 9 0 010-18zM12 7v5l3 2',
   more: 'M12 5h.01M12 12h.01M12 19h.01',
+  minus: 'M5 12h14',
+  lock: 'M6 11h12a1 1 0 011 1v8a1 1 0 01-1 1H6a1 1 0 01-1-1v-8a1 1 0 011-1zM8 11V7a4 4 0 018 0v4',
+  unlock: 'M6 11h12a1 1 0 011 1v8a1 1 0 01-1 1H6a1 1 0 01-1-1v-8a1 1 0 011-1zM8 11V7a4 4 0 017.6-1.7',
+  star: 'M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z',
+  play: 'M8 5.5v13l10.5-6.5z',
 };
 
 export function Icon({ name, size = 20, className, strokeWidth = 1.75 }) {

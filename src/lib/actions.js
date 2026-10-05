@@ -2,6 +2,7 @@
 // lists and the detail sheet all behave the same.
 
 import { frontOfQueue, thisMonth } from './catalogue.js';
+import { atIsJustCount, currentProgress, currentTotal } from './progress.js';
 
 export function actions(shelf, items) {
   const backOfQueue = (cat) =>
@@ -22,8 +23,14 @@ export function actions(shelf, items) {
     finish: (item) => setStatus(item, 'done'),
     queueFirst: (item) => shelf.patch(item.id, { status: 'next', order: frontOfQueue(items, item.cat) }),
     bump: (item, by = 1) => {
-      const progress = Math.max(0, (item.progress ?? 0) + by);
-      shelf.patch(item.id, { progress: item.total ? Math.min(progress, item.total) : progress });
+      // A count kept only as text ("pg 215 / 350") becomes real numbers on the
+      // first step, and the text goes if it said nothing else.
+      const total = currentTotal(item);
+      const raw = Math.max(0, currentProgress(item) + by);
+      const fields = { progress: total ? Math.min(raw, total) : raw };
+      if (!item.total && total) fields.total = total;
+      if (item.progress == null && atIsJustCount(item.at)) fields.at = undefined;
+      shelf.patch(item.id, fields);
     },
     set: (item, fields) => shelf.patch(item.id, fields),
     /** Back to exactly what the data files say, or gone if it was added here. */

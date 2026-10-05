@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import { category } from '../data/categories.js';
 import { selectBooks } from '../lib/select.js';
+import { actions } from '../lib/actions.js';
 import AddItem from './AddItem.jsx';
-import BookCard from './BookCard.jsx';
 import BookRow from './BookRow.jsx';
+import CategoryHero from './CategoryHero.jsx';
 import Controls from './Controls.jsx';
+import PosterTile from './PosterTile.jsx';
 import WeightPanel from './WeightPanel.jsx';
 
 const initialFilters = {
@@ -39,9 +41,14 @@ export default function BooksView({ books, weights, setWeights, onOpen, shelf })
   const update = (patch) => setFilters((f) => ({ ...f, ...patch }));
 
   const visible = useMemo(() => selectBooks(books, filters), [books, filters]);
+  const act = actions(shelf, books);
 
   return (
     <>
+      <div className="cat-page is-top">
+        <CategoryHero cat={category('book')} mine={books} onOpen={onOpen} act={act} canEdit={shelf.canEdit} />
+      </div>
+
       <Controls
         state={filters}
         update={update}
@@ -64,9 +71,9 @@ export default function BooksView({ books, weights, setWeights, onOpen, shelf })
             </button>
           </p>
         ) : view === 'grid' ? (
-          <div className="grid">
+          <div className="tiles">
             {visible.map((b) => (
-              <BookCard key={b.id} book={b} onOpen={onOpen} />
+              <PosterTile key={b.id} item={b} onOpen={onOpen} act={act} canEdit={shelf.canEdit} sub={`Score ${b.weighted.toFixed(0)}`} />
             ))}
           </div>
         ) : (

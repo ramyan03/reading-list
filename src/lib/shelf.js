@@ -85,7 +85,7 @@ export function useShelf() {
       if (res.status === 401) {
         setEditKey(null);
         write(KEY, null);
-        setError('The edit key was rejected. Unlock again to keep editing.');
+        setError('The admin password was rejected. Sign in again to keep editing.');
         setSync('offline');
         return;
       }
@@ -180,7 +180,7 @@ export function useShelf() {
         body: JSON.stringify({ changes: {} }),
       }).catch(() => null);
       if (!res) return 'Could not reach the server.';
-      if (res.status === 401) return 'That key is wrong.';
+      if (res.status === 401) return 'Wrong password.';
       if (!res.ok) return (await res.json().catch(() => ({}))).error || `Server said ${res.status}.`;
       write(KEY, key);
       keyRef.current = key;

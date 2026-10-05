@@ -28,7 +28,7 @@ const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
  * theme switch. Search opens the detail sheet directly, so finding a thing and
  * logging an episode of it is two taps from any page.
  */
-export default function TopBar({ route, items, onOpen }) {
+export default function TopBar({ route, items, onOpen, shelf, onAdmin }) {
   const [theme, setTheme] = useState(currentTheme);
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
@@ -161,6 +161,17 @@ export default function TopBar({ route, items, onOpen }) {
             </ul>
           )}
         </div>
+
+        <button
+          type="button"
+          className={`admin-button${shelf.canEdit ? ' is-on' : ''}`}
+          onClick={onAdmin}
+          aria-label={shelf.canEdit ? 'Admin mode on' : 'Admin sign in'}
+          title={shelf.canEdit ? 'Admin mode on' : 'Admin'}
+        >
+          <Icon name={shelf.canEdit ? 'unlock' : 'lock'} size={16} />
+          <span>{shelf.canEdit ? 'Editing' : 'Admin'}</span>
+        </button>
 
         <button type="button" className="icon-button" onClick={toggleTheme} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
           <Icon name={theme === 'light' ? 'moon' : 'sun'} size={18} />

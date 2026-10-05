@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import AdminGate from './components/AdminGate.jsx';
 import BacklogBoard from './components/BacklogBoard.jsx';
 import BookDetail from './components/BookDetail.jsx';
 import BooksView from './components/BooksView.jsx';
@@ -37,6 +38,9 @@ export default function App() {
   const [route, setRoute] = useState(readRoute);
   const [weights, setWeights] = useState(() => ({ ...DEFAULT_WEIGHTS, ...loadWeights({}) }));
   const [openId, setOpenId] = useState(null);
+  const [gate, setGate] = useState(false);
+  const openGate = useCallback(() => setGate(true), []);
+  const closeGate = useCallback(() => setGate(false), []);
   const shelf = useShelf();
 
   useEffect(() => saveWeights(weights), [weights]);
@@ -77,10 +81,11 @@ export default function App() {
 
   return (
     <>
-      <TopBar route={section} items={items} onOpen={open} />
+      <TopBar route={section} items={items} onOpen={open} shelf={shelf} onAdmin={openGate} />
       {section === 'backlog' && <CatNav route={route} />}
       {view}
-      <Footer shelf={shelf} />
+      <Footer shelf={shelf} onAdmin={openGate} />
+      <AdminGate open={gate} onClose={closeGate} shelf={shelf} />
 
       {openItem?.cat === 'book' ? (
         <BookDetail book={openItem} weights={weights} onClose={close} shelf={shelf} items={items} />

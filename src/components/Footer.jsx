@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { REVIEWS_ORIGIN } from '../data/reviews.js';
 
 const SYNC_TEXT = {
@@ -9,29 +8,8 @@ const SYNC_TEXT = {
   local: 'Read only: no database connected',
 };
 
-/**
- * Sync state and the edit key. Unlocking is per device: the key is checked
- * against the server once and then remembered in this browser.
- */
-export default function Footer({ shelf }) {
-  const [unlocking, setUnlocking] = useState(false);
-  const [key, setKey] = useState('');
-  const [error, setError] = useState(null);
-  const [busy, setBusy] = useState(false);
-
-  const submit = async (e) => {
-    e.preventDefault();
-    setBusy(true);
-    const err = await shelf.unlock(key.trim());
-    setBusy(false);
-    if (err) setError(err);
-    else {
-      setUnlocking(false);
-      setKey('');
-      setError(null);
-    }
-  };
-
+/** Sync state, and a second way into admin mode (the first is the top bar). */
+export default function Footer({ shelf, onAdmin }) {
   return (
     <footer className="foot">
       <span>Ramyan Reads</span>
@@ -43,31 +21,9 @@ export default function Footer({ shelf }) {
       </span>
 
       <span className="foot-edit">
-        {shelf.canEdit ? (
-          <button type="button" onClick={shelf.lock}>
-            Lock editing
-          </button>
-        ) : unlocking ? (
-          <form onSubmit={submit} className="unlock">
-            <input
-              type="password"
-              value={key}
-              onChange={(e) => setKey(e.target.value)}
-              placeholder="Edit key"
-              aria-label="Edit key"
-              autoComplete="current-password"
-              autoFocus
-            />
-            <button type="submit" disabled={busy || !key.trim()}>
-              {busy ? 'Checking' : 'Unlock'}
-            </button>
-            {error && <span className="foot-error">{error}</span>}
-          </form>
-        ) : (
-          <button type="button" onClick={() => setUnlocking(true)}>
-            Unlock to edit
-          </button>
-        )}
+        <button type="button" onClick={onAdmin}>
+          {shelf.canEdit ? 'Admin mode on' : 'Admin'}
+        </button>
       </span>
 
       <span>
