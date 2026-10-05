@@ -25,7 +25,7 @@ export default function Poster({ item, size, className = '', showTitle = true })
         <img src={src} alt="" loading="lazy" decoding="async" onError={() => setFailed(true)} />
       ) : (
         <>
-          <AbstractArt id={item.id} color={cat?.color} />
+          <AbstractArt item={item} />
           {showTitle && (
             <span className="poster-fallback">
               <Icon name={item.cat} size={18} />

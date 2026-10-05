@@ -14,6 +14,7 @@
 // finished YYYY-MM
 // order    position in the up next queue (lower first)
 // project  groups items into a plan, e.g. "doomsday"
+// imdb     rank on IMDb's Top 250 TV, for shows added from it
 // note     why it's on the list; mine = a personal note from the log
 
 export const media = [
@@ -84,6 +85,52 @@ export const media = [
   { id:"show-true-detective-s1", cat:"show", title:"True Detective S1", status:"done", myScore:10 },
   { id:"show-twin-peaks-s3", cat:"show", title:"Twin Peaks S3", status:"backlog", tier:"good", hrs:18, note:"A masterpiece. Watch S1-2 first." },
   { id:"show-victorious", cat:"show", title:"Victorious", status:"done", myScore:7 },
+
+  // From IMDb's Top 250 TV (October 2026): scripted shows not already
+  // tracked, picked for taste. imdb = chart rank.
+  { id:"show-the-twilight-zone", cat:"show", title:"The Twilight Zone", status:"backlog", tier:"good", hrs:65, imdb:20, note:"IMDb Top 250 TV #20. Anthology, so pick the famous episodes rather than going in order." },
+  { id:"show-rick-and-morty", cat:"show", title:"Rick and Morty", status:"backlog", tier:"good", hrs:33, imdb:22, note:"IMDb Top 250 TV #22. Best in short bursts. Seasons 1 to 3 are the peak." },
+  { id:"show-batman-the-animated-series", cat:"show", title:"Batman: The Animated Series", status:"backlog", tier:"good", hrs:31, imdb:24, note:"IMDb Top 250 TV #24. The definitive Batman. Episodic, easy to dip into." },
+  { id:"show-the-office", cat:"show", title:"The Office", status:"backlog", tier:"burner", hrs:60, imdb:26, note:"IMDb Top 250 TV #26. US version. Skip ahead past season 1 if it drags." },
+  { id:"show-firefly", cat:"show", title:"Firefly", status:"backlog", tier:"must", hrs:11, imdb:39, note:"IMDb Top 250 TV #39. One season and a film (Serenity). Space western." },
+  { id:"show-the-pitt", cat:"show", title:"The Pitt", status:"backlog", tier:"good", hrs:34, imdb:41, note:"IMDb Top 250 TV #41. Real-time ER drama, one hour per shift." },
+  { id:"show-dekalog", cat:"show", title:"Dekalog", status:"backlog", tier:"good", hrs:9, imdb:46, note:"IMDb Top 250 TV #46. Kieslowski's ten one-hour films on the commandments." },
+  { id:"show-seinfeld", cat:"show", title:"Seinfeld", status:"backlog", tier:"burner", hrs:50, imdb:47, note:"IMDb Top 250 TV #47. The sitcom everything else borrows from." },
+  { id:"show-fargo", cat:"show", title:"Fargo", status:"backlog", tier:"must", hrs:45, imdb:52, note:"IMDb Top 250 TV #52. Anthology. Seasons 1 and 2 first." },
+  { id:"show-the-west-wing", cat:"show", title:"The West Wing", status:"backlog", tier:"burner", hrs:110, imdb:57, note:"IMDb Top 250 TV #57. Sorkin at his best for the first four seasons." },
+  { id:"show-when-life-gives-you-tangerines", cat:"show", title:"When Life Gives You Tangerines", status:"backlog", tier:"good", hrs:16, imdb:59, note:"IMDb Top 250 TV #59. Korean family drama across four seasons of a life." },
+  { id:"show-when-they-see-us", cat:"show", title:"When They See Us", status:"backlog", tier:"must", hrs:5, imdb:61, note:"IMDb Top 250 TV #61. Four episodes. Hard watch, essential." },
+  { id:"show-it-s-always-sunny-in-philadelphia", cat:"show", title:"It's Always Sunny in Philadelphia", status:"backlog", tier:"burner", hrs:70, imdb:62, note:"IMDb Top 250 TV #62. Terrible people, very funny. Any season works." },
+  { id:"show-curb-your-enthusiasm", cat:"show", title:"Curb Your Enthusiasm", status:"backlog", tier:"burner", hrs:55, imdb:68, note:"IMDb Top 250 TV #68. Larry David from Seinfeld. Fully improvised." },
+  { id:"show-das-boot", cat:"show", title:"Das Boot", status:"backlog", tier:"good", hrs:5, imdb:70, note:"IMDb Top 250 TV #70. The 1985 miniseries cut of the U-boat classic." },
+  { id:"show-freaks-and-geeks", cat:"show", title:"Freaks and Geeks", status:"backlog", tier:"must", hrs:13, imdb:79, note:"IMDb Top 250 TV #79. One season, cancelled too early. Perfect." },
+  { id:"show-twin-peaks", cat:"show", title:"Twin Peaks", status:"backlog", tier:"must", hrs:23, imdb:81, note:"IMDb Top 250 TV #81. The original two seasons. Watch before Twin Peaks S3." },
+  { id:"show-reply-1988", cat:"show", title:"Reply 1988", status:"backlog", tier:"good", hrs:30, imdb:82, note:"IMDb Top 250 TV #82. Korean coming-of-age in a Seoul alley in 1988." },
+  { id:"show-over-the-garden-wall", cat:"show", title:"Over the Garden Wall", status:"backlog", tier:"must", hrs:2, imdb:89, note:"IMDb Top 250 TV #89. Ten short episodes. Ideal for October." },
+  { id:"show-my-mister", cat:"show", title:"My Mister", status:"backlog", tier:"good", hrs:20, imdb:90, note:"IMDb Top 250 TV #90. Quiet Korean drama about two worn-down people." },
+  { id:"show-black-mirror", cat:"show", title:"Black Mirror", status:"backlog", tier:"must", hrs:35, imdb:91, note:"IMDb Top 250 TV #91. Anthology. Start with season 3 or 4." },
+  { id:"show-rome", cat:"show", title:"Rome", status:"backlog", tier:"good", hrs:20, imdb:97, note:"IMDb Top 250 TV #97. HBO, two seasons. Caesar to Augustus." },
+  { id:"show-the-shield", cat:"show", title:"The Shield", status:"backlog", tier:"burner", hrs:65, imdb:103, note:"IMDb Top 250 TV #103. Corrupt-cop drama. Has one of TV's best endings." },
+  { id:"show-battlestar-galactica", cat:"show", title:"Battlestar Galactica", status:"backlog", tier:"good", hrs:60, imdb:106, note:"IMDb Top 250 TV #106. The 2004 reboot. Start with the miniseries." },
+  { id:"show-x-men-97", cat:"show", title:"X-Men '97", status:"backlog", tier:"good", hrs:8, imdb:107, note:"IMDb Top 250 TV #107. Picks up the 90s cartoon. Very good for MCU fans." },
+  { id:"show-mad-men", cat:"show", title:"Mad Men", status:"backlog", tier:"good", hrs:70, imdb:109, note:"IMDb Top 250 TV #109. Slow-burn prestige drama. Rewards patience." },
+  { id:"show-peep-show", cat:"show", title:"Peep Show", status:"backlog", tier:"good", hrs:22, imdb:110, note:"IMDb Top 250 TV #110. British cringe comedy in first person." },
+  { id:"show-blue-eye-samurai", cat:"show", title:"Blue Eye Samurai", status:"backlog", tier:"must", hrs:6, imdb:112, note:"IMDb Top 250 TV #112. Gorgeous animated revenge story, 8 episodes a season." },
+  { id:"show-line-of-duty", cat:"show", title:"Line of Duty", status:"backlog", tier:"good", hrs:40, imdb:118, note:"IMDb Top 250 TV #118. British police anti-corruption thriller." },
+  { id:"show-arrested-development", cat:"show", title:"Arrested Development", status:"backlog", tier:"good", hrs:30, imdb:125, note:"IMDb Top 250 TV #125. Seasons 1 to 3 are the classic run." },
+  { id:"show-mr-inbetween", cat:"show", title:"Mr Inbetween", status:"backlog", tier:"good", hrs:11, imdb:127, note:"IMDb Top 250 TV #127. Half-hour Aussie hitman drama. Short and sharp." },
+  { id:"show-the-thick-of-it", cat:"show", title:"The Thick of It", status:"backlog", tier:"good", hrs:12, imdb:133, note:"IMDb Top 250 TV #133. Political satire, before Veep." },
+  { id:"show-deadwood", cat:"show", title:"Deadwood", status:"backlog", tier:"good", hrs:32, imdb:142, note:"IMDb Top 250 TV #142. HBO western. Then the film." },
+  { id:"show-atlanta", cat:"show", title:"Atlanta", status:"backlog", tier:"good", hrs:18, imdb:145, note:"IMDb Top 250 TV #145. Donald Glover. Surreal and very funny." },
+  { id:"show-daredevil", cat:"show", title:"Daredevil", status:"backlog", tier:"good", hrs:40, imdb:146, note:"IMDb Top 250 TV #146. Netflix Marvel. Season 1 is the best." },
+  { id:"show-mindhunter", cat:"show", title:"Mindhunter", status:"backlog", tier:"must", hrs:17, imdb:148, note:"IMDb Top 250 TV #148. Fincher. Two seasons, FBI profilers in the 70s." },
+  { id:"show-it-s-a-sin", cat:"show", title:"It's a Sin", status:"backlog", tier:"good", hrs:4, imdb:151, note:"IMDb Top 250 TV #151. Five episodes. London in the 80s." },
+  { id:"show-justified", cat:"show", title:"Justified", status:"backlog", tier:"burner", hrs:57, imdb:185, note:"IMDb Top 250 TV #185. Elmore Leonard's US Marshal in Kentucky." },
+  { id:"show-what-we-do-in-the-shadows", cat:"show", title:"What We Do in the Shadows", status:"backlog", tier:"good", hrs:23, imdb:196, note:"IMDb Top 250 TV #196. Vampire mockumentary. Season 1 onward is gold." },
+  { id:"show-detectorists", cat:"show", title:"Detectorists", status:"backlog", tier:"good", hrs:9, imdb:201, note:"IMDb Top 250 TV #201. Gentle, funny, beautiful. Metal detecting." },
+  { id:"show-the-it-crowd", cat:"show", title:"The IT Crowd", status:"backlog", tier:"good", hrs:10, imdb:204, note:"IMDb Top 250 TV #204. Short British sitcom, easy to binge." },
+  { id:"show-derry-girls", cat:"show", title:"Derry Girls", status:"backlog", tier:"good", hrs:8, imdb:210, note:"IMDb Top 250 TV #210. Northern Ireland in the 90s. Three short seasons." },
+  { id:"show-happy-valley", cat:"show", title:"Happy Valley", status:"backlog", tier:"good", hrs:17, imdb:211, note:"IMDb Top 250 TV #211. Sarah Lancashire. British crime at its best." },
 
   // FILM
   { id:"film-captain-america-brave-new-world", cat:"film", title:"Captain America: Brave New World", status:"done", project:"doomsday", note:"Sam Wilson as Cap." },
