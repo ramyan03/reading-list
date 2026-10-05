@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "covers": "node scripts/fetch-covers.mjs",
+    "posters": "node scripts/fetch-posters.mjs",
     "check": "node scripts/check.mjs"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 import { category, shelfLabel, tierLabel } from '../data/categories.js';
 import { monthText, progressText } from '../lib/catalogue.js';
+import Poster from './Poster.jsx';
 
 /**
  * One item as a line of text: the shape shared by the Now page and every
@@ -28,6 +29,7 @@ export default function ItemLine({ item, onOpen, kicker, rank, children }) {
     <article className={`line is-${item.status}`}>
       <button type="button" className="line-hit" onClick={() => onOpen(item)}>
         {rank != null && <span className="line-rank">{rank}</span>}
+        <Poster item={item} size="S" className="is-thumb" showTitle={false} />
         <span className="line-main">
           {kicker && <span className="line-kicker">{kicker}</span>}
           <span className="line-title">{item.title}</span>

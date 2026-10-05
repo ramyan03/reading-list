@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import BacklogBoard from './components/BacklogBoard.jsx';
 import BookDetail from './components/BookDetail.jsx';
 import BooksView from './components/BooksView.jsx';
+import CatNav from './components/CatNav.jsx';
 import Footer from './components/Footer.jsx';
+import HomeView from './components/HomeView.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
-import Masthead from './components/Masthead.jsx';
 import MediaView from './components/MediaView.jsx';
-import Nav from './components/Nav.jsx';
-import NowView from './components/NowView.jsx';
 import PlanView from './components/PlanView.jsx';
+import TopBar from './components/TopBar.jsx';
 import { books as rawBooks } from './data/books.js';
 import { categoryByRoute } from './data/categories.js';
 import { media } from './data/media.js';
@@ -17,9 +18,9 @@ import { useShelf } from './lib/shelf.js';
 import { loadWeights, saveWeights } from './lib/storage.js';
 
 /**
- * Routes live in the hash (#now, #plan, #books, #anime...) so the phone's back
- * button and home-screen bookmarks work without any server rewrites. Reviews
- * links here with ?q=<title>, which always means the books tab.
+ * Routes live in the hash (#now, #backlog, #plan, #books, #anime...) so the
+ * phone's back button and home-screen bookmarks work without any server
+ * rewrites. Reviews links here with ?q=<title>, which always means books.
  */
 function readRoute() {
   const hash = location.hash.replace(/^#\/?/, '');
@@ -58,21 +59,26 @@ export default function App() {
   const openItem = openId && (books.find((b) => b.id === openId) ?? items.find((i) => i.id === openId));
 
   const cat = categoryByRoute(route);
+  const section = route === 'plan' ? 'plan' : route === 'backlog' || cat ? 'backlog' : 'now';
   const view =
     route === 'plan' ? (
       <PlanView items={items} onOpen={open} />
+    ) : route === 'backlog' ? (
+      <main className="page">
+        <BacklogBoard items={items} onOpen={open} title="Backlog" subtitle="Everything queued or waiting, by category." startOpen />
+      </main>
     ) : route === 'books' ? (
       <BooksView books={books} weights={weights} setWeights={setWeights} onOpen={open} shelf={shelf} />
     ) : cat ? (
       <MediaView key={cat.id} cat={cat} items={items} onOpen={open} shelf={shelf} />
     ) : (
-      <NowView items={items} onOpen={open} shelf={shelf} />
+      <HomeView items={items} onOpen={open} shelf={shelf} />
     );
 
   return (
     <>
-      <Masthead items={items} compact={route !== 'now'} />
-      <Nav route={cat || route === 'plan' || route === 'books' ? route : 'now'} />
+      <TopBar route={section} items={items} onOpen={open} />
+      {section === 'backlog' && <CatNav route={route} />}
       {view}
       <Footer shelf={shelf} />
 

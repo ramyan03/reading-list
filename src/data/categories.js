@@ -1,13 +1,14 @@
-// The kinds of thing tracked, and the words each one uses.
+// The kinds of thing tracked, the words each one uses, and its colour on the
+// home page cards, progress bars and kickers.
 
 export const CATEGORIES = [
-  { id: 'book', label: 'Books', one: 'Book', active: 'Reading', unit: 'pages', route: 'books' },
-  { id: 'show', label: 'Shows', one: 'Show', active: 'Watching', unit: 'eps', route: 'shows' },
-  { id: 'film', label: 'Films', one: 'Film', active: 'Watching', unit: null, route: 'films' },
-  { id: 'anime', label: 'Anime', one: 'Anime', active: 'Watching', unit: 'eps', route: 'anime' },
-  { id: 'manga', label: 'Manga', one: 'Manga', active: 'Reading', unit: 'ch', route: 'manga' },
-  { id: 'game', label: 'Games', one: 'Game', active: 'Playing', unit: null, route: 'games' },
-  { id: 'comic', label: 'Comics', one: 'Comic', active: 'Reading', unit: 'issues', route: 'comics' },
+  { id: 'book', label: 'Books', one: 'Book', active: 'Reading', unit: 'pages', route: 'books', color: '#3b6fe0' },
+  { id: 'show', label: 'Shows', one: 'Show', active: 'Watching', unit: 'eps', route: 'shows', color: '#7656e3' },
+  { id: 'film', label: 'Films', one: 'Film', active: 'Watching', unit: null, route: 'films', color: '#5f6f8a' },
+  { id: 'anime', label: 'Anime', one: 'Anime', active: 'Watching', unit: 'eps', route: 'anime', color: '#1fa394' },
+  { id: 'manga', label: 'Manga', one: 'Manga', active: 'Reading', unit: 'ch', route: 'manga', color: '#e0506a' },
+  { id: 'game', label: 'Games', one: 'Game', active: 'Playing', unit: null, route: 'games', color: '#e2733a' },
+  { id: 'comic', label: 'Comics', one: 'Comic', active: 'Reading', unit: 'issues', route: 'comics', color: '#d9a823' },
 ];
 
 export const category = (id) => CATEGORIES.find((c) => c.id === id);

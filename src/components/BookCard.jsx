@@ -1,5 +1,5 @@
-import { coverUrl } from '../data/covers.js';
 import { hasReview } from '../data/reviews.js';
+import Poster from './Poster.jsx';
 
 /**
  * One book in the catalogue.
@@ -14,7 +14,6 @@ import { hasReview } from '../data/reviews.js';
 const STATE_LABEL = { active: 'Reading', next: 'Up next', paused: 'Paused' };
 
 export default function BookCard({ book, onOpen }) {
-  const src = coverUrl(book.coverId, 'M');
   const label = STATE_LABEL[book.status];
   const reviewed = hasReview(book.id);
 
@@ -25,13 +24,7 @@ export default function BookCard({ book, onOpen }) {
       </button>
 
       <div className="book-art">
-        {src ? (
-          <img src={src} alt="" loading="lazy" decoding="async" />
-        ) : (
-          <div className="book-art-fallback">
-            <span>{book.title}</span>
-          </div>
-        )}
+        <Poster item={book} size="M" className="is-fill" />
       </div>
 
       <div className="book-meta">

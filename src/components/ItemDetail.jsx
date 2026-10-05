@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { category, tierLabel } from '../data/categories.js';
 import { progressText } from '../lib/catalogue.js';
 import Editor from './Editor.jsx';
+import Poster from './Poster.jsx';
 
 /** Detail sheet for anything that is not a book. */
 export default function ItemDetail({ item, onClose, shelf, items }) {
@@ -33,6 +34,7 @@ export default function ItemDetail({ item, onClose, shelf, items }) {
           Close
         </button>
 
+        <Poster item={item} size="L" className="detail-poster" showTitle={false} />
         <p className="detail-genre">{cat.one}</p>
         <h2 className="detail-title">{item.title}</h2>
         {item.note && <p className="detail-note">{item.note}</p>}

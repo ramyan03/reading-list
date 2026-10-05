@@ -1,70 +1,68 @@
 /* ==========================================================================
    Tokens
    --------------------------------------------------------------------------
-   Deliberately the same vocabulary as Ramyan Reviews: a zero chroma neutral
-   ground, one restrained gold accent, and nothing else carrying colour. The two
-   sites are not meant to look identical, but they are meant to be obviously by
-   the same hand, and a shared palette and type system does that far more
-   quietly than shared components would.
-
-   Reads earns its own character through density rather than through colour. It
-   is the utility half of the pair: more information per screen, smaller type,
-   tighter rhythm. Reviews is the magazine.
+   Dark first: a deep blue-black ground, raised surfaces a step lighter, and
+   colour coming from the media itself (posters) and from each category's own
+   hue (categories.js). The accent is a cool periwinkle used for focus, the
+   current tab and links. Light mode keeps every role, inverted.
    ========================================================================== */
 
 :root {
   color-scheme: dark;
 
-  --ink: #0f0f0f;
-  --surface: #161616;
-  --rule: #2a2a2a;
-  --rule-soft: #1f1f1f;
+  --bg: #0b0f17;
+  --ink: var(--bg);
+  --surface: #121722;
+  --surface-2: #171d2a;
+  --rule: #252c3a;
+  --rule-soft: #1b2130;
 
-  --fg-bright: #f2f0ed;
-  --fg-title: #e6e3df;
-  --fg: #c9c6c1;
-  --fg-muted: #8f8c87;
-  --fg-faint: #6e6b67;
-  --fg-dim: #575450;
+  --fg-bright: #f4f6fb;
+  --fg-title: #e8ebf2;
+  --fg: #c3c8d3;
+  --fg-muted: #8d94a3;
+  --fg-faint: #6d7484;
+  --fg-dim: #545b6a;
 
-  --accent: #c9a15a;
+  --accent: #8f9bff;
+  --shadow: 0 10px 30px -12px rgb(0 0 0 / 0.6);
 
-  --font-serif: Newsreader, Georgia, "Times New Roman", serif;
-  --font-sans: "Work Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-sans);
 
-  /* One scale, shared with Reviews. Nothing uses an arbitrary pixel value. */
   --text-xs: 12px;
   --text-sm: 14px;
   --text-base: 16px;
   --text-lg: 19px;
-  --text-xl: 28px;
-  --text-2xl: 44px;
-  --text-display: clamp(40px, 7vw, 86px);
+  --text-xl: 24px;
+  --text-2xl: 40px;
+  --text-display: clamp(36px, 5.4vw, 64px);
 
-  --gutter: clamp(1.25rem, 4vw, 4.5rem);
-  --max: 1420px;
-  --nav-h: 46px;
+  --radius: 10px;
+  --gutter: clamp(1rem, 4vw, 4rem);
+  --max: 1320px;
+  --nav-h: 60px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    color-scheme: light;
+:root[data-theme="light"] {
+  color-scheme: light;
 
-    --ink: #f8f7f5;
-    --surface: #ffffff;
-    --rule: #dedbd6;
-    --rule-soft: #eae7e2;
+  --bg: #f5f6f9;
+  --surface: #ffffff;
+  --surface-2: #eef0f5;
+  --rule: #dcdfe7;
+  --rule-soft: #e7e9ef;
 
-    --fg-bright: #1a1a18;
-    --fg-title: #22201e;
-    --fg: #3a3835;
-    --fg-muted: #6b6862;
-    --fg-faint: #85817b;
-    --fg-dim: #9a968f;
+  --fg-bright: #0f1320;
+  --fg-title: #161b29;
+  --fg: #353b4a;
+  --fg-muted: #5f6676;
+  --fg-faint: #7c8392;
+  --fg-dim: #9aa0ad;
 
-    --accent: #8a6520;
-  }
+  --accent: #4b55d6;
+  --shadow: 0 10px 30px -14px rgb(20 30 60 / 0.25);
 }
 
 *,
@@ -147,7 +145,7 @@ button {
   font-family: var(--font-serif);
   font-size: var(--text-display);
   font-weight: 500;
-  font-style: italic;
+  font-style: normal;
   line-height: 0.95;
   letter-spacing: -0.02em;
   color: var(--fg-bright);
@@ -418,7 +416,7 @@ button {
   padding: 0.9rem;
   text-align: center;
   font-family: var(--font-serif);
-  font-style: italic;
+  font-style: normal;
   font-size: var(--text-base);
   line-height: 1.2;
   color: var(--fg-faint);
@@ -664,7 +662,7 @@ button {
   font-family: var(--font-serif);
   font-size: var(--text-xl);
   font-weight: 500;
-  font-style: italic;
+  font-style: normal;
   color: var(--fg-bright);
 }
 
@@ -914,7 +912,7 @@ input[type="range"]::-moz-range-thumb {
   font-family: var(--font-serif);
   font-size: var(--text-xl);
   font-weight: 500;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--fg-bright);
@@ -1114,7 +1112,7 @@ input[type="range"]::-moz-range-thumb {
   padding: 5rem 0;
   text-align: center;
   font-family: var(--font-serif);
-  font-style: italic;
+  font-style: normal;
   font-size: var(--text-lg);
   color: var(--fg-faint);
 }
@@ -1234,7 +1232,7 @@ input[type="range"]::-moz-range-thumb {
   font-family: var(--font-serif);
   font-size: var(--text-xl);
   font-weight: 500;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.15;
   color: var(--fg-bright);
   margin-bottom: 0.85rem;

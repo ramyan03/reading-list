@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { coverUrl } from '../data/covers.js';
+import Poster from './Poster.jsx';
 import { reviewUrl } from '../data/reviews.js';
 import { genreLabel, sources as SOURCES } from '../data/taxonomy.js';
 import { breakdown } from '../lib/score.js';
@@ -25,7 +25,6 @@ export default function BookDetail({ book, weights, onClose, shelf, items }) {
   // Signals with no data drop out of the average, so out of the total too.
   const weightSum = rows.filter((r) => !r.missing).reduce((n, r) => n + r.weight, 0);
   const anyMissing = rows.some((r) => r.missing);
-  const src = coverUrl(book.coverId, 'L');
   const review = reviewUrl(book.id);
 
   return (
@@ -39,13 +38,7 @@ export default function BookDetail({ book, weights, onClose, shelf, items }) {
 
         <div className="detail-top">
           <div className="detail-art">
-            {src ? (
-              <img src={src} alt="" />
-            ) : (
-              <div className="book-art-fallback">
-                <span>{book.title}</span>
-              </div>
-            )}
+            <Poster item={book} size="L" className="is-fill" />
           </div>
 
           <div className="detail-head">
