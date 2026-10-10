@@ -2,7 +2,8 @@
 //
 // Each line names the items it covers by id, so the plan ticks itself off as
 // things are finished in the app. Edit the words here; the done state comes
-// from the shelf.
+// from the shelf. Book lines can carry words and go (GO train days), and any
+// line a flag, the small warning chip on the timeline page.
 
 export const DOOMSDAY = {
   title: 'Avengers: Doomsday',
@@ -19,8 +20,12 @@ export const PLAN = [
       {
         label: 'October 2026',
         lines: [
-          { cat: 'book', text: 'Finish P&P, then Norwegian Wood, then The Stranger', note: 'GO train reads',
-            ids: ['pride-and-prejudice-jane-austen', 'norwegian-wood-haruki-murakami', 'the-stranger-albert-camus'] },
+          { cat: 'book', text: 'Of Mice and Men', note: 'This week', words: '30k', go: 1.5, ids: ['of-mice-and-men-john-steinbeck'] },
+          { cat: 'book', text: 'Red Rising', note: 'Book 1, reading with friends', words: '128k', go: 6, ids: ['red-rising-pierce-brown'] },
+          { cat: 'book', text: 'And Then There Were None', note: 'Filler', words: '66k', go: 3, ids: ['and-then-there-were-none-agatha-christie'] },
+          { cat: 'book', text: 'East of Eden', note: 'The anchor', words: '265k', go: 12, ids: ['east-of-eden-john-steinbeck'] },
+          { cat: 'book', text: "Charlotte's Web", note: 'Home read', words: '31k', ids: ['charlotte-s-web-e-b-white'] },
+          { cat: 'book', text: 'Hamlet', note: 'Home read', words: '30k', ids: ['hamlet-william-shakespeare'] },
           { cat: 'anime', text: 'Finish FMAB by end of month', note: '~32 eps left, 3 to 4 a week',
             ids: ['anime-fullmetal-alchemist-brotherhood'] },
           { cat: 'show', text: 'Fleabag, one weekend', note: '12 eps, ~5h', ids: ['show-fleabag'] },
@@ -32,8 +37,9 @@ export const PLAN = [
       {
         label: 'November 2026',
         lines: [
-          { cat: 'book', text: 'Of Mice and Men, then Children of Dune, then start Crime and Punishment', note: 'GO train',
-            ids: ['of-mice-and-men-john-steinbeck', 'children-of-dune-frank-herbert'] },
+          { cat: 'book', text: 'Children of Dune', words: '88k left', go: 4, flag: 'Before Dec 18 🪐', ids: ['children-of-dune-frank-herbert'] },
+          { cat: 'book', text: 'The Book Thief', words: '120k', go: 6, ids: ['the-book-thief-markus-zusak'] },
+          { cat: 'book', text: 'Things Fall Apart', note: 'Filler', words: '60k', go: 3, ids: ['things-fall-apart-chinua-achebe'] },
           { cat: 'show', text: 'Finish Bojack by mid-November, Band of Brothers on alternate evenings',
             ids: ['show-bojack-horseman', 'show-band-of-brothers'] },
           { cat: 'show', text: 'Slow Horses S1 after Bojack', note: '6 eps, ~4h', ids: [] },
@@ -46,7 +52,8 @@ export const PLAN = [
       {
         label: 'December 2026',
         lines: [
-          { cat: 'book', text: 'Finish Crime and Punishment', note: 'Wraps the year strong', ids: ['crime-and-punishment-fyodor-dostoevsky'] },
+          { cat: 'book', text: 'Frankenstein', words: '75k', go: 3.5, ids: ['frankenstein-mary-shelley'] },
+          { cat: 'book', text: 'To Kill a Mockingbird', words: '100k', go: 5, ids: ['to-kill-a-mockingbird-harper-lee'] },
           { cat: 'show', text: 'Slow Horses S2, GoT S1 if there is time', note: 'Evenings', ids: [] },
           { cat: 'game', text: 'Before Your Eyes, any evening', note: '~2h, an emotional palate cleanser', ids: ['game-before-your-eyes'] },
           { cat: 'comic', text: 'Avengers: Doomsday, Dec 18', note: 'Everything was building to this', ids: [] },

@@ -7,6 +7,7 @@ const LINKS = [
   { route: 'now', label: 'Home' },
   { route: 'backlog', label: 'Backlog' },
   { route: 'plan', label: 'Plan' },
+  { route: 'timeline', label: 'Timeline' },
 ];
 
 const THEME = 'rl.theme';

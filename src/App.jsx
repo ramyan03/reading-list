@@ -9,6 +9,7 @@ import HomeView from './components/HomeView.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
 import MediaView from './components/MediaView.jsx';
 import PlanView from './components/PlanView.jsx';
+import TimelineView from './components/TimelineView.jsx';
 import TopBar from './components/TopBar.jsx';
 import { books as rawBooks } from './data/books.js';
 import { categoryByRoute } from './data/categories.js';
@@ -19,7 +20,7 @@ import { useShelf } from './lib/shelf.js';
 import { loadWeights, saveWeights } from './lib/storage.js';
 
 /**
- * Routes live in the hash (#now, #backlog, #plan, #books, #anime...) so the
+ * Routes live in the hash (#now, #backlog, #plan, #timeline, #books, #anime...) so the
  * phone's back button and home-screen bookmarks work without any server
  * rewrites. Reviews links here with ?q=<title>, which always means books.
  */
@@ -45,6 +46,11 @@ export default function App() {
 
   useEffect(() => saveWeights(weights), [weights]);
 
+  // The timeline has its own look; the class lets its colours reach body and footer.
+  useEffect(() => {
+    document.documentElement.classList.toggle('is-folio', route === 'timeline');
+  }, [route]);
+
   useEffect(() => {
     const onHash = () => {
       setRoute(readRoute());
@@ -63,10 +69,12 @@ export default function App() {
   const openItem = openId && (books.find((b) => b.id === openId) ?? items.find((i) => i.id === openId));
 
   const cat = categoryByRoute(route);
-  const section = route === 'plan' ? 'plan' : route === 'backlog' || cat ? 'backlog' : 'now';
+  const section = route === 'plan' || route === 'timeline' ? route : route === 'backlog' || cat ? 'backlog' : 'now';
   const view =
     route === 'plan' ? (
       <PlanView items={items} onOpen={open} />
+    ) : route === 'timeline' ? (
+      <TimelineView items={items} onOpen={open} />
     ) : route === 'backlog' ? (
       <main className="page">
         <BacklogBoard items={items} onOpen={open} title="Backlog" subtitle="Everything queued or waiting, by category." startOpen />

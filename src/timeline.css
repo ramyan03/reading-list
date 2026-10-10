@@ -1,0 +1,329 @@
+/* ==========================================================================
+   Timeline (#timeline)
+   --------------------------------------------------------------------------
+   "Folio": its own editorial look, separate from the rest of the site. Warm
+   cream, Fraunces display, Outfit text, one burgundy accent. The tokens sit on
+   html.is-folio (set by App on this route) so the body and footer follow too.
+   ========================================================================== */
+
+html.is-folio {
+  --f-bg: #f3efe7;
+  --f-fg: #161310;
+  --f-accent: #8e3429;
+  --f-muted: #6f675d;
+  --f-line: rgb(22 19 16 / 0.14);
+  --f-card: rgb(255 255 255 / 0.45);
+  --f-chip-fg: #f3efe7;
+  --f-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-body: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html.is-folio[data-theme="dark"] {
+  --f-bg: #1a1714;
+  --f-fg: #f0ebe3;
+  --f-muted: #a39a8f;
+  --f-line: rgb(240 235 227 / 0.14);
+  --f-card: rgb(255 255 255 / 0.03);
+}
+
+html.is-folio body {
+  background: var(--f-bg);
+}
+
+html.is-folio .foot {
+  --rule: var(--f-line);
+  --fg-faint: var(--f-muted);
+  --accent: var(--f-accent);
+  font-family: var(--f-body);
+}
+
+.folio {
+  background: var(--f-bg);
+  color: var(--f-fg);
+  font-family: var(--f-body);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.55;
+  border-top: 8px solid var(--f-accent);
+}
+
+.folio h1,
+.folio h2,
+.folio h3 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 700;
+  color: var(--f-fg);
+  text-wrap: balance;
+}
+
+.fo-wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 72px var(--gutter, 24px) 64px;
+  display: grid;
+  gap: 64px;
+}
+
+/* Header */
+.fo-kicker {
+  margin: 0 0 18px;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--f-accent);
+}
+
+.folio h1 {
+  font-size: clamp(48px, 10vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.fo-head hr {
+  width: 48px;
+  height: 2px;
+  margin: 28px 0 20px;
+  border: 0;
+  background: var(--f-accent);
+}
+
+.fo-sub {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 18px;
+  color: var(--f-muted);
+}
+
+/* Filter */
+.fo-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: -24px;
+  border-bottom: 1px solid var(--f-line);
+}
+
+.fo-filter button {
+  padding: 0 0 10px;
+  margin-bottom: -1px;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--f-muted);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.fo-filter button:hover {
+  color: var(--f-fg);
+}
+
+.fo-filter button[aria-pressed="true"] {
+  color: var(--f-accent);
+  border-bottom-color: var(--f-accent);
+}
+
+/* Section heads */
+.fo-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--f-line);
+}
+
+.folio h2 {
+  font-size: 30px;
+  letter-spacing: -0.01em;
+}
+
+.fo-sec span {
+  font-size: 14px;
+  color: var(--f-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fo-empty {
+  margin: 0;
+  color: var(--f-muted);
+}
+
+/* Currently */
+.fo-now {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.fo-card {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 18px 20px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--f-card);
+  border-left: 2px solid var(--f-accent);
+  transition: background 0.2s ease;
+}
+
+.fo-card:hover {
+  background: var(--f-line);
+}
+
+.fo-card h3 {
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.fo-by {
+  font-size: 15px;
+  color: var(--f-muted);
+}
+
+.fo-note {
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+/* Up next */
+.fo-months {
+  display: grid;
+  gap: 40px;
+}
+
+.fo-month {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 24px;
+}
+
+.fo-mlabel {
+  padding-top: 6px;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--f-accent);
+}
+
+.fo-mlabel span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--f-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fo-list {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0 0 0 24px;
+  list-style: none;
+  border-left: 1px solid var(--f-line);
+}
+
+.fo-list li {
+  position: relative;
+  display: grid;
+  gap: 2px;
+}
+
+.fo-list li::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--f-bg);
+  border: 2px solid var(--f-accent);
+}
+
+.fo-list li.is-done::before {
+  background: var(--f-accent);
+}
+
+.fo-list h3 {
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.fo-list li.is-done h3 {
+  color: var(--f-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.fo-title {
+  justify-self: start;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+}
+
+.fo-title:hover h3 {
+  color: var(--f-accent);
+}
+
+.fo-cat {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--f-muted);
+}
+
+.fo-meta {
+  font-size: 14px;
+  color: var(--f-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.fo-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--f-chip-fg);
+  background: var(--f-accent);
+}
+
+.fo-chip.is-quiet {
+  color: var(--f-muted);
+  background: transparent;
+  border: 1px solid var(--f-line);
+}
+
+@media (max-width: 720px) {
+  .fo-wrap {
+    padding-top: 48px;
+    gap: 52px;
+  }
+
+  .fo-month {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .fo-mlabel span {
+    display: inline;
+    margin-left: 10px;
+  }
+}

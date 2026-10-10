@@ -26,6 +26,7 @@ node scripts/verify-anilist.mjs  # re-check anime/manga posters strictly, refres
 | `#now`   | Home: hero with the Doomsday countdown, a card per medium, current and recent (with +1 and Finished), the next 6 months of the plan, and every backlog folded up |
 | `#backlog` | Every category's queue and backlog, expanded, with totals         |
 | `#plan`  | The whole plan as month columns or a written list, then the Doomsday checklist |
+| `#timeline` | The plan again in its own editorial look (cream, Fraunces, burgundy): in progress now, then each month ahead, filterable by kind |
 | `#books` | The original catalogue: covers or index, weighted score, filters    |
 | `#shows` `#films` `#anime` `#manga` `#games` `#comics` | A hero for what's on the go (else next up, else top rated) with the category's numbers, then a poster grid grouped now / next / backlog / paused / finished |
 
