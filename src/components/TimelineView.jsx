@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CATEGORIES, category } from '../data/categories.js';
 import { progressText } from '../lib/catalogue.js';
 import { planMonths } from './PlanBoard.jsx';
@@ -46,6 +46,12 @@ function Entry({ line, linked, showCat, onOpen }) {
  */
 export default function TimelineView({ items, onOpen }) {
   const [filter, setFilter] = useState('all');
+
+  // Each filter has its own accent (timeline.css), so the page and footer recolour.
+  useEffect(() => {
+    document.documentElement.dataset.folio = filter;
+    return () => delete document.documentElement.dataset.folio;
+  }, [filter]);
 
   const now = new Date();
   const thisMonth = now.getFullYear() * 12 + now.getMonth();

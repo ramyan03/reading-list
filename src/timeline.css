@@ -26,6 +26,26 @@ html.is-folio[data-theme="dark"] {
   --f-card: rgb(255 255 255 / 0.03);
 }
 
+/* One accent per filter: burgundy for everything, then a deep ink version of
+   each category's hue (categories.js). Dark mode lifts them so text stays
+   readable, and chips switch to dark text on the lighter fills. */
+html.is-folio[data-folio="book"] { --f-accent: #2d4e9b; }
+html.is-folio[data-folio="show"] { --f-accent: #5b3fa8; }
+html.is-folio[data-folio="film"] { --f-accent: #475569; }
+html.is-folio[data-folio="anime"] { --f-accent: #16695f; }
+html.is-folio[data-folio="manga"] { --f-accent: #a3324a; }
+html.is-folio[data-folio="game"] { --f-accent: #a14c1a; }
+html.is-folio[data-folio="comic"] { --f-accent: #85660c; }
+
+html.is-folio[data-theme="dark"][data-folio="book"] { --f-accent: #8fa8e8; }
+html.is-folio[data-theme="dark"][data-folio="show"] { --f-accent: #b39df0; }
+html.is-folio[data-theme="dark"][data-folio="film"] { --f-accent: #a7b2c4; }
+html.is-folio[data-theme="dark"][data-folio="anime"] { --f-accent: #5fc4b4; }
+html.is-folio[data-theme="dark"][data-folio="manga"] { --f-accent: #ec8a9c; }
+html.is-folio[data-theme="dark"][data-folio="game"] { --f-accent: #ee9a62; }
+html.is-folio[data-theme="dark"][data-folio="comic"] { --f-accent: #d9b44a; }
+html.is-folio[data-theme="dark"]:not([data-folio="all"]) { --f-chip-fg: #1a1714; }
+
 html.is-folio body {
   background: var(--f-bg);
 }
@@ -45,6 +65,7 @@ html.is-folio .foot {
   font-size: 16px;
   line-height: 1.55;
   border-top: 8px solid var(--f-accent);
+  transition: border-color 0.3s ease;
 }
 
 .folio h1,
@@ -66,6 +87,15 @@ html.is-folio .foot {
 }
 
 /* Header */
+.fo-kicker,
+.fo-mlabel,
+.fo-head hr,
+.fo-card,
+.fo-chip,
+.fo-list li::before {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
 .fo-kicker {
   margin: 0 0 18px;
   font-size: 13px;
@@ -170,7 +200,7 @@ html.is-folio .foot {
   color: inherit;
   background: var(--f-card);
   border-left: 2px solid var(--f-accent);
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.3s ease;
 }
 
 .fo-card:hover {
@@ -309,6 +339,13 @@ html.is-folio .foot {
   color: var(--f-muted);
   background: transparent;
   border: 1px solid var(--f-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio,
+  .folio * {
+    transition: none !important;
+  }
 }
 
 @media (max-width: 720px) {
