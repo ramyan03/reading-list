@@ -5,3 +5,4 @@ dist
 .vite
 .data
 .env*.local
+.env

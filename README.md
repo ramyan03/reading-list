@@ -85,6 +85,25 @@ rejects instantly and a self-retrying flush froze the page in testing.
 Without a database the site still works, read only, and the footer says so.
 To use the real database locally, put the same variables in `.env.local`.
 
+## From the command line, and Claude skills
+
+`scripts/shelf.mjs` reads and edits the live shelf the way the app does:
+
+```bash
+node scripts/shelf.mjs state                          # on the go, up next, this month's plan
+node scripts/shelf.mjs find red rising                # item ids by title
+node scripts/shelf.mjs set <id> progress=120          # or status=done myScore=8.5, field=null to undo
+```
+
+`--local` talks to `npm run dev` instead, `--dry-run` shows a change without
+saving it. Writing to the live site needs `EDIT_KEY` in `.env.local` (only that
+line: the `KV_` variables there would point local dev at the real shelf) or
+`READS_EDIT_KEY` in the environment.
+
+`claude-skills/` holds two Claude Code skills built on it, `reads-recommend`
+(three picks for today) and `reads-update` (a progress check-in that saves).
+Copy those folders into `~/.claude/skills/` to install them.
+
 ## Adding things
 
 From the app: sign in with Admin, open a category, press **Add**. Permanent additions belong in
