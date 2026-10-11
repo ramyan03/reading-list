@@ -4,8 +4,8 @@ import { selectBooks } from '../lib/select.js';
 import { actions } from '../lib/actions.js';
 import AddItem from './AddItem.jsx';
 import BookRow from './BookRow.jsx';
-import CategoryHero from './CategoryHero.jsx';
 import Controls from './Controls.jsx';
+import { Icon } from './Icons.jsx';
 import PosterTile from './PosterTile.jsx';
 import WeightPanel from './WeightPanel.jsx';
 
@@ -32,7 +32,11 @@ function initialState() {
   }
 }
 
-/** The original Reads: every book, ranked by the tunable weighted score. */
+/**
+ * The book index (#covers): every book as a wall of covers or a ranked list,
+ * by the tunable weighted score. The Books tab itself is the backlog, laid out
+ * like every other category; this is the one place that shows the lot.
+ */
 export default function BooksView({ books, weights, setWeights, onOpen, shelf }) {
   const [filters, setFilters] = useState(initialState);
   const [view, setView] = useState('grid');
@@ -46,7 +50,15 @@ export default function BooksView({ books, weights, setWeights, onOpen, shelf })
   return (
     <>
       <div className="cat-page is-top">
-        <CategoryHero cat={category('book')} mine={books} onOpen={onOpen} act={act} canEdit={shelf.canEdit} />
+        <header className="index-intro">
+          <a className="view-all is-back" href="#books">
+            <Icon name="arrow" size={14} /> Books
+          </a>
+          <h1>Every book</h1>
+          <p>
+            All {books.length}, from what I'm reading to what I've finished, ranked by the weighted score.
+          </p>
+        </header>
       </div>
 
       <Controls

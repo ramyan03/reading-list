@@ -8,8 +8,8 @@
 // Sources, none of which need a key:
 //   anime, manga   AniList GraphQL
 //   show           TVmaze
-//   film, game, comic   Wikipedia's lead image, trying the disambiguated
-//                       title first ("Soma (video game)") then a search
+//   game, comic    Wikipedia's lead image, trying the disambiguated
+//                  title first ("Soma (video game)") then a search
 
 import { writeFileSync } from 'node:fs';
 import { media } from '../src/data/media.js';
@@ -18,7 +18,7 @@ import { posters } from '../src/data/posters.js';
 const OUT = new URL('../src/data/posters.js', import.meta.url);
 const UA = { 'User-Agent': 'ramyan-reads/0.1 (personal project)' };
 // AniList allows about 30 requests a minute.
-const DELAY = { anime: 2200, manga: 2200, show: 600, film: 300, game: 300, comic: 300 };
+const DELAY = { anime: 2200, manga: 2200, show: 600, game: 300, comic: 300 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const found = { ...posters };
@@ -61,7 +61,7 @@ async function tvmaze(title) {
 }
 
 const WIKI = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=thumbnail&pithumbsize=500&pilicense=any&redirects=1';
-const SUFFIX = { film: ['film'], game: ['video game'], comic: ['comics', 'comic book', 'comic'] };
+const SUFFIX = { game: ['video game'], comic: ['comics', 'comic book', 'comic'] };
 
 /** The lead image of the first page that exists, in the order given. */
 async function wikiTitles(titles) {

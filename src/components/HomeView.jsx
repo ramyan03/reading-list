@@ -112,7 +112,7 @@ export default function HomeView({ items, onOpen, shelf }) {
             media backlog
           </h1>
           <p className="hero-lede">
-            Books, anime, manga, shows, films, games and comics.
+            Books, anime, manga, shows, games and comics.
             <br />
             Everything I want to experience, all in one place.
           </p>

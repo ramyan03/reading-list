@@ -25,12 +25,12 @@ node scripts/verify-anilist.mjs  # re-check anime/manga posters strictly, refres
 | -------- | ------------------------------------------------------------------- |
 | `#now`   | Home: hero with the Doomsday countdown, a card per medium, current and recent (with +1 and Finished), the next 6 months of the plan, and every backlog folded up |
 | `#backlog` | Every category's queue and backlog, expanded, with totals         |
-| `#plan`  | The whole plan as month columns or a written list, then the Doomsday checklist |
-| `#timeline` | The plan again in its own editorial look (cream, Fraunces, burgundy): in progress now, then each month ahead, filterable by kind |
-| `#books` | The original catalogue: covers or index, weighted score, filters    |
-| `#shows` `#films` `#anime` `#manga` `#games` `#comics` | A hero for what's on the go (else next up, else top rated) with the category's numbers, then a poster grid grouped now / next / backlog / paused / finished |
+| `#plan`  | A card per month, this month open: lines grouped by kind, each with the items it names, their progress, and GO days. Then the Doomsday checklist |
+| `#books` `#shows` `#anime` `#manga` `#games` `#comics` | A hero for what's on the go (else next up, else top rated) with the category's numbers, then a poster grid grouped now / next / backlog / paused / finished |
+| `#covers` | Every book: a wall of covers or a ranked index, weighted score, filters. Linked from Books; Reviews' `?q=` lands here |
 
-Books has the same hero above its scored catalogue.
+Films are not tracked here (Letterboxd has them). Old `#timeline` and `#films`
+links redirect to `#plan` and `#backlog`.
 
 **Admin mode.** The Admin button in the top bar asks for the password, which is
 `EDIT_KEY`. The server checks it before the browser keeps it, and again on every
@@ -46,7 +46,7 @@ Reviews links here with `?q=<title>`, which opens the books tab on that search.
 The data files are the baseline and never change at runtime:
 
 - `src/data/books.js`: 183 books with their scoring signals
-- `src/data/media.js`: 426 shows, films, anime, manga, games and comics
+- `src/data/media.js`: 465 shows, anime, manga, games and comics
 - `src/data/plan.js`: the monthly plan and the Doomsday goal
 
 Every item shares one vocabulary (`src/data/categories.js`):

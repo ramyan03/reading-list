@@ -9,7 +9,6 @@ import HomeView from './components/HomeView.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
 import MediaView from './components/MediaView.jsx';
 import PlanView from './components/PlanView.jsx';
-import TimelineView from './components/TimelineView.jsx';
 import TopBar from './components/TopBar.jsx';
 import { books as rawBooks } from './data/books.js';
 import { categoryByRoute } from './data/categories.js';
@@ -20,15 +19,17 @@ import { useShelf } from './lib/shelf.js';
 import { loadWeights, saveWeights } from './lib/storage.js';
 
 /**
- * Routes live in the hash (#now, #backlog, #plan, #timeline, #books, #anime...) so the
+ * Routes live in the hash (#now, #backlog, #plan, #books, #covers, #anime...) so the
  * phone's back button and home-screen bookmarks work without any server
- * rewrites. Reviews links here with ?q=<title>, which always means books.
+ * rewrites. Reviews links here with ?q=<title>, which opens the book index on it.
  */
+const MOVED = { timeline: 'plan', films: 'backlog' };
+
 function readRoute() {
   const hash = location.hash.replace(/^#\/?/, '');
-  if (hash) return hash;
+  if (hash) return MOVED[hash] ?? hash;
   try {
-    if (new URLSearchParams(location.search).get('q')) return 'books';
+    if (new URLSearchParams(location.search).get('q')) return 'covers';
   } catch {
     // Fall through to the default.
   }
@@ -45,11 +46,6 @@ export default function App() {
   const shelf = useShelf();
 
   useEffect(() => saveWeights(weights), [weights]);
-
-  // The timeline has its own look; the class lets its colours reach body and footer.
-  useEffect(() => {
-    document.documentElement.classList.toggle('is-folio', route === 'timeline');
-  }, [route]);
 
   useEffect(() => {
     const onHash = () => {
@@ -69,17 +65,15 @@ export default function App() {
   const openItem = openId && (books.find((b) => b.id === openId) ?? items.find((i) => i.id === openId));
 
   const cat = categoryByRoute(route);
-  const section = route === 'plan' || route === 'timeline' ? route : route === 'backlog' || cat ? 'backlog' : 'now';
+  const section = route === 'plan' ? route : route === 'backlog' || route === 'covers' || cat ? 'backlog' : 'now';
   const view =
     route === 'plan' ? (
       <PlanView items={items} onOpen={open} />
-    ) : route === 'timeline' ? (
-      <TimelineView items={items} onOpen={open} />
     ) : route === 'backlog' ? (
       <main className="page">
         <BacklogBoard items={items} onOpen={open} title="Backlog" subtitle="Everything queued or waiting, by category." startOpen />
       </main>
-    ) : route === 'books' ? (
+    ) : route === 'covers' ? (
       <BooksView books={books} weights={weights} setWeights={setWeights} onOpen={open} shelf={shelf} />
     ) : cat ? (
       <MediaView key={cat.id} cat={cat} items={items} onOpen={open} shelf={shelf} />
@@ -90,7 +84,7 @@ export default function App() {
   return (
     <>
       <TopBar route={section} items={items} onOpen={open} shelf={shelf} onAdmin={openGate} />
-      {section === 'backlog' && <CatNav route={route} />}
+      {section === 'backlog' && <CatNav route={route === 'covers' ? 'books' : route} />}
       {view}
       <Footer shelf={shelf} onAdmin={openGate} />
       <AdminGate open={gate} onClose={closeGate} shelf={shelf} />

@@ -4,7 +4,6 @@
 export const CATEGORIES = [
   { id: 'book', label: 'Books', one: 'Book', active: 'Reading', unit: 'pages', route: 'books', color: '#3b6fe0' },
   { id: 'show', label: 'Shows', one: 'Show', active: 'Watching', unit: 'eps', route: 'shows', color: '#7656e3' },
-  { id: 'film', label: 'Films', one: 'Film', active: 'Watching', unit: null, route: 'films', color: '#5f6f8a' },
   { id: 'anime', label: 'Anime', one: 'Anime', active: 'Watching', unit: 'eps', route: 'anime', color: '#1fa394' },
   { id: 'manga', label: 'Manga', one: 'Manga', active: 'Reading', unit: 'ch', route: 'manga', color: '#e0506a' },
   { id: 'game', label: 'Games', one: 'Game', active: 'Playing', unit: null, route: 'games', color: '#e2733a' },

@@ -60,7 +60,7 @@ export function selectMedia(items, { query, status, tier, sort }) {
       if (status === 'open' && (i.status === 'done' || i.status === 'dropped')) return false;
       if (status !== 'all' && status !== 'open' && i.status !== status) return false;
       if (tier !== 'all' && i.tier !== tier) return false;
-      if (q && !i.title.toLowerCase().includes(q)) return false;
+      if (q && !i.title.toLowerCase().includes(q) && !(i.author ?? '').toLowerCase().includes(q)) return false;
       return true;
     })
     .sort(mediaComparators[sort] ?? mediaComparators.queue);

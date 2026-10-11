@@ -1,4 +1,4 @@
-// Everything that is not a book: shows, films, anime, manga, games, comics.
+// Everything that is not a book: shows, anime, manga, games, comics.
 //
 // Merged on 2026-10-04 from three standalone lists (everything finished, the
 // tiered backlog, and the 2026-27 plan). This is the baseline; changes made in
@@ -133,10 +133,6 @@ export const media = [
   { id:"show-happy-valley", cat:"show", title:"Happy Valley", status:"backlog", tier:"good", hrs:17, imdb:211, note:"IMDb Top 250 TV #211. Sarah Lancashire. British crime at its best." },
 
   // FILM
-  { id:"film-captain-america-brave-new-world", cat:"film", title:"Captain America: Brave New World", status:"done", project:"doomsday", note:"Sam Wilson as Cap." },
-  { id:"film-deadpool-wolverine", cat:"film", title:"Deadpool & Wolverine", status:"done", project:"doomsday", note:"Fox X-Men brought into MCU canon." },
-  { id:"film-fantastic-four-first-steps", cat:"film", title:"Fantastic Four: First Steps", status:"next", tier:"must", hrs:2, project:"doomsday", note:"FF's MCU debut, direct Doom setup." },
-  { id:"film-thunderbolts", cat:"film", title:"Thunderbolts*", status:"next", tier:"must", hrs:2, project:"doomsday", note:"Origin of the New Avengers team." },
 
   // ANIME
   { id:"anime-oshi-no-ko", cat:"anime", title:"[Oshi no Ko]", status:"paused", progress:1, total:11 },

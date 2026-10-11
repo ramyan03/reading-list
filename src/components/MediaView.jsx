@@ -91,6 +91,11 @@ export default function MediaView({ cat, items, onOpen, shelf }) {
               <Icon name="chevron" size={14} />
             </label>
           )}
+          {cat.id === 'book' && (
+            <a className="btn is-quiet" href="#covers">
+              All {mine.length} covers <Icon name="arrow" size={14} />
+            </a>
+          )}
           {shelf.canEdit && (
             <button type="button" className="btn is-quiet" aria-expanded={adding} onClick={() => setAdding((a) => !a)}>
               <Icon name="plus" size={14} /> Add

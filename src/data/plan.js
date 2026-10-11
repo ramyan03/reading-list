@@ -3,7 +3,7 @@
 // Each line names the items it covers by id, so the plan ticks itself off as
 // things are finished in the app. Edit the words here; the done state comes
 // from the shelf. Book lines can carry words and go (GO train days), and any
-// line a flag, the small warning chip on the timeline page.
+// line a flag, the small warning chip on the plan page.
 
 export const DOOMSDAY = {
   title: 'Avengers: Doomsday',
