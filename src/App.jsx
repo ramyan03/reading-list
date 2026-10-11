@@ -8,6 +8,7 @@ import Footer from './components/Footer.jsx';
 import HomeView from './components/HomeView.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
 import MediaView from './components/MediaView.jsx';
+import PickNext from './components/PickNext.jsx';
 import PlanView from './components/PlanView.jsx';
 import TopBar from './components/TopBar.jsx';
 import { books as rawBooks } from './data/books.js';
@@ -43,6 +44,9 @@ export default function App() {
   const [gate, setGate] = useState(false);
   const openGate = useCallback(() => setGate(true), []);
   const closeGate = useCallback(() => setGate(false), []);
+  const [picking, setPicking] = useState(false);
+  const openPick = useCallback(() => setPicking(true), []);
+  const closePick = useCallback(() => setPicking(false), []);
   const shelf = useShelf();
 
   useEffect(() => saveWeights(weights), [weights]);
@@ -83,11 +87,12 @@ export default function App() {
 
   return (
     <>
-      <TopBar route={section} items={items} onOpen={open} shelf={shelf} onAdmin={openGate} />
+      <TopBar route={section} items={items} onOpen={open} shelf={shelf} onAdmin={openGate} onPick={openPick} />
       {section === 'backlog' && <CatNav route={route === 'covers' ? 'books' : route} />}
       {view}
       <Footer shelf={shelf} onAdmin={openGate} />
       <AdminGate open={gate} onClose={closeGate} shelf={shelf} />
+      <PickNext open={picking} onClose={closePick} items={items} shelf={shelf} onOpen={open} />
 
       {openItem?.cat === 'book' ? (
         <BookDetail book={openItem} weights={weights} onClose={close} shelf={shelf} items={items} />

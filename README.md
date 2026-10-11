@@ -32,6 +32,11 @@ node scripts/verify-anilist.mjs  # re-check anime/manga posters strictly, refres
 Films are not tracked here (Letterboxd has them). Old `#timeline` and `#films`
 links redirect to `#plan` and `#backlog`.
 
+The top bar's **🎲 Pick** draws one thing to start from what is queued or
+waiting (never skips), filtered by kind, length (books estimated from words at
+~250 a minute) and priority, weighted toward the queue and musts. Search opens
+with `/` or Ctrl/Cmd+K.
+
 **Admin mode.** The Admin button in the top bar asks for the password, which is
 `EDIT_KEY`. The server checks it before the browser keeps it, and again on every
 save, so the hidden controls are a convenience and the API is the gate. Once in,

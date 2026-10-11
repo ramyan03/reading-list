@@ -77,6 +77,8 @@ export default function BacklogBoard({ items, onOpen, title = 'All Backlog', sub
   const total = items.length;
   const done = items.filter((i) => i.status === 'done').length;
   const remaining = items.filter((i) => i.status !== 'done' && i.status !== 'dropped').length;
+  const scored = items.filter((i) => i.myScore != null);
+  const avg = scored.length ? (scored.reduce((t, i) => t + i.myScore, 0) / scored.length).toFixed(1) : null;
 
   const column = (gs) => (
     <div className="bk-col">
@@ -125,6 +127,12 @@ export default function BacklogBoard({ items, onOpen, title = 'All Backlog', sub
               <dt>Remaining</dt>
               <dd>{remaining}</dd>
             </div>
+            {avg && (
+              <div>
+                <dt>Avg score</dt>
+                <dd>{avg}</dd>
+              </div>
+            )}
           </dl>
         </aside>
       </div>

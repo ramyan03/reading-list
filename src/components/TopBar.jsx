@@ -28,7 +28,7 @@ const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
  * theme switch. Search opens the detail sheet directly, so finding a thing and
  * logging an episode of it is two taps from any page.
  */
-export default function TopBar({ route, items, onOpen, shelf, onAdmin }) {
+export default function TopBar({ route, items, onOpen, shelf, onAdmin, onPick }) {
   const [theme, setTheme] = useState(currentTheme);
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
@@ -50,10 +50,11 @@ export default function TopBar({ route, items, onOpen, shelf, onAdmin }) {
     }
   };
 
-  // "/" jumps to search from anywhere, as on most sites with one box.
+  // "/" or Ctrl/Cmd+K jumps to search from anywhere, as on most sites with one box.
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key !== '/' || e.target.closest('input, textarea, select')) return;
+      const combo = e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey);
+      if (!combo && (e.key !== '/' || e.target.closest('input, textarea, select'))) return;
       e.preventDefault();
       input.current?.focus();
     };
@@ -161,6 +162,11 @@ export default function TopBar({ route, items, onOpen, shelf, onAdmin }) {
             </ul>
           )}
         </div>
+
+        <button type="button" className="admin-button pick-button" onClick={onPick} aria-label="Pick my next" title="Pick my next">
+          <span aria-hidden="true">🎲</span>
+          <span>Pick</span>
+        </button>
 
         <button
           type="button"
