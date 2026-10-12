@@ -90,6 +90,15 @@ rejects instantly and a self-retrying flush froze the page in testing.
 Without a database the site still works, read only, and the footer says so.
 To use the real database locally, put the same variables in `.env.local`.
 
+## Reading the shelf from anywhere
+
+`GET /api/state` (public, read only) returns the shelf as it stands: the data
+files with every edit applied, cut down to what is on the go (`active`), the
+next three per kind (`upNext`), this month's and next month's `plan`, the
+Doomsday `deadline` with `daysLeft`, and `recentlyFinished`. `/api/shelf` is
+only the raw edits. claude.ai skills read `/api/state`; the local script below
+builds the same answer from `api/_state.js`.
+
 ## From the command line, and Claude skills
 
 `scripts/shelf.mjs` reads and edits the live shelf the way the app does:

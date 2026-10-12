@@ -16,11 +16,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { books } from '../src/data/books.js';
-import { media } from '../src/data/media.js';
-import { DOOMSDAY, PLAN } from '../src/data/plan.js';
-import { CATEGORIES } from '../src/data/categories.js';
-import { EDITABLE, buildCatalogue, thisMonth, upNext } from '../src/lib/catalogue.js';
+import { catalogue, shelfState, slim } from '../api/_state.js';
+import { EDITABLE, thisMonth } from '../src/lib/catalogue.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -58,59 +55,16 @@ function editKey() {
   fail('No edit key: set READS_EDIT_KEY, or EDIT_KEY in reading-list/.env.local');
 }
 
-const slim = (i) =>
-  Object.fromEntries(
-    ['id', 'cat', 'title', 'author', 'status', 'progress', 'total', 'at', 'started', 'finished', 'myScore', 'tier', 'hrs', 'mine', 'note']
-      .filter((k) => i[k] != null && i[k] !== '')
-      .map((k) => [k, i[k]])
-  );
-
 async function state() {
   const { records: recs, synced } = await records();
-  const items = buildCatalogue(books, media, recs);
-  const byId = new Map(items.map((i) => [i.id, i]));
-  const month = thisMonth();
-  const today = new Date().toISOString().slice(0, 10);
-
-  // This month and next from the plan, each line marked with how its items stand.
-  const months = PLAN.flatMap((p) => p.months);
-  const label = (ym) => new Date(`${ym}-15`).toLocaleString('en-US', { month: 'long', year: 'numeric' });
-  const next = new Date(`${month}-15`);
-  next.setMonth(next.getMonth() + 1);
-  const wanted = [label(month), label(thisMonth(next))];
-  const plan = months
-    .filter((m) => wanted.includes(m.label))
-    .map((m) => ({
-      month: m.label,
-      lines: m.lines.map((l) => ({
-        ...l,
-        items: (l.ids ?? []).map((id) => ({ id, status: byId.get(id)?.status ?? 'missing' })),
-        ids: undefined,
-      })),
-    }));
-
-  const doomsday = items.filter((i) => i.project === DOOMSDAY.project);
-  out({
-    today,
-    synced,
-    syncNote: synced ? undefined : 'Sync is not set up (/api/shelf 503): this is the baseline only, app edits are missing.',
-    active: items.filter((i) => i.status === 'active').map(slim),
-    upNext: Object.fromEntries(CATEGORIES.map((c) => [c.id, upNext(items, c.id, 3).map((i) => ({ ...slim(i), suggested: i.suggested }))])),
-    plan,
-    deadline: {
-      ...DOOMSDAY,
-      daysLeft: Math.ceil((new Date(DOOMSDAY.date) - new Date(today)) / 864e5),
-      items: doomsday.map((i) => ({ id: i.id, title: i.title, status: i.status, progress: i.progress, total: i.total, hrs: i.hrs })),
-    },
-    recentlyFinished: items.filter((i) => i.status === 'done' && i.finished >= thisMonth(new Date(Date.now() - 62 * 864e5))).map(slim),
-  });
+  out(shelfState(recs, synced));
 }
 
 async function find(words) {
   const { records: recs } = await records();
   const q = words.join(' ').toLowerCase();
   if (!q) fail('find needs some words');
-  out(buildCatalogue(books, media, recs).filter((i) => i.title.toLowerCase().includes(q)).map(slim));
+  out(catalogue(recs).filter((i) => i.title.toLowerCase().includes(q)).map(slim));
 }
 
 const parse = (v) => {
@@ -123,7 +77,7 @@ async function set(id, pairs) {
   if (!id || !pairs.length) fail('Usage: set <id> field=value ...');
   const { records: recs, synced } = await records();
   if (!synced) fail('Sync is not set up on the site (/api/shelf returns 503), so there is nowhere to save.');
-  const items = buildCatalogue(books, media, recs);
+  const items = catalogue(recs);
   const item = items.find((i) => i.id === id);
   if (!item) fail(`No item with id ${id}. Try: node scripts/shelf.mjs find <title words>`);
 

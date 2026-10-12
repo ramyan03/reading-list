@@ -2,9 +2,10 @@ import fs from 'node:fs';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileStore, handleShelf, upstashStore } from './api/_shelf.js';
+import { shelfState } from './api/_state.js';
 
 /**
- * Serves /api/shelf during `npm run dev` with the same handler Vercel runs.
+ * Serves /api/shelf and /api/state during `npm run dev` with the same handler Vercel runs.
  * Without Upstash credentials in .env.local it stores to .data/shelf.json, and
  * the edit key defaults to "dev".
  */
@@ -28,6 +29,12 @@ function shelfApi(env) {
         }
         const { status, json } = await handleShelf({ method: req.method, headers: req.headers, body }, store, editKey);
         res.statusCode = status;
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Cache-Control', 'no-store');
+        res.end(JSON.stringify(json));
+      });
+      server.middlewares.use('/api/state', async (req, res) => {
+        const json = shelfState(await store.all(), true);
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'no-store');
         res.end(JSON.stringify(json));
