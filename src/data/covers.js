@@ -113,7 +113,6 @@ export const coverIds = {
   'solaris-stanis-aw-lem': 12313764,
   'spqr-mary-beard': 7418788,
   'steppenwolf-hermann-hesse': 14911616,
-  'synecdoche-new-york-charlie-kaufman': 13336770,
   'the-aeneid-virgil': 6715695,
   'the-alchemist-paulo-coelho': 14846382,
   'the-apology-plato': 14398204,

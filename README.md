@@ -50,7 +50,7 @@ Reviews links here with `?q=<title>`, which opens the books tab on that search.
 
 The data files are the baseline and never change at runtime:
 
-- `src/data/books.js`: 183 books with their scoring signals
+- `src/data/books.js`: 182 books with their scoring signals
 - `src/data/media.js`: 465 shows, anime, manga, games and comics
 - `src/data/plan.js`: the monthly plan and the Doomsday goal
 
