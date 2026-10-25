@@ -1,18 +1,25 @@
 import { CATEGORIES } from '../data/categories.js';
-import { Icon } from './Icons.jsx';
 
-/** The categories as chips, under the top bar on the backlog and list pages. */
+/**
+ * The categories as a row of large words under the top bar on the backlog and
+ * category pages, the current one bright with a bar in its own colour beneath.
+ * Words rather than chips: the row reads as navigation, not as a set of
+ * filters, and there is no outline around each one to clutter it.
+ */
 export default function CatNav({ route }) {
+  const tabs = [{ route: 'backlog', label: 'All', color: 'var(--fg-bright)' }, ...CATEGORIES];
   return (
-    <nav className="catnav" aria-label="Categories">
-      <div className="catnav-inner">
-        <a href="#backlog" className={route === 'backlog' ? 'is-on' : ''}>
-          All
-        </a>
-        {CATEGORIES.map((c) => (
-          <a key={c.id} href={`#${c.route}`} className={route === c.route ? 'is-on' : ''} style={{ '--cat': c.color }}>
-            <Icon name={c.id} size={15} />
-            {c.label}
+    <nav className="cattabs" aria-label="Categories">
+      <div className="cattabs-inner">
+        {tabs.map((t) => (
+          <a
+            key={t.route}
+            href={`#${t.route}`}
+            className={route === t.route ? 'is-on' : ''}
+            aria-current={route === t.route ? 'page' : undefined}
+            style={{ '--cat': t.color }}
+          >
+            {t.label}
           </a>
         ))}
       </div>

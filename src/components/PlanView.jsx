@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { CATEGORIES, category, statusLabel } from '../data/categories.js';
 import { monthText, progressText } from '../lib/catalogue.js';
-import { percent } from '../lib/progress.js';
 import Countdown from './Countdown.jsx';
 import { Icon } from './Icons.jsx';
+import { inkOn } from './NowCard.jsx';
 import { planMonths } from './PlanBoard.jsx';
 import Poster from './Poster.jsx';
 
@@ -35,151 +35,108 @@ function shape(month, byId) {
   };
 }
 
-function ItemRow({ item, showTitle, onOpen }) {
-  const cat = category(item.cat);
-  const pct = item.status === 'active' ? percent(item) : null;
-  const where = item.status === 'done' ? null : progressText(item, cat.unit);
-  const facts = [
-    item.status === 'done' && item.finished && `Finished ${monthText(item.finished)}`,
-    item.status === 'done' && item.myScore != null && `${item.myScore}/10`,
-    item.status !== 'done' && item.hrs && `~${item.hrs}h`,
-  ].filter(Boolean);
+const STATE_LABEL = { done: 'Done', active: 'In progress', todo: 'To do' };
 
-  return (
-    <li>
-      <button type="button" className={`pm-item is-${item.status}`} onClick={() => onOpen(item)}>
-        <Poster item={item} size="S" className="is-thumb" showTitle={false} />
-        <span className="pm-item-body">
-          {showTitle && <span className="pm-item-title">{item.title}</span>}
-          <span className="pm-item-meta">
-            <span className="pm-status">
-              {item.status === 'done' && <Icon name="check" size={12} />}
-              {statusLabel(item.status, item.cat)}
-            </span>
-            {where && <span>{where}</span>}
-            {facts.map((f) => (
-              <span key={f}>{f}</span>
-            ))}
-          </span>
-          {pct != null && (
-            <span className="pm-bar" aria-label={`${pct}% through`}>
-              <span style={{ width: `${pct}%` }} />
-            </span>
-          )}
-        </span>
-        <Icon name="arrow" size={14} className="pm-go" />
-      </button>
-    </li>
-  );
-}
-
+/**
+ * One line of the plan as a checklist row: a box (ticked when everything it
+ * names is finished), the line, what it costs, and the words on the right.
+ * A line naming one item opens it; a line naming several lists them under it.
+ */
 function Line({ line, linked, state, onOpen }) {
-  const cat = category(line.cat);
   const single = linked.length === 1 ? linked[0] : null;
-  const meta = [
-    single?.author,
-    line.words && line.words.replace(/^(\S+)( left)?$/, '$1 words$2'),
-    line.go != null && goDays(line.go),
-    line.note,
-  ].filter(Boolean);
+  const meta = [single?.author, line.go != null && goDays(line.go), line.note].filter(Boolean).join(' · ');
+  const extra = single && single.status !== 'done' ? progressText(single, category(single.cat).unit) : null;
+  const body = (
+    <>
+      <span className="plan-box" aria-label={STATE_LABEL[state]}>
+        {state === 'done' && <Icon name="check" size={12} strokeWidth={3} />}
+      </span>
+      <span className="pv-line-text">
+        <span className="pv-line-title">
+          {line.text}
+          {line.flag && <span className="plan-flag">{line.flag}</span>}
+        </span>
+        {(meta || extra) && <span className="pv-line-meta">{[meta, extra].filter(Boolean).join(' · ')}</span>}
+      </span>
+      {line.words && <span className="plan-words">{line.words.replace(/ left$/, '')}</span>}
+    </>
+  );
 
   return (
-    <li className={`pm-line is-${state}`}>
-      <div className="pm-line-head">
-        <span className="pm-mark" aria-label={state === 'done' ? 'Done' : state === 'active' ? 'In progress' : 'To do'}>
-          {state === 'done' ? <Icon name="check" size={13} /> : <span />}
-        </span>
-        <div>
-          <h4>
-            {line.text}
-            {line.flag && <span className="pm-flag">{line.flag}</span>}
-          </h4>
-          {meta.length > 0 && <p className="pm-meta">{meta.join(' · ')}</p>}
-        </div>
-      </div>
-      {linked.length > 0 ? (
-        <ul className="pm-items">
+    <li className={`pv-line is-${state}`}>
+      {single ? (
+        <button type="button" onClick={() => onOpen(single)}>
+          {body}
+        </button>
+      ) : (
+        <div>{body}</div>
+      )}
+      {linked.length > 1 && (
+        <ul className="plan-items">
           {linked.map((item) => (
-            <ItemRow key={item.id} item={item} showTitle={!single || item.title !== line.text} onOpen={onOpen} />
+            <li key={item.id}>
+              <button type="button" onClick={() => onOpen(item)}>
+                <Poster item={item} size="S" className="is-thumb" showTitle={false} />
+                <span>{item.title}</span>
+                <span className="pv-line-meta">
+                  {item.status === 'done' ? `Finished${item.finished ? ` ${monthText(item.finished)}` : ''}` : statusLabel(item.status, item.cat)}
+                </span>
+              </button>
+            </li>
           ))}
         </ul>
-      ) : (
-        <p className="pm-loose">
-          <Icon name={cat.id} size={13} /> Not on the shelf yet
-        </p>
       )}
+      {linked.length === 0 && <p className="plan-loose">Not on the shelf yet</p>}
     </li>
   );
 }
 
-function Month({ month, info, open, onToggle, onOpen, when }) {
-  const pct = info.items ? Math.round((info.done / info.items) * 100) : 0;
-  const id = `pm-${month.label.replace(/\W+/g, '-').toLowerCase()}`;
-  const stats = [
-    `${info.lineCount} ${info.lineCount === 1 ? 'line' : 'lines'}`,
-    info.items > 0 && `${info.done} of ${info.items} done`,
-    info.go > 0 && (info.goLeft < info.go ? `${goDays(info.goLeft)} left of ${info.go}` : goDays(info.go)),
-  ].filter(Boolean);
+/** A category's share of the month: books get the big checklist card, the rest a solid card each. */
+function CatCard({ group, index, onOpen, big }) {
+  const { cat, lines } = group;
+  const linked = [...new Map(lines.flatMap((l) => l.linked).map((i) => [i.id, i])).values()];
+  const done = linked.filter((i) => i.status === 'done').length;
+  const go = sum(lines, (l) => (l.state === 'done' ? 0 : l.line.go));
+  const pct = linked.length ? Math.round((done / linked.length) * 100) : 0;
 
   return (
-    <section className={`pm${open ? ' is-open' : ''} is-${when}`}>
-      <h2 className="pm-h">
-        <button type="button" className="pm-head" aria-expanded={open} aria-controls={id} onClick={onToggle}>
-          <span className="pm-title">
-            <span className="pm-name">{month.label}</span>
-            {when === 'now' && <span className="pm-badge">Now</span>}
-            {when === 'past' && <span className="pm-badge is-quiet">{pct === 100 ? 'Done' : 'Past'}</span>}
-          </span>
-          <span className="pm-stats">{stats.join(' · ')}</span>
-          <span className="pm-cats">
-            {info.groups.map((g) => (
-              <span key={g.cat.id} style={{ '--cat': g.cat.color }} title={`${g.cat.label}: ${g.lines.length}`}>
-                <Icon name={g.cat.id} size={13} />
-                {g.lines.length}
-              </span>
-            ))}
-          </span>
-          <span className="pm-progress" aria-hidden="true">
-            <span style={{ width: `${pct}%` }} />
-          </span>
-          <Icon name="chevron" size={18} className="pm-chevron" />
-        </button>
-      </h2>
-
-      {open && (
-        <div className="pm-body" id={id}>
-          {info.groups.map((g) => {
-            const linked = g.lines.flatMap((l) => l.linked);
-            const done = linked.filter((i) => i.status === 'done').length;
-            const go = sum(g.lines, (l) => l.line.go);
-            return (
-              <section key={g.cat.id} className="pm-cat" style={{ '--cat': g.cat.color }}>
-                <h3>
-                  <Icon name={g.cat.id} size={15} />
-                  {g.cat.label}
-                  <span>
-                    {[linked.length > 0 && `${done} of ${linked.length} done`, go > 0 && goDays(go)].filter(Boolean).join(' · ')}
-                  </span>
-                </h3>
-                <ul>
-                  {g.lines.map((l, i) => (
-                    <Line key={i} {...l} onOpen={onOpen} />
-                  ))}
-                </ul>
-              </section>
-            );
-          })}
+    <section
+      className={`plan-card${big ? ' is-big' : ''}`}
+      style={{ '--cat': cat.color, '--on-cat': inkOn(cat.color) }}
+      aria-label={cat.label}
+    >
+      <div className="plan-card-head">
+        <div>
+          <p className="now-kicker">
+            ({String(index + 1).padStart(2, '0')}) {cat.label}
+          </p>
+          {linked.length > 0 && (
+            <p className="plan-num">
+              {done}
+              <span>/{linked.length} done</span>
+            </p>
+          )}
         </div>
+        {go > 0 && <p className="plan-go">{goDays(go)} left</p>}
+      </div>
+      {linked.length > 0 && (
+        <span className="now-line" aria-hidden="true">
+          <span style={{ width: `${pct}%` }} />
+        </span>
       )}
+      <ul className="pv-lines">
+        {lines.map((l, i) => (
+          <Line key={i} {...l} onOpen={onOpen} />
+        ))}
+      </ul>
     </section>
   );
 }
 
 /**
- * The whole plan, a month to a card. This month starts open; every month
- * expands into its lines by kind, each with the items it names, where they
- * stand, and the GO train days the books should take. The words live in
- * data/plan.js; done-ness comes from the shelf, so it ticks itself off.
+ * The plan, one month at a time. The months are a row of tiles across the
+ * top, each with how much of it is done; picking one shows its books as one
+ * big checklist and everything else as a card per medium.
  */
 export default function PlanView({ items, onOpen }) {
   const byId = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
@@ -188,17 +145,9 @@ export default function PlanView({ items, onOpen }) {
   const d = new Date();
   const now = d.getFullYear() * 12 + d.getMonth();
   const when = (m) => (m.to < now ? 'past' : m.from <= now ? 'now' : 'later');
-  const firstOpen = months.find(({ month }) => when(month) !== 'past')?.month.label;
-
-  const [open, setOpen] = useState(() => new Set(firstOpen ? [firstOpen] : []));
-  const toggle = (label) =>
-    setOpen((s) => {
-      const next = new Set(s);
-      if (next.has(label)) next.delete(label);
-      else next.add(label);
-      return next;
-    });
-  const allOpen = months.every(({ month }) => open.has(month.label));
+  const current = months.find(({ month }) => when(month) !== 'past')?.month.label ?? months.at(-1)?.month.label;
+  const [picked, setPicked] = useState(current);
+  const shown = months.find(({ month }) => month.label === picked) ?? months[0];
 
   const ahead = months.filter(({ month }) => when(month) !== 'past');
   const totals = {
@@ -209,61 +158,82 @@ export default function PlanView({ items, onOpen }) {
   const first = months[0]?.month.label.replace(/^(\w+) .*?(\d{4})$/, '$1 $2');
   const last = months.at(-1)?.month.label.replace(/^.* to /, '');
 
+  // Books first and big, since they are most of every month; then the rest.
+  const groups = shown ? [...shown.info.groups].sort((a, b) => (b.cat.id === 'book') - (a.cat.id === 'book')) : [];
+  const [lead, ...rest] = groups[0]?.cat.id === 'book' ? groups : [null, ...groups];
+
   return (
-    <main className="page">
-      <section className="section">
-        <div className="section-head">
+    <main className="rd-page plan">
+      <header className="rd-head">
+        <p className="rd-eyebrow">{first && last ? `${first} to ${last}` : 'Month by month'}</p>
+        <h1 className="rd-title">
+          The <em style={{ '--em': category('comic').color }}>plan</em>
+        </h1>
+      </header>
+
+      <dl className="rd-stats">
+        <div>
+          <dd>
+            {totals.done}
+            <small>/{totals.items}</small>
+          </dd>
+          <dt>planned things done</dt>
+        </div>
+        {totals.goLeft > 0 && (
           <div>
-            <h2>The Plan</h2>
-            <p>
-              {first && last ? `${first} to ${last}, month by month. ` : ''}
-              Tap a month to see everything in it.
-            </p>
-          </div>
-          <div className="section-tools">
-            <button
-              type="button"
-              className="view-all"
-              onClick={() => setOpen(allOpen ? new Set() : new Set(months.map(({ month }) => month.label)))}
-            >
-              {allOpen ? 'Collapse all' : 'Expand all'}
-              <Icon name="chevron" size={14} className={allOpen ? 'is-flipped' : undefined} />
-            </button>
-          </div>
-        </div>
-
-        <div className="pm-summary">
-          <span>
-            <b>{totals.done}</b> of {totals.items} planned things done
-          </span>
-          {totals.goLeft > 0 && (
-            <span>
-              <b>{totals.goLeft}</b> GO days of reading ahead
-            </span>
-          )}
-          <span>
-            <b>{ahead.length}</b> {ahead.length === 1 ? 'month' : 'months'} to go
-          </span>
-        </div>
-
-        {months.length === 0 ? (
-          <p className="quiet">Nothing planned yet. Add months to src/data/plan.js.</p>
-        ) : (
-          <div className="pm-list">
-            {months.map(({ month, info }) => (
-              <Month
-                key={month.label}
-                month={month}
-                info={info}
-                when={when(month)}
-                open={open.has(month.label)}
-                onToggle={() => toggle(month.label)}
-                onOpen={onOpen}
-              />
-            ))}
+            <dd>{totals.goLeft}</dd>
+            <dt>GO days of reading ahead</dt>
           </div>
         )}
-      </section>
+        <div>
+          <dd>{ahead.length}</dd>
+          <dt>{ahead.length === 1 ? 'month' : 'months'} to go</dt>
+        </div>
+      </dl>
+
+      {months.length === 0 ? (
+        <p className="quiet">Nothing planned yet. Add months to src/data/plan.js.</p>
+      ) : (
+        <>
+          <div className="plan-months" role="tablist" aria-label="Month">
+            {months.map(({ month, info }) => {
+              const pct = info.items ? Math.round((info.done / info.items) * 100) : 0;
+              const on = month.label === shown?.month.label;
+              return (
+                <button
+                  key={month.label}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  className={`plan-month is-${when(month)}${on ? ' is-on' : ''}`}
+                  onClick={() => setPicked(month.label)}
+                >
+                  <span className="plan-month-name">{month.label.replace(/ \d{4}$/, '')}</span>
+                  <span className="plan-month-meta">
+                    {when(month) === 'now' ? 'Now · ' : ''}
+                    {info.items ? `${info.done}/${info.items}` : `${info.lineCount} lines`}
+                  </span>
+                  <span className="plan-month-line" aria-hidden="true">
+                    <span style={{ width: `${pct}%` }} />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {shown && (
+            <div className="plan-grid" role="tabpanel" aria-label={shown.month.label}>
+              {lead && <CatCard group={lead} index={0} onOpen={onOpen} big />}
+              <div className="plan-rest">
+                {rest.map((g, i) => (
+                  <CatCard key={g.cat.id} group={g} index={i + (lead ? 1 : 0)} onOpen={onOpen} />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
       <Countdown items={items} onOpen={onOpen} />
     </main>
   );

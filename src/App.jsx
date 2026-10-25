@@ -4,6 +4,7 @@ import BacklogBoard from './components/BacklogBoard.jsx';
 import BookDetail from './components/BookDetail.jsx';
 import BooksView from './components/BooksView.jsx';
 import CatNav from './components/CatNav.jsx';
+import CreditsView from './components/CreditsView.jsx';
 import Footer from './components/Footer.jsx';
 import HomeView from './components/HomeView.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
@@ -15,6 +16,7 @@ import { books as rawBooks } from './data/books.js';
 import { categoryByRoute } from './data/categories.js';
 import { media } from './data/media.js';
 import { buildCatalogue } from './lib/catalogue.js';
+import { installSidewaysWheel } from './lib/wheel.js';
 import { DEFAULT_WEIGHTS, scoreAll } from './lib/score.js';
 import { useShelf } from './lib/shelf.js';
 import { loadWeights, saveWeights } from './lib/storage.js';
@@ -50,6 +52,7 @@ export default function App() {
   const shelf = useShelf();
 
   useEffect(() => saveWeights(weights), [weights]);
+  useEffect(installSidewaysWheel, []);
 
   useEffect(() => {
     const onHash = () => {
@@ -71,11 +74,13 @@ export default function App() {
   const cat = categoryByRoute(route);
   const section = route === 'plan' ? route : route === 'backlog' || route === 'covers' || cat ? 'backlog' : 'now';
   const view =
-    route === 'plan' ? (
+    route === 'credits' ? (
+      <CreditsView />
+    ) : route === 'plan' ? (
       <PlanView items={items} onOpen={open} />
     ) : route === 'backlog' ? (
       <main className="page">
-        <BacklogBoard items={items} onOpen={open} title="Backlog" subtitle="Everything queued or waiting, by category." startOpen />
+        <BacklogBoard items={items} onOpen={open} title="Backlog" />
       </main>
     ) : route === 'covers' ? (
       <BooksView books={books} weights={weights} setWeights={setWeights} onOpen={open} shelf={shelf} />

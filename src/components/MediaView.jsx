@@ -4,6 +4,7 @@ import { actions } from '../lib/actions.js';
 import { MEDIA_SORTS, selectMedia } from '../lib/select.js';
 import AddItem from './AddItem.jsx';
 import CategoryHero from './CategoryHero.jsx';
+import { inkOn } from './NowCard.jsx';
 import { Icon } from './Icons.jsx';
 import PosterTile from './PosterTile.jsx';
 
@@ -51,7 +52,7 @@ export default function MediaView({ cat, items, onOpen, shelf }) {
     : [{ id: 'all', list: visible }];
 
   return (
-    <main className="cat-page">
+    <main className="cat-page" style={{ '--cat': cat.color, '--on-cat': inkOn(cat.color) }}>
       <CategoryHero cat={cat} mine={mine} onOpen={onOpen} act={act} canEdit={shelf.canEdit} />
 
       <div className="cat-tools">

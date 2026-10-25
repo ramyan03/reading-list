@@ -27,6 +27,10 @@ export default function Footer({ shelf, onAdmin }) {
       </span>
 
       <span>
+        <a href="#credits">Credits</a>
+      </span>
+
+      <span>
         <a href={REVIEWS_ORIGIN}>Ramyan Reviews &rarr;</a>
       </span>
     </footer>
