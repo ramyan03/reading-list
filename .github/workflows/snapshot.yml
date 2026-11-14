@@ -1,0 +1,55 @@
+# Saves the live shelf to the `snapshot` branch, so anything that can read the
+# repo (a Claude chat that can't reach the site) sees the shelf as it stands,
+# app edits included. Vercel ignores that branch (vercel.json).
+name: Snapshot shelf
+
+on:
+  schedule:
+    - cron: '23 */3 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: true
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for the deploy
+        if: github.event_name == 'push'
+        run: sleep 150
+
+      - name: Fetch the shelf
+        run: |
+          mkdir out
+          for path in state shelf; do
+            for try in 1 2 3; do
+              curl -fsS "https://ramyan-reads.vercel.app/api/$path" -o "out/$path.json" && break
+              sleep 20
+            done
+            test -s "out/$path.json"
+          done
+          jq -S . out/state.json > out/state.pretty.json && mv out/state.pretty.json out/state.json
+          jq -S . out/shelf.json > out/shelf.pretty.json && mv out/shelf.pretty.json out/shelf.json
+
+      - name: Commit to the snapshot branch
+        env:
+          REPO: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
+        run: |
+          git config --global user.name "shelf-snapshot"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git clone --depth 1 --branch snapshot "$REPO" snap 2>/dev/null; then :; else
+            mkdir snap && cd snap && git init -b snapshot && git remote add origin "$REPO" && cd ..
+          fi
+          cp out/state.json out/shelf.json snap/
+          cd snap
+          git add state.json shelf.json
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin snapshot

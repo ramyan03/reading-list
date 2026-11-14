@@ -17,7 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { catalogue, shelfState, slim } from '../api/_state.js';
-import { EDITABLE, thisMonth } from '../src/lib/catalogue.js';
+import { buildRecord, parseValue } from './_edit.mjs';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -67,12 +67,6 @@ async function find(words) {
   out(catalogue(recs).filter((i) => i.title.toLowerCase().includes(q)).map(slim));
 }
 
-const parse = (v) => {
-  if (v === 'null') return null;
-  if (/^-?\d+(\.\d+)?$/.test(v)) return Number(v);
-  return v;
-};
-
 async function set(id, pairs) {
   if (!id || !pairs.length) fail('Usage: set <id> field=value ...');
   const { records: recs, synced } = await records();
@@ -85,28 +79,15 @@ async function set(id, pairs) {
   for (const p of pairs) {
     const at = p.indexOf('=');
     if (at < 1) fail(`Expected field=value, got ${p}`);
-    const k = p.slice(0, at);
-    if (!EDITABLE.includes(k)) fail(`${k} is not editable. Editable: ${EDITABLE.join(', ')}`);
-    fields[k] = parse(p.slice(at + 1));
+    fields[p.slice(0, at)] = parseValue(p.slice(at + 1));
   }
 
-  // Same side effects as setStatus in src/lib/actions.js.
-  if ('status' in fields && fields.status !== item.status) {
-    const s = fields.status;
-    if (s === 'done' && !('finished' in fields)) fields.finished = item.finished ?? thisMonth();
-    if (s === 'active' && !('started' in fields)) fields.started = item.started ?? thisMonth();
-    if (s === 'next' && !('order' in fields)) {
-      fields.order = Math.max(0, ...items.filter((i) => i.cat === item.cat && i.status === 'next' && i.order != null).map((i) => i.order)) + 1;
-    } else if (s !== 'next' && !('order' in fields)) fields.order = null;
+  let record;
+  try {
+    record = buildRecord(items, recs, id, fields);
+  } catch (err) {
+    fail(err.message);
   }
-  if (item.total && typeof fields.progress === 'number') fields.progress = Math.min(Math.max(0, fields.progress), item.total);
-
-  const rec = { ...(recs[id] ?? {}) };
-  for (const [k, v] of Object.entries(fields)) {
-    if (v === null) delete rec[k];
-    else rec[k] = v;
-  }
-  const record = Object.keys(rec).length ? rec : null;
 
   if (dryRun) return out({ id, before: recs[id] ?? null, after: record });
 

@@ -118,6 +118,23 @@ line: the `KV_` variables there would point local dev at the real shelf) or
 (three picks for today) and `reads-update` (a progress check-in that saves).
 Copy those folders into `~/.claude/skills/` to install them.
 
+## From a Claude chat, through GitHub
+
+A claude.ai chat can push to this repo but can't reach the site, so both
+directions go through git:
+
+- **Chat → site.** The chat commits a CSV to `updates/` (`id,field,value`, one
+  field per row; see `updates/README.md`). The production build runs
+  `scripts/apply-updates.mjs` before `vite build`, which applies new files to
+  Upstash with the same rules as `shelf.mjs set` and records them in the Redis
+  hash `reads:applied`, so each file applies once. Bad rows are logged and
+  skipped, and nothing in it can fail the build. Try a file locally with
+  `npm run updates -- --local` (dev store) or `-- --dry-run`.
+- **Site → chat.** `.github/workflows/snapshot.yml` saves `/api/state` and
+  `/api/shelf` to the `snapshot` branch every three hours and a few minutes after
+  every push to `main`, so the chat reads the shelf with app edits included.
+  `vercel.json` keeps that branch from deploying.
+
 ## Adding things
 
 From the app: sign in with Admin, open a category, press **Add**. Permanent additions belong in
