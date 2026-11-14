@@ -10,7 +10,7 @@ export const DOOMSDAY = {
   date: '2026-12-18',
   start: '2026-09-01',
   project: 'doomsday',
-  note: 'About 33 hours of Hickman, around 2 hours a week, finished by mid-November. Then the MCU gaps.',
+  note: 'About 33 hours of Hickman. Behind as of mid-November: ~5 hours a weekend to finish by Dec 18. Then the MCU gaps.',
 };
 
 export const PLAN = [
@@ -37,27 +37,30 @@ export const PLAN = [
       {
         label: 'November 2026',
         lines: [
-          { cat: 'book', text: 'Children of Dune', words: '88k left', go: 4, flag: 'Before Dec 18 🪐', ids: ['children-of-dune-frank-herbert'] },
-          { cat: 'book', text: 'The Book Thief', words: '120k', go: 6, ids: ['the-book-thief-markus-zusak'] },
-          { cat: 'book', text: 'Things Fall Apart', note: 'Filler', words: '60k', go: 3, ids: ['things-fall-apart-chinua-achebe'] },
+          { cat: 'book', text: 'Dune Messiah, reread', note: 'Nov 12 to 14, ready for Dune 3', words: '83k', go: 4, ids: ['dune-messiah-frank-herbert'] },
+          { cat: 'book', text: 'Children of Dune, from page 1', note: 'Nov 15 to 25', words: '220k', go: 11, flag: 'Before Dec 18 🪐', ids: ['children-of-dune-frank-herbert'] },
+          { cat: 'book', text: 'The Communist Manifesto', note: 'Filler, any single commute', words: '18k', go: 1, ids: ['the-communist-manifesto-karl-marx'] },
+          { cat: 'book', text: 'Frankenstein', note: 'Nov 26 to 29', words: '75k', go: 4, ids: ['frankenstein-mary-shelley'] },
+          { cat: 'anime', text: 'Hunter x Hunter: the Chimera Ant arc', note: 'Eps 76 to 148, ~29h. FMAB done', ids: ['anime-hunter-x-hunter-2011'] },
           { cat: 'show', text: 'Finish Bojack by mid-November, Band of Brothers on alternate evenings',
             ids: ['show-bojack-horseman', 'show-band-of-brothers'] },
           { cat: 'show', text: 'Slow Horses S1 after Bojack', note: '6 eps, ~4h', ids: [] },
           { cat: 'game', text: 'Shadow of the Colossus', note: '~8h, one weekend', ids: ['game-shadow-of-the-colossus'] },
-          { cat: 'comic', text: 'Finish the Hickman run by mid-November', note: 'Before Doomsday on Dec 18',
+          { cat: 'comic', text: 'Hickman: finish FF, then Avengers and New Avengers', note: '~5h a weekend to make Dec 18',
             ids: ['comic-fantastic-four-ff-hickman', 'comic-avengers-vol-5-hickman', 'comic-new-avengers-vol-3-hickman', 'comic-infinity', 'comic-secret-wars-2015'] },
-          { cat: 'manga', text: 'Monster ongoing, start Dandadan', note: 'Evenings', ids: ['manga-dandadan'] },
+          { cat: 'manga', text: 'Back to One Piece at ch. 215, start Monster or Dandadan', note: 'Evenings', ids: ['manga-one-piece', 'manga-monster', 'manga-dandadan'] },
         ],
       },
       {
         label: 'December 2026',
         lines: [
-          { cat: 'book', text: 'Frankenstein', words: '75k', go: 3.5, ids: ['frankenstein-mary-shelley'] },
-          { cat: 'book', text: 'To Kill a Mockingbird', words: '100k', go: 5, ids: ['to-kill-a-mockingbird-harper-lee'] },
+          { cat: 'book', text: 'To Kill a Mockingbird', note: 'Dec 1 to 5', words: '100k', go: 5, ids: ['to-kill-a-mockingbird-harper-lee'] },
+          { cat: 'book', text: 'Buffer: Dracula or Best Served Cold if there is time', note: 'Dec 5 to 17', ids: ['dracula-bram-stoker'] },
+          { cat: 'anime', text: 'Finish Hunter x Hunter, then short Top 250 movies around Hickman weekends', ids: ['anime-hunter-x-hunter-2011'] },
           { cat: 'show', text: 'Slow Horses S2, GoT S1 if there is time', note: 'Evenings', ids: [] },
           { cat: 'game', text: 'Before Your Eyes, any evening', note: '~2h, an emotional palate cleanser', ids: ['game-before-your-eyes'] },
           { cat: 'comic', text: 'Avengers: Doomsday, Dec 18', note: 'Everything was building to this', ids: [] },
-          { cat: 'manga', text: 'One Piece to the end of Water 7', note: 'Ch. ~300 to ~430', ids: [] },
+          { cat: 'manga', text: 'One Piece through Skypiea', note: 'From ch. 215', ids: ['manga-one-piece'] },
         ],
       },
     ],
@@ -68,7 +71,8 @@ export const PLAN = [
       {
         label: 'Jan to Feb 2027',
         lines: [
-          { cat: 'book', text: 'A Dance with Dragons', note: 'ASOIAF Book 5, ~20 GO days', ids: ['a-dance-with-dragons-george-r-r-martin'] },
+          { cat: 'book', text: 'A Feast for Crows, then A Dance with Dragons', note: 'ASOIAF 4 and 5, ~34 GO days', ids: ['a-feast-for-crows-george-r-r-martin', 'a-dance-with-dragons-george-r-r-martin'] },
+          { cat: 'anime', text: 'Frieren, then Ping Pong and Made in Abyss', note: 'After the quick Top 250 picks', ids: ['anime-frieren', 'anime-ping-pong-the-animation', 'anime-made-in-abyss'] },
           { cat: 'show', text: 'GoT seasons 1 to 2, finally in sync with the books', ids: [] },
           { cat: 'show', text: 'Slow Horses S3 to 4 through the winter', ids: ['show-slow-horses'] },
           { cat: 'game', text: 'Hollow Knight', note: '~30h, long winter evenings', ids: ['game-hollow-knight'] },
@@ -78,10 +82,10 @@ export const PLAN = [
       {
         label: 'Mar to Apr 2027',
         lines: [
-          { cat: 'book', text: 'The Trial, then Norwegian Wood again or start Brothers Karamazov', note: 'GO train',
-            ids: ['the-trial-franz-kafka'] },
+          { cat: 'book', text: 'Crime and Punishment, One Hundred Years of Solitude, then The Trial', note: 'GO train, ~20 days',
+            ids: ['crime-and-punishment-fyodor-dostoevsky', 'one-hundred-years-of-solitude-gabriel-garcia-marquez', 'the-trial-franz-kafka'] },
           { cat: 'show', text: 'The Wire S1', note: 'The real one, finally', ids: [] },
-          { cat: 'anime', text: 'Frieren, then Vinland Saga', note: '28 + 24 eps', ids: ['anime-frieren', 'anime-vinland-saga-season-2'] },
+          { cat: 'anime', text: 'Mid-length series: Dungeon Meshi, Orb, Cowboy Bebop', ids: ['anime-cowboy-bebop'] },
           { cat: 'game', text: 'Disco Elysium', note: '~25h, plays like a novel', ids: ['game-disco-elysium'] },
           { cat: 'manga', text: 'Start Vagabond, Goodnight Punpun when stable', ids: ['manga-oyasumi-punpun'] },
         ],
@@ -91,7 +95,7 @@ export const PLAN = [
         lines: [
           { cat: 'book', text: 'The Brothers Karamazov', note: 'A multi-month read, start here', ids: ['the-brothers-karamazov-fyodor-dostoevsky'] },
           { cat: 'show', text: 'The Wire S2 to 3, Mr Robot alternating', ids: ['show-mr-robot'] },
-          { cat: 'anime', text: 'Start Hunter x Hunter', note: '148 eps, long haul', ids: [] },
+          { cat: 'anime', text: 'Rakugo, Mob Psycho 100, March Comes in Like a Lion', ids: [] },
           { cat: 'game', text: 'Red Dead Redemption 2', note: '~60h, summer time for it at last', ids: ['game-red-dead-redemption-2'] },
           { cat: 'manga', text: 'Start 20th Century Boys, One Piece post-timeskip', ids: [] },
         ],

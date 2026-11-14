@@ -6,3 +6,4 @@ dist
 .data
 .env*.local
 .env
+public/updates-log.json

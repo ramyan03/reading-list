@@ -37,7 +37,12 @@ const dir = path.join(root, 'updates');
 const args = process.argv.slice(2);
 const local = args.includes('--local');
 const dryRun = args.includes('--dry-run');
-const log = (...a) => console.log('[updates]', ...a);
+const lines = [];
+const log = (...a) => {
+  const msg = a.join(' ');
+  lines.push(msg);
+  console.log('[updates]', msg);
+};
 const APPLIED = 'reads:applied';
 
 /** Rows of id, field, value. Quotes allowed around a value that has a comma. */
@@ -99,8 +104,34 @@ function stores() {
   };
 }
 
+// Production on Vercel. VERCEL_ENV is the usual signal; the branch is a backup
+// in case system variables aren't exposed to the build.
+const production = process.env.VERCEL_ENV === 'production' ||
+  (process.env.VERCEL === '1' && !process.env.VERCEL_ENV && process.env.VERCEL_GIT_COMMIT_REF === 'main');
+
+/**
+ * What happened, published with the site as /updates-log.json so the snapshot
+ * Action (and a chat reading the snapshot branch) can see it without build
+ * logs. Names of variables only, never their values.
+ */
+function writeLog() {
+  if (local || dryRun) return;
+  const out = {
+    at: new Date().toISOString(),
+    commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? null,
+    vercelEnv: process.env.VERCEL_ENV ?? null,
+    branch: process.env.VERCEL_GIT_COMMIT_REF ?? null,
+    hasUpstash: Boolean((process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL) && (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN)),
+    lines,
+  };
+  try {
+    fs.mkdirSync(path.join(root, 'public'), { recursive: true });
+    fs.writeFileSync(path.join(root, 'public/updates-log.json'), JSON.stringify(out, null, 2));
+  } catch {}
+}
+
 async function main() {
-  if (!local && !dryRun && process.env.VERCEL_ENV !== 'production') {
+  if (!local && !dryRun && !production) {
     log('not a Vercel production build, skipping');
     return;
   }
@@ -152,7 +183,9 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  // Never block a deploy over this; the next build retries the file.
-  console.error('[updates] failed, the site still deploys:', err.message);
-});
+main()
+  .catch((err) => {
+    // Never block a deploy over this; the next build retries the file.
+    log(`failed, the site still deploys: ${err.message}`);
+  })
+  .finally(writeLog);

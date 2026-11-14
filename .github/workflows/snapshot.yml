@@ -35,6 +35,7 @@ jobs:
             done
             test -s "out/$path.json"
           done
+          curl -fsS "https://ramyan-reads.vercel.app/updates-log.json" -o out/updates-log.json || echo '{"missing": true}' > out/updates-log.json
           jq -S . out/state.json > out/state.pretty.json && mv out/state.pretty.json out/state.json
           jq -S . out/shelf.json > out/shelf.pretty.json && mv out/shelf.pretty.json out/shelf.json
 
@@ -47,9 +48,9 @@ jobs:
           if git clone --depth 1 --branch snapshot "$REPO" snap 2>/dev/null; then :; else
             mkdir snap && cd snap && git init -b snapshot && git remote add origin "$REPO" && cd ..
           fi
-          cp out/state.json out/shelf.json snap/
+          cp out/state.json out/shelf.json out/updates-log.json snap/
           cd snap
-          git add state.json shelf.json
+          git add state.json shelf.json updates-log.json
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
           git push origin snapshot
