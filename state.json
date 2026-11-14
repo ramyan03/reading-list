@@ -1,0 +1,633 @@
+{
+  "active": [
+    {
+      "at": "Started recently",
+      "author": "William Shakespeare",
+      "cat": "book",
+      "id": "hamlet-william-shakespeare",
+      "mine": "Home read",
+      "note": "Indecision, revenge, and performance: Shakespeare's most psychological and most quoted work.",
+      "status": "active",
+      "title": "Hamlet"
+    },
+    {
+      "at": "About 4 entries in",
+      "author": "Marcus Aurelius",
+      "cat": "book",
+      "id": "meditations-marcus-aurelius",
+      "mine": "Side read at home",
+      "note": "A Roman Emperor's private notes on how to live: the most accessible and most honest Stoic text.",
+      "status": "active",
+      "title": "Meditations"
+    },
+    {
+      "at": "About 20% in",
+      "cat": "show",
+      "id": "show-bojack-horseman",
+      "note": "Evenings. Finish by mid-November.",
+      "status": "active",
+      "tier": "must",
+      "title": "Bojack Horseman"
+    },
+    {
+      "at": "Part 2",
+      "cat": "manga",
+      "id": "manga-chainsaw-man",
+      "myScore": 8,
+      "progress": 97,
+      "status": "active",
+      "title": "Chainsaw Man"
+    },
+    {
+      "cat": "manga",
+      "hrs": 18,
+      "id": "manga-monster",
+      "note": "Starting Oct 2026. Urasawa's masterpiece.",
+      "status": "active",
+      "tier": "must",
+      "title": "Monster"
+    },
+    {
+      "at": "Ch. ~300, entering Skypiea",
+      "cat": "manga",
+      "id": "manga-one-piece",
+      "myScore": 8,
+      "note": "On the iPad. Water 7 by year end (ch. ~430).",
+      "progress": 300,
+      "status": "active",
+      "tier": "must",
+      "title": "One Piece"
+    },
+    {
+      "at": "Vol. 2, #580. Vol. 1 and Dark Reign done",
+      "cat": "comic",
+      "hrs": 13,
+      "id": "comic-fantastic-four-ff-hickman",
+      "note": "Fantastic Four #570–611 and FF #1–23. Modern Doom's origin: Council of Reeds, Valeria, the Future Foundation.",
+      "progress": 19,
+      "status": "active",
+      "tier": "must",
+      "title": "Fantastic Four / FF (Hickman)",
+      "total": 65
+    }
+  ],
+  "deadline": {
+    "date": "2026-12-18",
+    "daysLeft": 35,
+    "items": [
+      {
+        "hrs": 5,
+        "id": "show-loki-season-1",
+        "status": "next",
+        "title": "Loki Season 1"
+      },
+      {
+        "hrs": 5,
+        "id": "show-loki-season-2",
+        "status": "next",
+        "title": "Loki Season 2"
+      },
+      {
+        "hrs": 9,
+        "id": "comic-avengers-vol-5-hickman",
+        "progress": 0,
+        "status": "next",
+        "title": "Avengers Vol. 5 (Hickman)",
+        "total": 44
+      },
+      {
+        "hrs": 13,
+        "id": "comic-fantastic-four-ff-hickman",
+        "progress": 19,
+        "status": "active",
+        "title": "Fantastic Four / FF (Hickman)",
+        "total": 65
+      },
+      {
+        "hrs": 1.5,
+        "id": "comic-infinity",
+        "progress": 0,
+        "status": "next",
+        "title": "Infinity",
+        "total": 6
+      },
+      {
+        "hrs": 6,
+        "id": "comic-new-avengers-vol-3-hickman",
+        "progress": 0,
+        "status": "next",
+        "title": "New Avengers Vol. 3 (Hickman)",
+        "total": 33
+      },
+      {
+        "hrs": 3.5,
+        "id": "comic-secret-wars-2015",
+        "progress": 0,
+        "status": "next",
+        "title": "Secret Wars (2015)",
+        "total": 9
+      }
+    ],
+    "note": "About 33 hours of Hickman, around 2 hours a week, finished by mid-November. Then the MCU gaps.",
+    "project": "doomsday",
+    "start": "2026-09-01",
+    "title": "Avengers: Doomsday"
+  },
+  "plan": [
+    {
+      "lines": [
+        {
+          "cat": "book",
+          "flag": "Before Dec 18 🪐",
+          "go": 4,
+          "items": [
+            {
+              "id": "children-of-dune-frank-herbert",
+              "status": "next",
+              "title": "Children of Dune"
+            }
+          ],
+          "text": "Children of Dune",
+          "words": "88k left"
+        },
+        {
+          "cat": "book",
+          "go": 6,
+          "items": [
+            {
+              "id": "the-book-thief-markus-zusak",
+              "status": "backlog",
+              "title": "The Book Thief"
+            }
+          ],
+          "text": "The Book Thief",
+          "words": "120k"
+        },
+        {
+          "cat": "book",
+          "go": 3,
+          "items": [
+            {
+              "id": "things-fall-apart-chinua-achebe",
+              "status": "backlog",
+              "title": "Things Fall Apart"
+            }
+          ],
+          "note": "Filler",
+          "text": "Things Fall Apart",
+          "words": "60k"
+        },
+        {
+          "cat": "show",
+          "items": [
+            {
+              "id": "show-bojack-horseman",
+              "status": "active",
+              "title": "Bojack Horseman"
+            },
+            {
+              "id": "show-band-of-brothers",
+              "status": "next",
+              "title": "Band of Brothers"
+            }
+          ],
+          "text": "Finish Bojack by mid-November, Band of Brothers on alternate evenings"
+        },
+        {
+          "cat": "show",
+          "items": [],
+          "note": "6 eps, ~4h",
+          "text": "Slow Horses S1 after Bojack"
+        },
+        {
+          "cat": "game",
+          "items": [
+            {
+              "id": "game-shadow-of-the-colossus",
+              "status": "next",
+              "title": "Shadow of the Colossus"
+            }
+          ],
+          "note": "~8h, one weekend",
+          "text": "Shadow of the Colossus"
+        },
+        {
+          "cat": "comic",
+          "items": [
+            {
+              "id": "comic-fantastic-four-ff-hickman",
+              "status": "active",
+              "title": "Fantastic Four / FF (Hickman)"
+            },
+            {
+              "id": "comic-avengers-vol-5-hickman",
+              "status": "next",
+              "title": "Avengers Vol. 5 (Hickman)"
+            },
+            {
+              "id": "comic-new-avengers-vol-3-hickman",
+              "status": "next",
+              "title": "New Avengers Vol. 3 (Hickman)"
+            },
+            {
+              "id": "comic-infinity",
+              "status": "next",
+              "title": "Infinity"
+            },
+            {
+              "id": "comic-secret-wars-2015",
+              "status": "next",
+              "title": "Secret Wars (2015)"
+            }
+          ],
+          "note": "Before Doomsday on Dec 18",
+          "text": "Finish the Hickman run by mid-November"
+        },
+        {
+          "cat": "manga",
+          "items": [
+            {
+              "id": "manga-dandadan",
+              "status": "next",
+              "title": "Dandadan"
+            }
+          ],
+          "note": "Evenings",
+          "text": "Monster ongoing, start Dandadan"
+        }
+      ],
+      "month": "November 2026"
+    },
+    {
+      "lines": [
+        {
+          "cat": "book",
+          "go": 3.5,
+          "items": [
+            {
+              "id": "frankenstein-mary-shelley",
+              "status": "next",
+              "title": "Frankenstein"
+            }
+          ],
+          "text": "Frankenstein",
+          "words": "75k"
+        },
+        {
+          "cat": "book",
+          "go": 5,
+          "items": [
+            {
+              "id": "to-kill-a-mockingbird-harper-lee",
+              "status": "next",
+              "title": "To Kill a Mockingbird"
+            }
+          ],
+          "text": "To Kill a Mockingbird",
+          "words": "100k"
+        },
+        {
+          "cat": "show",
+          "items": [],
+          "note": "Evenings",
+          "text": "Slow Horses S2, GoT S1 if there is time"
+        },
+        {
+          "cat": "game",
+          "items": [
+            {
+              "id": "game-before-your-eyes",
+              "status": "next",
+              "title": "Before Your Eyes"
+            }
+          ],
+          "note": "~2h, an emotional palate cleanser",
+          "text": "Before Your Eyes, any evening"
+        },
+        {
+          "cat": "comic",
+          "items": [],
+          "note": "Everything was building to this",
+          "text": "Avengers: Doomsday, Dec 18"
+        },
+        {
+          "cat": "manga",
+          "items": [],
+          "note": "Ch. ~300 to ~430",
+          "text": "One Piece to the end of Water 7"
+        }
+      ],
+      "month": "December 2026"
+    }
+  ],
+  "recentlyFinished": [
+    {
+      "author": "Haruki Murakami",
+      "cat": "book",
+      "finished": "2026-10",
+      "id": "norwegian-wood-haruki-murakami",
+      "mine": "Owned, GO train after P&P",
+      "myScore": 7,
+      "note": "Murakami's most emotionally direct novel: grief, memory, and first love in 1960s Tokyo.",
+      "status": "done",
+      "title": "Norwegian Wood"
+    },
+    {
+      "author": "Oscar Wilde",
+      "cat": "book",
+      "finished": "2026-09",
+      "id": "the-picture-of-dorian-gray-oscar-wilde",
+      "mine": "8.5/10, full review written",
+      "myScore": 8.5,
+      "note": "A man's soul corrupts while his portrait ages: Wilde's only novel, packed with aphorisms about beauty and sin.",
+      "status": "done",
+      "title": "The Picture of Dorian Gray"
+    },
+    {
+      "author": "Jane Austen",
+      "cat": "book",
+      "finished": "2026-10",
+      "id": "pride-and-prejudice-jane-austen",
+      "mine": "GO train",
+      "myScore": 8,
+      "note": "Five million ratings don't lie: Austen's portrait of class, marriage, and a woman who refuses to be managed.",
+      "status": "done",
+      "title": "Pride and Prejudice"
+    },
+    {
+      "author": "Aldous Huxley",
+      "cat": "book",
+      "finished": "2026-09",
+      "id": "brave-new-world-aldous-huxley",
+      "myScore": 6,
+      "note": "Pleasure as control: Huxley's dystopia is more relevant than Orwell's because it already happened.",
+      "status": "done",
+      "title": "Brave New World"
+    },
+    {
+      "author": "Albert Camus",
+      "cat": "book",
+      "finished": "2026-10",
+      "id": "the-stranger-albert-camus",
+      "mine": "GO train, ~2 days",
+      "myScore": 9,
+      "note": "A man kills someone and feels nothing: the defining existentialist novel, read in an afternoon.",
+      "status": "done",
+      "title": "The Stranger"
+    },
+    {
+      "author": "F. Scott Fitzgerald",
+      "cat": "book",
+      "finished": "2026-09",
+      "id": "the-great-gatsby-f-scott-fitzgerald",
+      "myScore": 7,
+      "note": "The American Dream exposed as hollow: the most taught novel in American schools for a reason.",
+      "status": "done",
+      "title": "The Great Gatsby"
+    },
+    {
+      "author": "John Steinbeck",
+      "cat": "book",
+      "finished": "2026-11",
+      "id": "of-mice-and-men-john-steinbeck",
+      "mine": "To buy, ~2 GO days",
+      "myScore": 8,
+      "note": "Two migrant workers with one dream: Steinbeck's most economical and devastating story.",
+      "status": "done",
+      "title": "Of Mice and Men"
+    },
+    {
+      "at": "Book 1",
+      "author": "Pierce Brown",
+      "cat": "book",
+      "finished": "2026-10",
+      "id": "red-rising-pierce-brown",
+      "mine": "Gift (6 books), reading Book 1 with friends",
+      "myScore": 8,
+      "progress": 90,
+      "status": "done",
+      "title": "Red Rising",
+      "total": 382
+    },
+    {
+      "at": "About halfway, finish by end of October",
+      "cat": "anime",
+      "finished": "2026-11",
+      "hrs": 13,
+      "id": "anime-fullmetal-alchemist-brotherhood",
+      "myScore": 9,
+      "note": "Evenings, 3 to 4 eps a week.",
+      "progress": 56,
+      "status": "done",
+      "tier": "must",
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "total": 64
+    },
+    {
+      "cat": "comic",
+      "finished": "2026-10",
+      "id": "comic-clayface-detective-comics",
+      "note": "Detective Comics #40, #298 and #604 to #607.",
+      "progress": 6,
+      "status": "done",
+      "title": "Clayface (Detective Comics)",
+      "total": 6
+    }
+  ],
+  "synced": true,
+  "today": "2026-11-13",
+  "units": {
+    "anime": "eps",
+    "book": "pages",
+    "comic": "issues",
+    "game": null,
+    "manga": "ch",
+    "show": "eps"
+  },
+  "upNext": {
+    "anime": [
+      {
+        "cat": "anime",
+        "hrs": 11,
+        "id": "anime-frieren",
+        "note": "2027. 28 eps. Quietly beautiful.",
+        "status": "backlog",
+        "suggested": true,
+        "tier": "must",
+        "title": "Frieren"
+      },
+      {
+        "cat": "anime",
+        "hrs": 5,
+        "id": "anime-ping-pong-the-animation",
+        "note": "11 eps. Greatest sports anime.",
+        "status": "backlog",
+        "suggested": true,
+        "tier": "must",
+        "title": "Ping Pong The Animation"
+      },
+      {
+        "cat": "anime",
+        "hrs": 6,
+        "id": "anime-a-place-further-than-the-universe",
+        "note": "13 eps. Will make you cry.",
+        "status": "backlog",
+        "suggested": true,
+        "tier": "must",
+        "title": "A Place Further Than The Universe"
+      }
+    ],
+    "book": [
+      {
+        "author": "E.B. White",
+        "cat": "book",
+        "id": "charlotte-s-web-e-b-white",
+        "mine": "Gift, read any day, basically one GO trip",
+        "status": "next",
+        "title": "Charlotte's Web"
+      },
+      {
+        "author": "John Steinbeck",
+        "cat": "book",
+        "id": "east-of-eden-john-steinbeck",
+        "mine": "Gift, slot after Of Mice and Men (Steinbeck run)",
+        "note": "Good and evil across two families in California: Steinbeck's most ambitious novel and his personal favourite.",
+        "status": "next",
+        "title": "East of Eden"
+      },
+      {
+        "author": "Harper Lee",
+        "cat": "book",
+        "id": "to-kill-a-mockingbird-harper-lee",
+        "mine": "Gift, replaces Alchemist as quick 2026 read",
+        "note": "Racial injustice seen through a child's eyes: the most morally instructive American novel.",
+        "status": "next",
+        "title": "To Kill a Mockingbird"
+      }
+    ],
+    "comic": [
+      {
+        "cat": "comic",
+        "hrs": 9,
+        "id": "comic-avengers-vol-5-hickman",
+        "note": "Avengers #1–44. Interleave with New Avengers from about #18.",
+        "progress": 0,
+        "status": "next",
+        "tier": "must",
+        "title": "Avengers Vol. 5 (Hickman)",
+        "total": 44
+      },
+      {
+        "cat": "comic",
+        "hrs": 6,
+        "id": "comic-new-avengers-vol-3-hickman",
+        "note": "New Avengers #1–33. Illuminati and incursions, the backbone of what Doomsday adapts.",
+        "progress": 0,
+        "status": "next",
+        "tier": "must",
+        "title": "New Avengers Vol. 3 (Hickman)",
+        "total": 33
+      },
+      {
+        "cat": "comic",
+        "hrs": 1.5,
+        "id": "comic-infinity",
+        "note": "Infinity #1–6. Slots in around New Avengers #7–12.",
+        "progress": 0,
+        "status": "next",
+        "tier": "must",
+        "title": "Infinity",
+        "total": 6
+      }
+    ],
+    "game": [
+      {
+        "cat": "game",
+        "hrs": 8,
+        "id": "game-soma",
+        "note": "October 2026. Philosophical horror, one long weekend.",
+        "status": "next",
+        "tier": "must",
+        "title": "SOMA"
+      },
+      {
+        "cat": "game",
+        "hrs": 8,
+        "id": "game-shadow-of-the-colossus",
+        "note": "Nov 2026. Meditative masterpiece.",
+        "status": "next",
+        "tier": "must",
+        "title": "Shadow of the Colossus"
+      },
+      {
+        "cat": "game",
+        "hrs": 2,
+        "id": "game-before-your-eyes",
+        "note": "Dec 2026. One evening.",
+        "status": "next",
+        "tier": "must",
+        "title": "Before Your Eyes"
+      }
+    ],
+    "manga": [
+      {
+        "cat": "manga",
+        "hrs": 8,
+        "id": "manga-dandadan",
+        "note": "Starting Nov 2026. Insane energy.",
+        "status": "next",
+        "tier": "must",
+        "title": "Dandadan"
+      },
+      {
+        "cat": "manga",
+        "hrs": 3,
+        "id": "manga-our-happy-hours",
+        "note": "Short manhwa. Emotionally wrecking.",
+        "status": "backlog",
+        "suggested": true,
+        "tier": "must",
+        "title": "Our Happy Hours"
+      },
+      {
+        "cat": "manga",
+        "hrs": 8,
+        "id": "manga-yokohama-kaidashi-kikou",
+        "note": "Post-apocalyptic slice of life.",
+        "status": "backlog",
+        "suggested": true,
+        "tier": "must",
+        "title": "Yokohama Kaidashi Kikou"
+      }
+    ],
+    "show": [
+      {
+        "cat": "show",
+        "hrs": 5,
+        "id": "show-fleabag",
+        "note": "Oct 2026. 12 eps. Perfect.",
+        "status": "next",
+        "tier": "must",
+        "title": "Fleabag"
+      },
+      {
+        "cat": "show",
+        "hrs": 11,
+        "id": "show-band-of-brothers",
+        "note": "Nov 2026. Peak prestige TV.",
+        "status": "next",
+        "tier": "must",
+        "title": "Band of Brothers"
+      },
+      {
+        "cat": "show",
+        "hrs": 18,
+        "id": "show-slow-horses",
+        "note": "Nov 2026–2027. Gary Oldman MI5 thriller.",
+        "status": "next",
+        "tier": "must",
+        "title": "Slow Horses"
+      }
+    ]
+  }
+}

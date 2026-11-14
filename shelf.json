@@ -1,0 +1,174 @@
+{
+  "records": {
+    "1984-george-orwell": {
+      "myScore": 6
+    },
+    "a-clash-of-kings-george-r-r-martin": {
+      "myScore": 9
+    },
+    "a-game-of-thrones-george-r-r-martin": {
+      "myScore": 9
+    },
+    "a-storm-of-swords-george-r-r-martin": {
+      "myScore": 9
+    },
+    "animal-farm-george-orwell": {
+      "myScore": 8
+    },
+    "anime-fullmetal-alchemist-brotherhood": {
+      "finished": "2026-11",
+      "myScore": 9,
+      "progress": 56,
+      "status": "done"
+    },
+    "before-they-are-hanged-joe-abercrombie": {
+      "myScore": 9
+    },
+    "brave-new-world-aldous-huxley": {
+      "myScore": 6
+    },
+    "comic-absolute-batman": {
+      "finished": "2025-10"
+    },
+    "comic-batgirl-year-one": {
+      "finished": "2025-10"
+    },
+    "comic-batman-a-death-in-the-family": {
+      "finished": "2025-10"
+    },
+    "comic-batman-a-lonely-place-of-dying": {
+      "finished": "2025-10"
+    },
+    "comic-batman-dark-victory": {
+      "finished": "2025-09"
+    },
+    "comic-batman-gotham-noir": {
+      "finished": "2025-09"
+    },
+    "comic-batman-haunted-knight": {
+      "finished": "2025-09"
+    },
+    "comic-batman-hush": {
+      "finished": "2025-10"
+    },
+    "comic-batman-sword-of-azrael": {
+      "finished": "2025-10"
+    },
+    "comic-batman-the-dark-knight-returns": {
+      "finished": "2025-09"
+    },
+    "comic-batman-the-killing-joke": {
+      "finished": "2025-10"
+    },
+    "comic-batman-the-long-halloween": {
+      "finished": "2025-09"
+    },
+    "comic-batman-the-man-who-laughs": {
+      "finished": "2025-09"
+    },
+    "comic-batman-under-the-red-hood": {
+      "finished": "2025-10"
+    },
+    "comic-batman-venom": {
+      "finished": "2025-09"
+    },
+    "comic-batman-year-one": {
+      "finished": "2025-09"
+    },
+    "comic-clayface-detective-comics": {
+      "finished": "2026-10",
+      "progress": 6,
+      "status": "done"
+    },
+    "comic-fantastic-four-ff-hickman": {
+      "at": "Vol. 2, #580. Vol. 1 and Dark Reign done",
+      "progress": 19
+    },
+    "comic-nightwing-year-one": {
+      "finished": "2025-10"
+    },
+    "comic-robin-year-one": {
+      "finished": "2025-09"
+    },
+    "dune-frank-herbert": {
+      "myScore": 10
+    },
+    "dune-messiah-frank-herbert": {
+      "myScore": 9
+    },
+    "fahrenheit-451-ray-bradbury": {
+      "myScore": 7
+    },
+    "homage-to-catalonia-george-orwell": {
+      "myScore": 8
+    },
+    "kafka-on-the-shore-haruki-murakami": {
+      "myScore": 10
+    },
+    "last-argument-of-kings-joe-abercrombie": {
+      "myScore": 10
+    },
+    "lord-of-the-flies-william-golding": {
+      "myScore": 6
+    },
+    "man-s-search-for-meaning-viktor-frankl": {
+      "myScore": 9
+    },
+    "norwegian-wood-haruki-murakami": {
+      "myScore": 7
+    },
+    "of-mice-and-men-john-steinbeck": {
+      "finished": "2026-11",
+      "myScore": 8,
+      "shelf": "owned",
+      "status": "done"
+    },
+    "pride-and-prejudice-jane-austen": {
+      "myScore": 8
+    },
+    "project-hail-mary-andy-weir": {
+      "myScore": 9
+    },
+    "red-rising-pierce-brown": {
+      "finished": "2026-10",
+      "myScore": 8,
+      "status": "done"
+    },
+    "slaughterhouse-five-kurt-vonnegut": {
+      "myScore": 8
+    },
+    "the-blade-itself-joe-abercrombie": {
+      "myScore": 9
+    },
+    "the-catcher-in-the-rye-j-d-salinger": {
+      "myScore": 6
+    },
+    "the-curious-incident-of-the-dog-in-the-night-time-mark-haddon": {
+      "myScore": 7
+    },
+    "the-great-gatsby-f-scott-fitzgerald": {
+      "myScore": 7
+    },
+    "the-hitchhiker-s-guide-to-the-galaxy-douglas-adams": {
+      "myScore": 7
+    },
+    "the-hunger-games-suzanne-collins": {
+      "myScore": 7
+    },
+    "the-little-prince-antoine-de-saint-exupery": {
+      "myScore": 7
+    },
+    "the-martian-andy-weir": {
+      "myScore": 10
+    },
+    "the-metamorphosis-franz-kafka": {
+      "myScore": 8
+    },
+    "the-setting-sun-osamu-dazai": {
+      "myScore": 9
+    },
+    "the-stranger-albert-camus": {
+      "myScore": 9
+    }
+  }
+}
