@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-14T00:37:28.715Z",
+  "commit": "5383ed5",
+  "vercelEnv": "production",
+  "branch": "main",
+  "hasUpstash": true,
+  "lines": [
+    "2026-11-13.csv: already applied",
+    "2026-11-13b.csv line 3: and-then-there-were-none-agatha-christie status=done",
+    "2026-11-13b.csv line 4: and-then-there-were-none-agatha-christie finished=2026-11",
+    "2026-11-13b.csv line 5: golden-son-red-rising-2-pierce-brown myScore=9",
+    "2026-11-13b.csv line 6: morning-star-red-rising-3-pierce-brown myScore=8",
+    "2026-11-13b.csv line 7: dune-messiah-frank-herbert status=active",
+    "2026-11-13b.csv line 8: dune-messiah-frank-herbert progress=204",
+    "2026-11-13b.csv line 9: dune-messiah-frank-herbert total=335",
+    "2026-11-13b.csv line 10: dune-messiah-frank-herbert at=Reread for Dune 3, day 2 (first read Nov 2023)",
+    "2026-11-13b.csv line 11: children-of-dune-frank-herbert order=1",
+    "2026-11-13b.csv line 12: children-of-dune-frank-herbert at=Starting again from page 1 after Messiah, Nov 15",
+    "2026-11-13b.csv line 13: frankenstein-mary-shelley order=2",
+    "2026-11-13b.csv line 14: to-kill-a-mockingbird-harper-lee order=3",
+    "2026-11-13b.csv line 15: the-communist-manifesto-karl-marx status=next",
+    "2026-11-13b.csv line 16: the-communist-manifesto-karl-marx order=4",
+    "2026-11-13b.csv line 17: the-communist-manifesto-karl-marx at=Filler for any single commute",
+    "2026-11-13b.csv line 18: charlotte-s-web-e-b-white order=5",
+    "2026-11-13b.csv line 19: charlotte-s-web-e-b-white at=Home read",
+    "2026-11-13b.csv line 20: east-of-eden-john-steinbeck order=8",
+    "2026-11-13b.csv: saved 10 item(s)"
+  ]
+}

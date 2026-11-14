@@ -12,6 +12,10 @@
     "a-storm-of-swords-george-r-r-martin": {
       "myScore": 9
     },
+    "and-then-there-were-none-agatha-christie": {
+      "finished": "2026-11",
+      "status": "done"
+    },
     "animal-farm-george-orwell": {
       "myScore": 8
     },
@@ -32,6 +36,14 @@
     },
     "brave-new-world-aldous-huxley": {
       "myScore": 6
+    },
+    "charlotte-s-web-e-b-white": {
+      "at": "Home read",
+      "order": 5
+    },
+    "children-of-dune-frank-herbert": {
+      "at": "Starting again from page 1 after Messiah, Nov 15",
+      "order": 1
     },
     "comic-absolute-batman": {
       "finished": "2025-10"
@@ -100,13 +112,25 @@
       "myScore": 10
     },
     "dune-messiah-frank-herbert": {
-      "myScore": 9
+      "at": "Reread for Dune 3, day 2 (first read Nov 2023)",
+      "myScore": 9,
+      "progress": 204,
+      "started": "2026-11",
+      "status": "active",
+      "total": 335
+    },
+    "east-of-eden-john-steinbeck": {
+      "order": 8
     },
     "fahrenheit-451-ray-bradbury": {
       "myScore": 7
     },
+    "frankenstein-mary-shelley": {
+      "order": 2
+    },
     "golden-son-red-rising-2-pierce-brown": {
       "finished": "2026-10",
+      "myScore": 9,
       "status": "done"
     },
     "hamlet-william-shakespeare": {
@@ -140,6 +164,7 @@
     },
     "morning-star-red-rising-3-pierce-brown": {
       "finished": "2026-11",
+      "myScore": 8,
       "status": "done"
     },
     "norwegian-wood-haruki-murakami": {
@@ -171,6 +196,11 @@
     "the-catcher-in-the-rye-j-d-salinger": {
       "myScore": 6
     },
+    "the-communist-manifesto-karl-marx": {
+      "at": "Filler for any single commute",
+      "order": 4,
+      "status": "next"
+    },
     "the-curious-incident-of-the-dog-in-the-night-time-mark-haddon": {
       "myScore": 7
     },
@@ -197,6 +227,9 @@
     },
     "the-stranger-albert-camus": {
       "myScore": 9
+    },
+    "to-kill-a-mockingbird-harper-lee": {
+      "order": 3
     }
   }
 }

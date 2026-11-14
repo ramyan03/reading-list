@@ -1,6 +1,20 @@
 {
   "active": [
     {
+      "at": "Reread for Dune 3, day 2 (first read Nov 2023)",
+      "author": "Frank Herbert",
+      "cat": "book",
+      "finished": "2023-11",
+      "id": "dune-messiah-frank-herbert",
+      "myScore": 9,
+      "note": "The cost of being the messiah: Paul Atreides faces the consequences of his own mythology.",
+      "progress": 204,
+      "started": "2026-11",
+      "status": "active",
+      "title": "Dune Messiah",
+      "total": 335
+    },
+    {
       "at": "About 4 entries in",
       "author": "Marcus Aurelius",
       "cat": "book",
@@ -112,7 +126,7 @@
         "total": 9
       }
     ],
-    "note": "About 33 hours of Hickman, around 2 hours a week, finished by mid-November. Then the MCU gaps.",
+    "note": "About 33 hours of Hickman. Behind as of mid-November: ~5 hours a weekend to finish by Dec 18. Then the MCU gaps.",
     "project": "doomsday",
     "start": "2026-09-01",
     "title": "Avengers: Doomsday"
@@ -122,8 +136,22 @@
       "lines": [
         {
           "cat": "book",
-          "flag": "Before Dec 18 🪐",
           "go": 4,
+          "items": [
+            {
+              "id": "dune-messiah-frank-herbert",
+              "status": "active",
+              "title": "Dune Messiah"
+            }
+          ],
+          "note": "Nov 12 to 14, ready for Dune 3",
+          "text": "Dune Messiah, reread",
+          "words": "83k"
+        },
+        {
+          "cat": "book",
+          "flag": "Before Dec 18 🪐",
+          "go": 11,
           "items": [
             {
               "id": "children-of-dune-frank-herbert",
@@ -131,35 +159,49 @@
               "title": "Children of Dune"
             }
           ],
-          "text": "Children of Dune",
-          "words": "88k left"
+          "note": "Nov 15 to 25",
+          "text": "Children of Dune, from page 1",
+          "words": "220k"
         },
         {
           "cat": "book",
-          "go": 6,
+          "go": 1,
           "items": [
             {
-              "id": "the-book-thief-markus-zusak",
-              "status": "backlog",
-              "title": "The Book Thief"
+              "id": "the-communist-manifesto-karl-marx",
+              "status": "next",
+              "title": "The Communist Manifesto"
             }
           ],
-          "text": "The Book Thief",
-          "words": "120k"
+          "note": "Filler, any single commute",
+          "text": "The Communist Manifesto",
+          "words": "18k"
         },
         {
           "cat": "book",
-          "go": 3,
+          "go": 4,
           "items": [
             {
-              "id": "things-fall-apart-chinua-achebe",
-              "status": "backlog",
-              "title": "Things Fall Apart"
+              "id": "frankenstein-mary-shelley",
+              "status": "next",
+              "title": "Frankenstein"
             }
           ],
-          "note": "Filler",
-          "text": "Things Fall Apart",
-          "words": "60k"
+          "note": "Nov 26 to 29",
+          "text": "Frankenstein",
+          "words": "75k"
+        },
+        {
+          "cat": "anime",
+          "items": [
+            {
+              "id": "anime-hunter-x-hunter-2011",
+              "status": "active",
+              "title": "Hunter x Hunter (2011)"
+            }
+          ],
+          "note": "Eps 76 to 148, ~29h. FMAB done",
+          "text": "Hunter x Hunter: the Chimera Ant arc"
         },
         {
           "cat": "show",
@@ -224,12 +266,22 @@
               "title": "Secret Wars (2015)"
             }
           ],
-          "note": "Before Doomsday on Dec 18",
-          "text": "Finish the Hickman run by mid-November"
+          "note": "~5h a weekend to make Dec 18",
+          "text": "Hickman: finish FF, then Avengers and New Avengers"
         },
         {
           "cat": "manga",
           "items": [
+            {
+              "id": "manga-one-piece",
+              "status": "paused",
+              "title": "One Piece"
+            },
+            {
+              "id": "manga-monster",
+              "status": "next",
+              "title": "Monster"
+            },
             {
               "id": "manga-dandadan",
               "status": "next",
@@ -237,26 +289,13 @@
             }
           ],
           "note": "Evenings",
-          "text": "Monster ongoing, start Dandadan"
+          "text": "Back to One Piece at ch. 215, start Monster or Dandadan"
         }
       ],
       "month": "November 2026"
     },
     {
       "lines": [
-        {
-          "cat": "book",
-          "go": 3.5,
-          "items": [
-            {
-              "id": "frankenstein-mary-shelley",
-              "status": "next",
-              "title": "Frankenstein"
-            }
-          ],
-          "text": "Frankenstein",
-          "words": "75k"
-        },
         {
           "cat": "book",
           "go": 5,
@@ -267,8 +306,32 @@
               "title": "To Kill a Mockingbird"
             }
           ],
+          "note": "Dec 1 to 5",
           "text": "To Kill a Mockingbird",
           "words": "100k"
+        },
+        {
+          "cat": "book",
+          "items": [
+            {
+              "id": "dracula-bram-stoker",
+              "status": "backlog",
+              "title": "Dracula"
+            }
+          ],
+          "note": "Dec 5 to 17",
+          "text": "Buffer: Dracula or Best Served Cold if there is time"
+        },
+        {
+          "cat": "anime",
+          "items": [
+            {
+              "id": "anime-hunter-x-hunter-2011",
+              "status": "active",
+              "title": "Hunter x Hunter (2011)"
+            }
+          ],
+          "text": "Finish Hunter x Hunter, then short Top 250 movies around Hickman weekends"
         },
         {
           "cat": "show",
@@ -296,9 +359,15 @@
         },
         {
           "cat": "manga",
-          "items": [],
-          "note": "Ch. ~300 to ~430",
-          "text": "One Piece to the end of Water 7"
+          "items": [
+            {
+              "id": "manga-one-piece",
+              "status": "paused",
+              "title": "One Piece"
+            }
+          ],
+          "note": "From ch. 215",
+          "text": "One Piece through Skypiea"
         }
       ],
       "month": "December 2026"
@@ -399,6 +468,7 @@
       "finished": "2026-10",
       "id": "golden-son-red-rising-2-pierce-brown",
       "mine": "Gift, 2027 after Book 1",
+      "myScore": 9,
       "status": "done",
       "title": "Golden Son (Red Rising #2)"
     },
@@ -408,8 +478,18 @@
       "finished": "2026-11",
       "id": "morning-star-red-rising-3-pierce-brown",
       "mine": "Gift, 2027",
+      "myScore": 8,
       "status": "done",
       "title": "Morning Star (Red Rising #3)"
+    },
+    {
+      "author": "Agatha Christie",
+      "cat": "book",
+      "finished": "2026-11",
+      "id": "and-then-there-were-none-agatha-christie",
+      "mine": "One sitting",
+      "status": "done",
+      "title": "And Then There Were None"
     },
     {
       "at": "About halfway, finish by end of October",
@@ -481,21 +561,23 @@
     ],
     "book": [
       {
-        "author": "E.B. White",
+        "at": "Starting again from page 1 after Messiah, Nov 15",
+        "author": "Frank Herbert",
         "cat": "book",
-        "id": "charlotte-s-web-e-b-white",
-        "mine": "Gift, read any day, basically one GO trip",
+        "id": "children-of-dune-frank-herbert",
+        "mine": "Owned, paused. Close it off.",
+        "note": "The children of a god-emperor and what happens to a society built on prophecy.",
         "status": "next",
-        "title": "Charlotte's Web"
+        "title": "Children of Dune"
       },
       {
-        "author": "John Steinbeck",
+        "author": "Mary Shelley",
         "cat": "book",
-        "id": "east-of-eden-john-steinbeck",
-        "mine": "Gift, slot after Of Mice and Men (Steinbeck run)",
-        "note": "Good and evil across two families in California: Steinbeck's most ambitious novel and his personal favourite.",
+        "id": "frankenstein-mary-shelley",
+        "mine": "Owned",
+        "note": "The original sci-fi novel: about creation, responsibility, and what makes something human.",
         "status": "next",
-        "title": "East of Eden"
+        "title": "Frankenstein"
       },
       {
         "author": "Harper Lee",
