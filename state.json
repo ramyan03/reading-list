@@ -1,16 +1,6 @@
 {
   "active": [
     {
-      "at": "Started recently",
-      "author": "William Shakespeare",
-      "cat": "book",
-      "id": "hamlet-william-shakespeare",
-      "mine": "Home read",
-      "note": "Indecision, revenge, and performance: Shakespeare's most psychological and most quoted work.",
-      "status": "active",
-      "title": "Hamlet"
-    },
-    {
       "at": "About 4 entries in",
       "author": "Marcus Aurelius",
       "cat": "book",
@@ -30,6 +20,20 @@
       "title": "Bojack Horseman"
     },
     {
+      "at": "Restarting at ep 76 (Chimera Ant)",
+      "cat": "anime",
+      "hrs": 55,
+      "id": "anime-hunter-x-hunter-2011",
+      "myScore": 7,
+      "note": "2027+. Chimera Ant arc is all-time.",
+      "progress": 75,
+      "started": "2026-11",
+      "status": "active",
+      "tier": "must",
+      "title": "Hunter x Hunter (2011)",
+      "total": 148
+    },
+    {
       "at": "Part 2",
       "cat": "manga",
       "id": "manga-chainsaw-man",
@@ -37,26 +41,6 @@
       "progress": 97,
       "status": "active",
       "title": "Chainsaw Man"
-    },
-    {
-      "cat": "manga",
-      "hrs": 18,
-      "id": "manga-monster",
-      "note": "Starting Oct 2026. Urasawa's masterpiece.",
-      "status": "active",
-      "tier": "must",
-      "title": "Monster"
-    },
-    {
-      "at": "Ch. ~300, entering Skypiea",
-      "cat": "manga",
-      "id": "manga-one-piece",
-      "myScore": 8,
-      "note": "On the iPad. Water 7 by year end (ch. ~430).",
-      "progress": 300,
-      "status": "active",
-      "tier": "must",
-      "title": "One Piece"
     },
     {
       "at": "Vol. 2, #580. Vol. 1 and Dark Reign done",
@@ -410,6 +394,24 @@
       "total": 382
     },
     {
+      "author": "Pierce Brown",
+      "cat": "book",
+      "finished": "2026-10",
+      "id": "golden-son-red-rising-2-pierce-brown",
+      "mine": "Gift, 2027 after Book 1",
+      "status": "done",
+      "title": "Golden Son (Red Rising #2)"
+    },
+    {
+      "author": "Pierce Brown",
+      "cat": "book",
+      "finished": "2026-11",
+      "id": "morning-star-red-rising-3-pierce-brown",
+      "mine": "Gift, 2027",
+      "status": "done",
+      "title": "Morning Star (Red Rising #3)"
+    },
+    {
       "at": "About halfway, finish by end of October",
       "cat": "anime",
       "finished": "2026-11",
@@ -581,6 +583,15 @@
       },
       {
         "cat": "manga",
+        "hrs": 18,
+        "id": "manga-monster",
+        "note": "Starting Oct 2026. Urasawa's masterpiece.",
+        "status": "next",
+        "tier": "must",
+        "title": "Monster"
+      },
+      {
+        "cat": "manga",
         "hrs": 3,
         "id": "manga-our-happy-hours",
         "note": "Short manhwa. Emotionally wrecking.",
@@ -588,16 +599,6 @@
         "suggested": true,
         "tier": "must",
         "title": "Our Happy Hours"
-      },
-      {
-        "cat": "manga",
-        "hrs": 8,
-        "id": "manga-yokohama-kaidashi-kikou",
-        "note": "Post-apocalyptic slice of life.",
-        "status": "backlog",
-        "suggested": true,
-        "tier": "must",
-        "title": "Yokohama Kaidashi Kikou"
       }
     ],
     "show": [

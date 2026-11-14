@@ -21,6 +21,12 @@
       "progress": 56,
       "status": "done"
     },
+    "anime-hunter-x-hunter-2011": {
+      "at": "Restarting at ep 76 (Chimera Ant)",
+      "progress": 75,
+      "started": "2026-11",
+      "status": "active"
+    },
     "before-they-are-hanged-joe-abercrombie": {
       "myScore": 9
     },
@@ -99,6 +105,15 @@
     "fahrenheit-451-ray-bradbury": {
       "myScore": 7
     },
+    "golden-son-red-rising-2-pierce-brown": {
+      "finished": "2026-10",
+      "status": "done"
+    },
+    "hamlet-william-shakespeare": {
+      "at": "Not started",
+      "order": 21,
+      "status": "next"
+    },
     "homage-to-catalonia-george-orwell": {
       "myScore": 8
     },
@@ -113,6 +128,19 @@
     },
     "man-s-search-for-meaning-viktor-frankl": {
       "myScore": 9
+    },
+    "manga-monster": {
+      "order": 3,
+      "status": "next"
+    },
+    "manga-one-piece": {
+      "at": "Paused at ch. 215 (end of Alabasta)",
+      "progress": 215,
+      "status": "paused"
+    },
+    "morning-star-red-rising-3-pierce-brown": {
+      "finished": "2026-11",
+      "status": "done"
     },
     "norwegian-wood-haruki-murakami": {
       "myScore": 7
