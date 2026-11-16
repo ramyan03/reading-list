@@ -99,8 +99,9 @@
       "status": "done"
     },
     "comic-fantastic-four-ff-hickman": {
-      "at": "Vol. 2, #580. Vol. 1 and Dark Reign done",
-      "progress": 19
+      "at": "Done through #604 and FF #16. Next: v6 + FF v4, alternating",
+      "progress": 45,
+      "total": 60
     },
     "comic-nightwing-year-one": {
       "finished": "2025-10"
