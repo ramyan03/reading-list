@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { STATUSES, TIERS, statusLabel } from '../data/categories.js';
 import { actions } from '../lib/actions.js';
-import { MEDIA_SORTS, selectMedia } from '../lib/select.js';
+import { MEDIA_GENRES, MEDIA_SORTS, genresOf, selectMedia } from '../lib/select.js';
 import AddItem from './AddItem.jsx';
 import CategoryHero from './CategoryHero.jsx';
 import { inkOn } from './NowCard.jsx';
@@ -29,7 +29,7 @@ function Chips({ label, options, value, onChange }) {
  * done; any other sort is one flat grid.
  */
 export default function MediaView({ cat, items, onOpen, shelf }) {
-  const [state, setState] = useState({ query: '', status: 'open', tier: 'all', sort: 'queue' });
+  const [state, setState] = useState({ query: '', status: 'open', tier: 'all', genre: 'all', sort: 'queue' });
   const [showAllDone, setShowAllDone] = useState(false);
   const [adding, setAdding] = useState(false);
   const update = (patch) => setState((s) => ({ ...s, ...patch }));
@@ -45,6 +45,10 @@ export default function MediaView({ cat, items, onOpen, shelf }) {
     { id: 'all', label: 'All', n: mine.length },
   ];
   const hasTiers = mine.some((i) => i.tier);
+  // Only genres this medium actually has, most common first.
+  const genreOptions = MEDIA_GENRES.map((g) => ({ g, n: mine.filter((i) => genresOf(i).includes(g)).length }))
+    .filter((o) => o.n > 0)
+    .sort((a, b) => b.n - a.n);
 
   const grouped = state.sort === 'queue';
   const groups = grouped
@@ -92,6 +96,20 @@ export default function MediaView({ cat, items, onOpen, shelf }) {
               <Icon name="chevron" size={14} />
             </label>
           )}
+          {genreOptions.length > 0 && (
+            <label className="select">
+              <span className="sr-only">Genre</span>
+              <select value={state.genre} onChange={(e) => update({ genre: e.target.value })}>
+                <option value="all">Any genre</option>
+                {genreOptions.map((o) => (
+                  <option key={o.g} value={o.g}>
+                    {o.g} ({o.n})
+                  </option>
+                ))}
+              </select>
+              <Icon name="chevron" size={14} />
+            </label>
+          )}
           {cat.id === 'book' && (
             <a className="btn is-quiet" href="#covers">
               All {mine.length} covers <Icon name="arrow" size={14} />
@@ -110,7 +128,7 @@ export default function MediaView({ cat, items, onOpen, shelf }) {
       {visible.length === 0 && (
         <p className="empty">
           Nothing here.{' '}
-          <button type="button" onClick={() => update({ query: '', status: 'all', tier: 'all' })}>
+          <button type="button" onClick={() => update({ query: '', status: 'all', tier: 'all', genre: 'all' })}>
             Show everything
           </button>
         </p>

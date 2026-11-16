@@ -442,6 +442,16 @@ export const media = [
   { id:"manga-yancha-gal-no-anjou-san", cat:"manga", title:"Yancha Gal no Anjou-san", status:"paused", progress:130, myScore:6 },
   { id:"manga-yokohama-kaidashi-kikou", cat:"manga", title:"Yokohama Kaidashi Kikou", status:"backlog", tier:"must", hrs:8, note:"Post-apocalyptic slice of life." },
   { id:"manga-yotsuba", cat:"manga", title:"Yotsuba", status:"backlog", tier:"good", hrs:10, note:"Ongoing. Pure joy." },
+  { id:"manga-yubisaki-to-renren", cat:"manga", title:"Yubisaki to Renren", status:"backlog", tier:"good", note:"Romance pick: A Sign of Affection. Gentle, sincere, Skip to Loafer energy." },
+  { id:"manga-kimi-wa-meido-sama", cat:"manga", title:"Kimi wa Meido-sama.", status:"backlog", tier:"good", note:"Romance pick: You Are Ms. Servant. Retired assassin turned maid. Sweet and funny." },
+  { id:"manga-dosanko-gyaru-wa-namaramenkoi", cat:"manga", title:"Dosanko Gyaru wa Namaramenkoi", status:"backlog", tier:"good", note:"Romance pick: Hokkaido Gals Are Super Adorable. Light, charming." },
+  { id:"manga-100-kanojo", cat:"manga", title:"Kimi no Koto ga Daidaidaidaidaisuki na 100-nin no Kanojo", status:"backlog", tier:"good", note:"Romance pick: The 100 Girlfriends. Harem parody, actually hilarious." },
+  { id:"manga-yamada-kun-to-lv999-no-koi-wo-suru", cat:"manga", title:"Yamada-kun to Lv999 no Koi wo Suru", status:"backlog", tier:"good", note:"Romance pick: Loving Yamada at Lv999. Grown-up gamer romcom." },
+  { id:"manga-otonari-no-tenshi-sama", cat:"manga", title:"Otonari no Tenshi-sama ni Itsunomanika Dame Ningen ni Sareteita Ken", status:"backlog", tier:"burner", note:"Slop pick: The Angel Next Door. Comfort-food romcom." },
+  { id:"manga-megami-no-cafe-terrace", cat:"manga", title:"Megami no Café Terrace", status:"backlog", tier:"burner", note:"Slop pick: Goddess Café Terrace. Harem slop, knows what it is." },
+  { id:"manga-jijou-wo-shiranai-tenkousei-ga-guigui-kuru", cat:"manga", title:"Jijou wo Shiranai Tenkousei ga Guigui Kuru.", status:"backlog", tier:"burner", note:"Slop pick: Wholesome kids' romance, very short chapters." },
+  { id:"manga-class-de-2-banme-ni-kawaii", cat:"manga", title:"Class de 2-banme ni Kawaii Onna no Ko to Tomodachi ni Natta", status:"backlog", tier:"burner", note:"Slop pick: Became Friends with the Second Cutest Girl. Pure fluff." },
+  { id:"manga-gimai-seikatsu", cat:"manga", title:"Gimai Seikatsu", status:"backlog", tier:"burner", note:"Slop pick: Days with My Stepsister. Slow, quiet step-sibling romance." },
 
   // GAME
   { id:"game-ac-syndicate", cat:"game", title:"AC Syndicate", status:"backlog", tier:"skip", hrs:20, note:"Completion run only." },

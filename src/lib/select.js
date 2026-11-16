@@ -1,5 +1,6 @@
 // Filtering + sorting. Pure, so it runs under Node.
 
+import { genres as GENRES } from '../data/genres.js';
 import { queueCmp } from './catalogue.js';
 
 const comparators = {
@@ -53,13 +54,20 @@ export const MEDIA_SORTS = [
   { id: 'title', label: 'A–Z' },
 ];
 
-export function selectMedia(items, { query, status, tier, sort }) {
+/** AniList's top-level genres, the ones worth filtering by (tags are too many). */
+export const MEDIA_GENRES = ['Action', 'Adventure', 'Comedy', 'Drama', 'Ecchi', 'Fantasy', 'Horror', 'Mahou Shoujo', 'Mecha', 'Music', 'Mystery', 'Psychological', 'Romance', 'Sci-Fi', 'Slice of Life', 'Sports', 'Supernatural', 'Thriller'];
+
+/** An item's genres: its own list if it has one, else the AniList/TVmaze data. */
+export const genresOf = (i) => i.genres ?? GENRES[i.id] ?? [];
+
+export function selectMedia(items, { query, status, tier, sort, genre = 'all' }) {
   const q = query.trim().toLowerCase();
   return items
     .filter((i) => {
       if (status === 'open' && (i.status === 'done' || i.status === 'dropped')) return false;
       if (status !== 'all' && status !== 'open' && i.status !== status) return false;
       if (tier !== 'all' && i.tier !== tier) return false;
+      if (genre !== 'all' && !genresOf(i).includes(genre)) return false;
       if (q && !i.title.toLowerCase().includes(q) && !(i.author ?? '').toLowerCase().includes(q)) return false;
       return true;
     })
