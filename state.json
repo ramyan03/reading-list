@@ -71,7 +71,7 @@
   ],
   "deadline": {
     "date": "2026-12-18",
-    "daysLeft": 31,
+    "daysLeft": 30,
     "items": [
       {
         "hrs": 5,
@@ -517,7 +517,7 @@
     }
   ],
   "synced": true,
-  "today": "2026-11-17",
+  "today": "2026-11-18",
   "units": {
     "anime": "eps",
     "book": "pages",
