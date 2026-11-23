@@ -57,6 +57,15 @@
       "title": "Chainsaw Man"
     },
     {
+      "cat": "game",
+      "hrs": 50,
+      "id": "game-gta-vi",
+      "note": "PS5. Released Nov 19, 2026. December big game, around the comics.",
+      "status": "active",
+      "tier": "must",
+      "title": "Grand Theft Auto VI"
+    },
+    {
       "at": "Done through #604 and FF #16. Next: v6 + FF v4, alternating",
       "cat": "comic",
       "hrs": 13,
@@ -71,7 +80,7 @@
   ],
   "deadline": {
     "date": "2026-12-18",
-    "daysLeft": 26,
+    "daysLeft": 25,
     "items": [
       {
         "hrs": 5,
@@ -343,13 +352,30 @@
           "cat": "game",
           "items": [
             {
-              "id": "game-before-your-eyes",
-              "status": "next",
-              "title": "Before Your Eyes"
+              "id": "game-gta-vi",
+              "status": "active",
+              "title": "Grand Theft Auto VI"
             }
           ],
-          "note": "~2h, an emotional palate cleanser",
-          "text": "Before Your Eyes, any evening"
+          "note": "Evenings, after the weekend comics",
+          "text": "GTA VI, the December game"
+        },
+        {
+          "cat": "game",
+          "items": [
+            {
+              "id": "game-gta-iii-definitive",
+              "status": "next",
+              "title": "GTA III (Definitive Edition)"
+            },
+            {
+              "id": "game-gta-vice-city-definitive",
+              "status": "next",
+              "title": "GTA Vice City (Definitive Edition)"
+            }
+          ],
+          "note": "PS5 Trilogy",
+          "text": "GTA III Platinum over the holidays, then Vice City"
         },
         {
           "cat": "comic",
@@ -517,7 +543,7 @@
     }
   ],
   "synced": true,
-  "today": "2026-11-22",
+  "today": "2026-11-23",
   "units": {
     "anime": "eps",
     "book": "pages",
